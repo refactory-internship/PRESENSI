@@ -35,9 +35,37 @@
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="#">
                 <div class="c-sidebar-nav-icon">
-                    <i class="cil-chart-pie"></i>
+                    <i class="cil-people"></i>
                 </div>
-                Charts
+                Employees
+            </a>
+        </li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                <div class="c-sidebar-nav-icon">
+                    <i class="cil-building"></i>
+                </div>
+                Office Data
+            </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.offices.index') }}">
+                        Offices
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.divisions.index') }}">
+                        Divisions
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('web.calendars.create') }}">
+                <div class="c-sidebar-nav-icon">
+                    <i class="cil-calendar"></i>
+                </div>
+                Calendar
             </a>
         </li>
     </ul>

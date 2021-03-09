@@ -21,6 +21,7 @@ class CreateCalendarsTable extends Migration
             $table->unsignedBigInteger('month');
             $table->string('month_name');
             $table->unsignedBigInteger('year');
+            $table->text('description');
             $table->enum('status', \App\Enums\CalendarStatus::getValues())->default(\App\Enums\CalendarStatus::WEEK_DAY);
             $table->timestamps();
         });
