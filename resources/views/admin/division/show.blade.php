@@ -13,14 +13,14 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <a href="{{ route('web.divisions.index') }}" class="btn btn-dark">
+                                    <a href="{{ route('web.admin.divisions.index') }}" class="btn btn-dark">
                                         <svg class="c-icon">
                                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
                                         </svg>
                                         Back
                                     </a>
                                     <div class="btn-group float-right">
-                                        <a href="{{ route('web.divisions.edit', $division->id) }}"
+                                        <a href="{{ route('web.admin.divisions.edit', $division->id) }}"
                                            class="btn btn-outline-dark">
                                             Edit
                                             <svg class="c-icon">
@@ -30,7 +30,7 @@
                                         <button type="button" class="btn btn-outline-dark"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop"
-                                                data-bs-url="{{ route('web.divisions.destroy', $division->id) }}">
+                                                data-bs-url="{{ route('web.admin.divisions.destroy', $division->id) }}">
                                             Delete
                                             <svg class="c-icon">
                                                 <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-trash"></use>

@@ -24,10 +24,13 @@ Route::get('/getCities/{id}', [\App\Http\Controllers\LocationController::class, 
 Route::get('/getDistricts/{id}', [\App\Http\Controllers\LocationController::class, 'getDistricts'])->name('district');
 Route::get('/getVillages/{id}', [\App\Http\Controllers\LocationController::class, 'getVillages'])->name('village');
 
-Route::prefix('web')->name('web.')->middleware(['auth'])->group(function () {
+Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::resource('/offices', \App\Http\Controllers\OfficeController::class);
-    Route::resource('/divisions', \App\Http\Controllers\DivisionController::class);
-    Route::resource('/calendars', \App\Http\Controllers\CalendarController::class)
-    ->except(['index']);
+
+    Route::prefix('admin')->name('admin.')->middleware('web.admin')->group(function () {
+        Route::resource('/offices', \App\Http\Controllers\OfficeController::class);
+        Route::resource('/divisions', \App\Http\Controllers\DivisionController::class);
+        Route::resource('/calendars', \App\Http\Controllers\CalendarController::class)
+            ->only(['create', 'store']);
+    });
 });

@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <form action="{{ route('web.calendars.store') }}" method="POST">
+                                <form action="{{ route('web.admin.calendars.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row mb-3">
                                         <label for="first_range" class="col-md-2 col-form-label">First Date Range</label>

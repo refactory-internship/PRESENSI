@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <form action="{{ route('web.offices.update', $office->id) }}" method="POST">
+                    <form action="{{ route('web.admin.offices.update', $office->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="card">
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" value="Save" class="btn btn-primary">
-                                        <a href="{{ route('web.offices.show', $office->id) }}" class="btn btn-dark">
+                                        <a href="{{ route('web.admin.offices.show', $office->id) }}" class="btn btn-dark">
                                             Cancel
                                         </a>
                                     </div>

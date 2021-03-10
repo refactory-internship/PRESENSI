@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <form action="{{ route('web.offices.store') }}" method="POST">
+                    <form action="{{ route('web.admin.offices.store') }}" method="POST">
                         @csrf
                         <div class="card">
                             <div class="card-header">Office Location</div>
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" value="Save" class="btn btn-primary">
-                                        <a href="{{ route('web.offices.index') }}" class="btn btn-dark">
+                                        <a href="{{ route('web.admin.offices.index') }}" class="btn btn-dark">
                                             Cancel
                                         </a>
                                     </div>

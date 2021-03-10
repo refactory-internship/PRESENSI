@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <form action="{{ route('web.divisions.store') }}" method="POST">
+                    <form action="{{ route('web.admin.divisions.store') }}" method="POST">
                         @csrf
                         <div class="card">
                             <div class="card-header">Add New Division</div>
@@ -16,7 +16,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" value="Save" class="btn btn-primary">
-                                        <a href="{{ route('web.divisions.index') }}" class="btn btn-dark">
+                                        <a href="{{ route('web.admin.divisions.index') }}" class="btn btn-dark">
                                             Cancel
                                         </a>
                                     </div>

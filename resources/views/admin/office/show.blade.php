@@ -60,14 +60,14 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <a href="{{ route('web.offices.index') }}" class="btn btn-dark">
+                                    <a href="{{ route('web.admin.offices.index') }}" class="btn btn-dark">
                                         <svg class="c-icon">
                                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
                                         </svg>
                                         Back
                                     </a>
                                     <div class="btn-group float-right">
-                                        <a href="{{ route('web.offices.edit', $office->id) }}"
+                                        <a href="{{ route('web.admin.offices.edit', $office->id) }}"
                                            class="btn btn-outline-dark">
                                             Edit
                                             <svg class="c-icon">
@@ -77,7 +77,7 @@
                                         <button type="button" class="btn btn-outline-dark"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop"
-                                                data-bs-url="{{ route('web.offices.destroy', $office->id) }}">
+                                                data-bs-url="{{ route('web.admin.offices.destroy', $office->id) }}">
                                             Delete
                                             <svg class="c-icon">
                                                 <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-trash"></use>

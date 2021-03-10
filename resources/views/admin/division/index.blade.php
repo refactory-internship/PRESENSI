@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <table class="table table-hover" aria-label="division-table">
                                 <caption style="caption-side: top;">
-                                    <a href="{{ route('web.divisions.create') }}" class="btn btn-outline-success">
+                                    <a href="{{ route('web.admin.divisions.create') }}" class="btn btn-outline-success">
                                         <svg class="c-icon">
                                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
                                         </svg>
@@ -29,7 +29,7 @@
                                         <th scope="row">{{ $division->id }}</th>
                                         <td>{{ $division->name }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.divisions.show', $division->id) }}"
+                                            <a href="{{ route('web.admin.divisions.show', $division->id) }}"
                                                class="btn btn-sm btn-outline-dark">
                                                 Check Details
                                             </a>

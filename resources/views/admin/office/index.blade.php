@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <table class="table table-hover" aria-label="office-table">
                                 <caption style="caption-side: top;">
-                                    <a href="{{ route('web.offices.create') }}" class="btn btn-outline-success">
+                                    <a href="{{ route('web.admin.offices.create') }}" class="btn btn-outline-success">
                                         <svg class="c-icon">
                                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
                                         </svg>
@@ -33,7 +33,7 @@
                                         <td>{{ $office->village->district->city->province->name }}</td>
                                         <td>{{ $office->address }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.offices.show', $office->id) }}"
+                                            <a href="{{ route('web.admin.offices.show', $office->id) }}"
                                                class="btn btn-sm btn-outline-dark">
                                                 Check Details
                                             </a>

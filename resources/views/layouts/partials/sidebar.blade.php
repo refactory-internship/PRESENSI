@@ -49,19 +49,19 @@
             </a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('web.offices.index') }}">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.admin.offices.index') }}">
                         Offices
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('web.divisions.index') }}">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.admin.divisions.index') }}">
                         Divisions
                     </a>
                 </li>
             </ul>
         </li>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('web.calendars.create') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
                 <div class="c-sidebar-nav-icon">
                     <i class="cil-calendar"></i>
                 </div>
