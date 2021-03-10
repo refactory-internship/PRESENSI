@@ -17,7 +17,7 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Gate::allows('isAdmin')) {
+        if (!Gate::allows('isAdmin')) {
             abort(403);
         }
         return $next($request);

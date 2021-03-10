@@ -11,7 +11,7 @@ class OfficeController extends Controller
 {
     public function index()
     {
-        $offices = Office::all();
+        $offices = Office::query()->paginate(5);
         return view('admin.office.index', compact('offices'));
     }
 

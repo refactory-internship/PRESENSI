@@ -15,8 +15,10 @@ class CreateDivisionOfficeTable extends Migration
     {
         Schema::create('division_office', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('division_id')->nullable()->constrained('divisions')->onDelete('CASCADE');
-            $table->foreignId('office_id')->nullable()->constrained('offices')->onDelete('CASCADE');
+            $table->unsignedBigInteger('division_id')->nullable();
+            $table->foreign('division_id')->references('id')->on('divisions')->onDelete('CASCADE');
+            $table->unsignedBigInteger('office_id')->nullable();
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

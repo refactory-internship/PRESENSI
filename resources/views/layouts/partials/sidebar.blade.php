@@ -7,68 +7,91 @@
             <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#signet"></use>
         </svg>
     </div>
-    <ul class="c-sidebar-nav ps">
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link c-active" href="#">
-                <div class="c-sidebar-nav-icon">
-                    <i class="cil-speedometer"></i>
-                </div>
-                Dashboard
-            </a>
-        </li>
-        <li class="c-sidebar-nav-title">Components</li>
-        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                <div class="c-sidebar-nav-icon">
-                    <i class="cil-puzzle"></i>
-                </div>
-                Base
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="#">
-                        Breadcrumb
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="#">
-                <div class="c-sidebar-nav-icon">
-                    <i class="cil-people"></i>
-                </div>
-                Employees
-            </a>
-        </li>
-        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                <div class="c-sidebar-nav-icon">
-                    <i class="cil-building"></i>
-                </div>
-                Office Data
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('web.admin.offices.index') }}">
-                        Offices
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('web.admin.divisions.index') }}">
-                        Divisions
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
-                <div class="c-sidebar-nav-icon">
-                    <i class="cil-calendar"></i>
-                </div>
-                Calendar
-            </a>
-        </li>
-    </ul>
+    @can('isAdmin')
+        <ul class="c-sidebar-nav ps">
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link c-active" href="#">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-speedometer"></i>
+                    </div>
+                    Dashboard
+                </a>
+            </li>
+            <li class="c-sidebar-nav-title">Components</li>
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-puzzle"></i>
+                    </div>
+                    Base
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="#">
+                            Breadcrumb
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-people"></i>
+                    </div>
+                    Employees
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-building"></i>
+                    </div>
+                    Office Data
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('web.admin.offices.index') }}">
+                            Offices
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('web.admin.divisions.index') }}">
+                            Divisions
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-calendar"></i>
+                    </div>
+                    Calendar
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.admin.roles.index') }}">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-puzzle"></i>
+                    </div>
+                    Roles
+                </a>
+            </li>
+        </ul>
+    @endcan
+    @can('isUser')
+        <ul class="c-sidebar-nav ps">
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-book"></i>
+                    </div>
+                    Attendance
+                </a>
+            </li>
+        </ul>
+    @endcan
+
     <div class="ps__rail-x" style="left: 0; bottom: 0;">
         <div class="ps__thumb-x" tabindex="0" style="left: 0; width: 0;"></div>
     </div>
