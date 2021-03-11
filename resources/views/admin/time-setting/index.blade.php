@@ -33,9 +33,9 @@
                                         <td>{{ date('H:i', strtotime($time->start_time)) }}</td>
                                         <td>{{ date('H:i', strtotime($time->end_time)) }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.admin.time-settings.show', $time->id) }}"
+                                            <a href="{{ route('web.admin.time-settings.edit', $time->id) }}"
                                                class="btn btn-sm btn-outline-dark">
-                                                Check Details
+                                                Edit Schedule
                                             </a>
                                         </td>
                                     </tr>

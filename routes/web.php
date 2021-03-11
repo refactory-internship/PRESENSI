@@ -39,6 +39,7 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::resource('/calendars', CalendarController::class)
             ->only(['create', 'store']);
         Route::resource('/roles', RoleController::class);
-        Route::resource('/time-settings', TimeSettingController::class);
+        Route::resource('/time-settings', TimeSettingController::class)
+        ->except(['show']);
     });
 });

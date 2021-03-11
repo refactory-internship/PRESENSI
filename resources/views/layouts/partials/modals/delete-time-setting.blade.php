@@ -1,4 +1,4 @@
-{{--DELETE ROLE MODAL--}}
+{{--DELETE TIME SETTING MODAL--}}
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -13,7 +13,7 @@
                 @csrf
                 @method('DELETE')
                 <div class="modal-body">
-                    Are you sure want to delete this role and all of its users?
+                    Are you sure want to delete this schedule?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
@@ -21,11 +21,11 @@
                         Close
                     </button>
                     <button type="submit" class="btn btn-outline-danger">
-                        Yes, Delete This Role Permanently
+                        Yes, Delete This Schedule Permanently
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-{{--END DELETE ROLE MODAL--}}
+{{--END DELETE TIME SETTING MODAL--}}
