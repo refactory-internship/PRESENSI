@@ -9,6 +9,8 @@ use Laravolt\Indonesia\Models\Province;
 
 class OfficeController extends Controller
 {
+    private $index = 'web.admin.offices.index';
+
     public function index()
     {
         $offices = Office::query()->paginate(5);
@@ -31,7 +33,7 @@ class OfficeController extends Controller
         ]);
         $office->division()->attach($request->divisions);
 
-        return redirect()->route('web.offices.index')->with('message', 'Office Added!');
+        return redirect()->route($this->index)->with('message', 'Office Added!');
     }
 
     public function show(Office $office)
@@ -55,12 +57,12 @@ class OfficeController extends Controller
         ]);
         $office->division()->sync($request->divisions);
 
-        return redirect()->route('web.offices.index')->with('message', 'Office Updated!');
+        return redirect()->route($this->index)->with('message', 'Office Updated!');
     }
 
     public function destroy(Office $office)
     {
         $office->delete();
-        return redirect()->route('web.offices.index')->with('danger', 'Office Deleted!');
+        return redirect()->route($this->index)->with('danger', 'Office Deleted!');
     }
 }

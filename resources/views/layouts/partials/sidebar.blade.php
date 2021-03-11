@@ -10,7 +10,7 @@
     @can('isAdmin')
         <ul class="c-sidebar-nav ps">
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link c-active" href="#">
+                <a class="c-sidebar-nav-link" href="{{ route('web.home') }}">
                     <div class="c-sidebar-nav-icon">
                         <i class="cil-speedometer"></i>
                     </div>
@@ -18,21 +18,6 @@
                 </a>
             </li>
             <li class="c-sidebar-nav-title">Components</li>
-            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-puzzle"></i>
-                    </div>
-                    Base
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="#">
-                            Breadcrumb
-                        </a>
-                    </li>
-                </ul>
-            </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#">
                     <div class="c-sidebar-nav-icon">
@@ -75,6 +60,14 @@
                         <i class="cil-puzzle"></i>
                     </div>
                     Roles
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.admin.time-settings.index') }}">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-clock"></i>
+                    </div>
+                    Time Settings
                 </a>
             </li>
         </ul>

@@ -5,6 +5,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TimeSettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,6 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::resource('/calendars', CalendarController::class)
             ->only(['create', 'store']);
         Route::resource('/roles', RoleController::class);
+        Route::resource('/time-settings', TimeSettingController::class);
     });
 });

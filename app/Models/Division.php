@@ -16,4 +16,9 @@ class Division extends Model
     {
         return $this->belongsToMany(Office::class)->withTimestamps();
     }
+
+    public function time_settings()
+    {
+        return $this->hasMany(TimeSetting::class);
+    }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class DivisionController extends Controller
 {
+    private $index = 'web.admin.divisions.index';
+
     public function index()
     {
         $divisions = Division::query()->paginate(5);
@@ -21,7 +23,7 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         Division::query()->create($request->all());
-        return redirect()->route('web.divisions.index')->with('message', 'Division Added!');
+        return redirect()->route($this->index)->with('message', 'Division Added!');
     }
 
     public function show(Division $division)
@@ -37,12 +39,12 @@ class DivisionController extends Controller
     public function update(Request $request, Division $division)
     {
         $division->update($request->all());
-        return redirect()->route('web.divisions.index')->with('message', 'Division Updated!');
+        return redirect()->route($this->index)->with('message', 'Division Updated!');
     }
 
     public function destroy(Division $division)
     {
         $division->delete();
-        return redirect()->route('web.divisions.index')->with('danger', 'Division Deleted!');
+        return redirect()->route($this->index)->with('danger', 'Division Deleted!');
     }
 }
