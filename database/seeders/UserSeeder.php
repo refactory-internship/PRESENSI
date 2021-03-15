@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -18,23 +19,33 @@ class UserSeeder extends Seeder
     {
         $password = 'password';
         $today = Carbon::now();
+        $faker = Factory::create();
+        $first_name = $faker->firstName;
+        $last_name = $faker->lastName;
+        $email = strtolower($first_name) . '@mail.com';
         DB::table('users')->insert([
             [
-                'name' => 'admin',
+                'role_id' => 1,
+                'division_office_id' => 2,
+                'time_setting_id' => 2,
+                'first_name' => 'admin',
+                'last_name' => null,
                 'email' => 'admin@mail.com',
                 'password' => Hash::make($password),
-                'role_id' => 1,
                 'created_at' => date($today),
                 'updated_at' => date($today)
             ],
             [
-                'name' => 'fajar',
-                'email' => 'fajar@mail.com',
-                'password' => Hash::make($password),
                 'role_id' => 2,
+                'division_office_id' => 2,
+                'time_setting_id' => 2,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'email' => $email,
+                'password' => Hash::make($password),
                 'created_at' => date($today),
                 'updated_at' => date($today)
-            ]
+            ],
         ]);
     }
 }

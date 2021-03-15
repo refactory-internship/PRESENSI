@@ -1,77 +1,17 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
-        <svg class="c-sidebar-brand-full" width="118" height="46">
-            <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#full"></use>
-        </svg>
-        <svg class="c-sidebar-brand-minimized" width="46" height="46">
-            <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#signet"></use>
-        </svg>
+        <div class="c-sidebar-brand-full">
+            <div class="fade-in">
+                <img src="{{ asset('coreui/brand/laravel-logolockup-rgb-white.svg') }}" alt="logo" style="width: 150px;">
+            </div>
+        </div>
+        <div class="c-sidebar-brand-minimized">
+            <div class="fade-in">
+                <img src="{{ asset('coreui/brand/laravel-white.svg') }}" alt="min logo" style="width: 46px;">
+            </div>
+        </div>
     </div>
-    @can('isAdmin')
-        <ul class="c-sidebar-nav ps">
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('web.home') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-speedometer"></i>
-                    </div>
-                    Dashboard
-                </a>
-            </li>
-            <li class="c-sidebar-nav-title">Components</li>
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-people"></i>
-                    </div>
-                    Employees
-                </a>
-            </li>
-            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-building"></i>
-                    </div>
-                    Office Data
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('web.admin.offices.index') }}">
-                            Offices
-                        </a>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('web.admin.divisions.index') }}">
-                            Divisions
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-calendar"></i>
-                    </div>
-                    Calendar
-                </a>
-            </li>
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('web.admin.roles.index') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-puzzle"></i>
-                    </div>
-                    Roles
-                </a>
-            </li>
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('web.admin.time-settings.index') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-clock"></i>
-                    </div>
-                    Time Settings
-                </a>
-            </li>
-        </ul>
-    @endcan
+    @include('admin.sidebar')
     @can('isUser')
         <ul class="c-sidebar-nav ps">
             <li class="c-sidebar-nav-item">

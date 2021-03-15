@@ -25,6 +25,6 @@ class CalendarController extends Controller
     public function store(Request $request)
     {
         $this->calendarService->store($request->first_range, $request->last_range);
-        return redirect()->route('web.calendars.create')->with('message', 'New Calendar Added!');
+        return redirect()->route('web.admin.calendars.create')->with('message', 'New Calendar Added!');
     }
 }

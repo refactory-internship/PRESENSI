@@ -21,7 +21,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         Role::query()->create([
-            'name' => $request->name
+            'name' => $request->name,
         ]);
         return redirect()->route('web.admin.roles.index')->with('message', 'Role Added!');
     }

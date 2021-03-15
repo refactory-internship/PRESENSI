@@ -26,17 +26,22 @@
                                         <div class="col-md-3">
                                             Schedule
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Start Time</span>
                                                 </div>
-                                                <input class="form-control" id="start_time" type="time" name="start_time" aria-label="start_time">
-
+                                                <input class="form-control" id="start_time" type="time"
+                                                       name="start_time" aria-label="start_time">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">End Time</span>
                                                 </div>
-                                                <input class="form-control" id="end_time" type="time" name="end_time" aria-label="end_time">
+                                                <input class="form-control" id="end_time" type="time" name="end_time"
+                                                       aria-label="end_time">
                                             </div>
                                         </div>
                                     </div>

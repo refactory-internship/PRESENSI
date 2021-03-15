@@ -28,7 +28,7 @@
                                 <tbody>
                                 @forelse($offices as $office)
                                     <tr>
-                                        <th scope="row">{{ $office->id }}</th>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $office->name }}</td>
                                         <td>{{ $office->village->district->city->province->name }}</td>
                                         <td>{{ $office->address }}</td>

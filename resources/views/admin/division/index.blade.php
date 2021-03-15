@@ -26,7 +26,7 @@
                                 <tbody>
                                 @forelse($divisions as $division)
                                     <tr>
-                                        <th scope="row">{{ $division->id }}</th>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $division->name }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('web.admin.divisions.show', $division->id) }}"

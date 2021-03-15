@@ -18,10 +18,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'role_id',
+        'division_office_id',
+        'time_setting_id',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'role_id',
+        'isAutoApproved',
+        'parent_id',
     ];
 
     /**
@@ -41,7 +46,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'isAutoApproved' => 'boolean'
     ];
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     public function role()
     {
@@ -51,5 +62,20 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return null !== $this->role()->where('name', $role)->first();
+    }
+
+    public function division_office()
+    {
+        return $this->belongsTo(DivisionOffice::class, 'division_office_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function time_setting()
+    {
+        return $this->belongsTo(TimeSetting::class);
     }
 }

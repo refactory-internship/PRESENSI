@@ -28,7 +28,7 @@
                                 <tbody>
                                 @forelse($times as $time)
                                     <tr>
-                                        <th scope="row">{{ $time->id }}</th>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $time->division->name }}</td>
                                         <td>{{ date('H:i', strtotime($time->start_time)) }}</td>
                                         <td>{{ date('H:i', strtotime($time->end_time)) }}</td>
@@ -41,7 +41,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No Data</td>
+                                        <td colspan="5" class="text-center">No Data</td>
                                     </tr>
                                 @endforelse
                                 </tbody>

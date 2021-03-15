@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RoleSeeder extends Seeder
+class DivisionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,24 +16,34 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $today = Carbon::now();
-        DB::table('roles')->insert([
+        DB::table('divisions')->insert([
             [
-                'name' => 'Admin',
+                'name' => 'Human Resource',
                 'created_at' => date($today),
                 'updated_at' => date($today),
             ],
             [
-                'name' => 'Manager',
+                'name' => 'IT Support',
                 'created_at' => date($today),
                 'updated_at' => date($today),
             ],
             [
-                'name' => 'Supervisor',
+                'name' => 'Accounting',
                 'created_at' => date($today),
                 'updated_at' => date($today),
             ],
             [
-                'name' => 'Employee',
+                'name' => 'Security',
+                'created_at' => date($today),
+                'updated_at' => date($today),
+            ],
+            [
+                'name' => 'Legal and Business',
+                'created_at' => date($today),
+                'updated_at' => date($today),
+            ],
+            [
+                'name' => 'Trainer',
                 'created_at' => date($today),
                 'updated_at' => date($today),
             ],
