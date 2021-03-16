@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\DeactivatedEmployeeController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OfficeController;
@@ -45,7 +46,11 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             ->only(['create', 'store']);
         Route::resource('/roles', RoleController::class);
         Route::resource('/time-settings', TimeSettingController::class)
-        ->except(['show']);
+            ->except(['show']);
         Route::resource('users', UserController::class);
+
+        Route::get('/deactivated', [DeactivatedEmployeeController::class, 'bin'])->name('deactivated-employees');
+        Route::put('/deactivated/{id}', [DeactivatedEmployeeController::class, 'restore'])->name('deactivated-employees.restore');
+        Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])->name('deactivated-employees.destroy');
     });
 });

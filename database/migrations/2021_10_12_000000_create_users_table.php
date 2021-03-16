@@ -29,7 +29,8 @@ class CreateUsersTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-           $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('CASCADE');
+           $table->foreignId('parent_id')->nullable()->after('isAutoApproved')->constrained('users')->onDelete('CASCADE');
+           $table->softDeletes()->after('updated_at');
         });
     }
 

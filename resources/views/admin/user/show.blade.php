@@ -18,10 +18,6 @@
                                         <td>{{ $user->email }}</td>
                                     </tr>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <td>{{ $user->getFullNameAttribute() }}</td>
-                                    </tr>
-                                    <tr>
                                         <th scope="col">Role</th>
                                         <td>{{ $user->role->name }}</td>
                                     </tr>

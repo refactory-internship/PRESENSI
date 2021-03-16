@@ -5,17 +5,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     @include('layouts.partials.message')
-                    <div class="mb-3">
-                        <a href="{{ route('web.admin.users.create') }}" class="btn btn-success">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
-                            Add New Employee
-                        </a>
-                    </div>
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-hover" aria-label="office-table" id="dataTable">
+                            <table class="table table-hover" aria-label="deactivated employees" id="dataTable">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -24,7 +16,7 @@
                                     <th scope="col">Division</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Parent</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -59,10 +51,31 @@
                                             <td>{{ $user->parent->first_name . ' ' . $user->parent->last_name }}</td>
                                         @endif
 
-                                        <td>
-                                            <a href="{{ route('web.admin.users.show', $user->id) }}" class="btn btn-sm btn-outline-dark">
-                                                Check Details
-                                            </a>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <form
+                                                    action="{{ route('web.admin.deactivated-employees.restore', $user->id) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="btn btn-sm btn-outline-dark" type="submit">
+                                                        <svg class="c-icon">
+                                                            <use
+                                                                xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-action-undo"></use>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+
+                                                <button type="button" class="btn btn-sm btn-outline-dark"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop"
+                                                        data-bs-url="{{ route('web.admin.deactivated-employees.destroy', $user->id) }}">
+                                                    <svg class="c-icon">
+                                                        <use
+                                                            xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-trash"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -78,4 +91,8 @@
             </div>
         </div>
     </div>
+    @include('layouts.partials.modals.delete-employee')
+@endsection
+@section('script')
+    @include('layouts.partials.modals.script')
 @endsection

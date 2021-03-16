@@ -8,7 +8,7 @@
         <li class="c-header-nav-item dropdown">
             <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">
-                {{ \Illuminate\Support\Facades\Auth::user()->getFullNameAttribute() }}
+                {{ auth()->user()->getFullNameAttribute() }}
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
                 <div class="dropdown-header bg-light py-2">
