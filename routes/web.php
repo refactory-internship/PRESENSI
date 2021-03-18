@@ -7,6 +7,7 @@ use App\Http\Controllers\DeactivatedEmployeeController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TimeSettingController;
 use App\Http\Controllers\UserController;
@@ -58,7 +59,11 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     Route::prefix('employee')->name('employee.')->middleware('web.employee')->group(function () {
         Route::resource('/attendances', AttendanceController::class);
+        Route::resource('/overtimes', OvertimeController::class)
+        ->except(['create', 'store']);
 
-        Route::resource('/approve-attendances', ApproveAttendanceController::class)->middleware('web.approveAttendance');
+        Route::middleware('web.approveAttendance')->group(function () {
+            Route::resource('/approve-attendances', ApproveAttendanceController::class);
+        });
     });
 });

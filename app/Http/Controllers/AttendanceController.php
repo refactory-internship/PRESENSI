@@ -18,7 +18,7 @@ class AttendanceController extends Controller
     public function index()
     {
         $user = auth()->id();
-        $attendances = Attendance::query()->where('user_id', $user)->get();
+        $attendances = Attendance::query()->where('user_id', $user)->where('isOvertime', false)->get();
         return view('user.attendance.index', compact('attendances'));
     }
 
@@ -54,7 +54,6 @@ class AttendanceController extends Controller
 
     public function destroy(Attendance $attendance)
     {
-        dd('deleted');
         $attendance->delete();
         return redirect()->route('web.employee.attendances.index')->with('danger', 'Attendance Deleted!');
     }

@@ -32,8 +32,7 @@ class AttendanceService
         if ($request->has('overtimeStatus')) {
             $isOvertime = true;
             $overtimeDuration = $request->overtime_duration;
-            $todayHour = Carbon::parse($timeToday)->addHours($request->overtime_duration);
-            $clockOutTime = date('H:i:s', strtotime($todayHour));
+            $clockOutTime = Carbon::parse($timeToday)->addHours($request->overtime_duration)->toTimeString();
         } else {
             $isOvertime = false;
             $overtimeDuration = null;

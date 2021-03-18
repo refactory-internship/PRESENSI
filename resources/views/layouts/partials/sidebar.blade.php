@@ -31,7 +31,7 @@
                         </a>
                     </li>
                     <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="#">
+                        <a class="c-sidebar-nav-link" href="{{ route('web.employee.overtimes.index') }}">
                             Overtimes
                         </a>
                     </li>

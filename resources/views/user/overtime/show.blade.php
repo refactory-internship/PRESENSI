@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Attendance Details</h5>
+                                <h5>Overtime Details</h5>
                                 <small>{{ $attendance->created_at->diffForHumans() }}</small>
                             </div>
 
@@ -53,6 +53,16 @@
                                                        disabled>
                                             </div>
                                         </div>
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Overtime Duration</span>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="overtime_duration"
+                                                       value="{{ $attendance->overtimeDuration . ' Hour' }}"
+                                                       disabled>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -79,12 +89,10 @@
                                     <tr>
                                         <th scope="row" style="width: 20%;">Attendance Status</th>
                                         <td>
-                                            @if($attendance->status == 1)
-                                                <span class="badge badge-info">Present</span>
-                                            @elseif($attendance->status == 2)
-                                                <span class="badge badge-warning">Absent</span>
-                                            @elseif($attendance->status == 3)
-                                                <span class="badge badge-info">Leave</span>
+                                            @if($attendance->isOvertime === true)
+                                                <span class="badge badge-warning">Overtime</span>
+                                            @else
+                                                <span class="badge badge-info">Regular</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -130,21 +138,21 @@
                                 </table>
                             </div>
 
-                            <a href="{{ route('web.employee.attendances.index') }}" class="btn btn-dark">
+                            <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
                                 <svg class="c-icon">
                                     <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
                                 </svg>
                                 Back
                             </a>
                             <div class="btn-group float-right">
-                                <a href="{{ route('web.employee.attendances.edit', $attendance->id) }}"
+                                <a href="{{ route('web.employee.overtimes.edit', $attendance->id) }}"
                                    class="btn btn-outline-dark">
                                     Edit
                                 </a>
                                 <button type="button" class="btn btn-outline-danger" id="deleteButton"
                                         data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop"
-                                        data-bs-url="{{ route('web.employee.attendances.destroy', $attendance->id) }}">
+                                        data-bs-url="{{ route('web.employee.overtimes.destroy', $attendance->id) }}">
                                     Delete
                                     <svg class="c-icon">
                                         <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-ban"></use>

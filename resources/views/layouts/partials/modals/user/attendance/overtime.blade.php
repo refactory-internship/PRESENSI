@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="overtime_duration">Overtime Duration</label>
-                        <select name="overtime_duration" id="overtime_duration" class="form-select">
+                        <select name="overtime_duration" id="overtime_duration" class="form-select form-select-sm">
                             <option value="1">1 Hour</option>
                             <option value="2">2 Hour</option>
                             <option value="3">3 Hour</option>
