@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApproveAttendanceController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DeactivatedEmployeeController;
 use App\Http\Controllers\DivisionController;
@@ -52,5 +54,11 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::get('/deactivated', [DeactivatedEmployeeController::class, 'bin'])->name('deactivated-employees');
         Route::put('/deactivated/{id}', [DeactivatedEmployeeController::class, 'restore'])->name('deactivated-employees.restore');
         Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])->name('deactivated-employees.destroy');
+    });
+
+    Route::prefix('employee')->name('employee.')->middleware('web.employee')->group(function () {
+        Route::resource('/attendances', AttendanceController::class);
+
+        Route::resource('/approve-attendances', ApproveAttendanceController::class)->middleware('web.approveAttendance');
     });
 });

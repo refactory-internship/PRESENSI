@@ -12,4 +12,9 @@ class Calendar extends Model
     protected $table = 'calendars';
     protected $guarded = [];
     protected $dates = ['date'];
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

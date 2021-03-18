@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             TimeSettingSeeder::class,
             DivisionOfficeSeeder::class,
             UserSeeder::class,
-            ChildSeeder::class
+            ChildSeeder::class,
+            CalendarSeeder::class,
         ]);
     }
 }

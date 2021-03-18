@@ -75,8 +75,18 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'parent_id');
     }
 
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
     public function time_setting()
     {
         return $this->belongsTo(TimeSetting::class);
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\Web\AdminAccess;
+use App\Http\Middleware\Web\ApproveAttendance;
+use App\Http\Middleware\Web\EmployeeAccess;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -64,6 +66,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'web.admin' => AdminAccess::class
+        'web.admin' => AdminAccess::class,
+        'web.employee' => EmployeeAccess::class,
+        'web.approveAttendance' => ApproveAttendance::class
     ];
 }

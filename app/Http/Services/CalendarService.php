@@ -14,7 +14,7 @@ class CalendarService
     public function store($first, $last)
     {
         //Truncate all records
-        Calendar::query()->truncate();
+        Calendar::query()->delete();
 
         //Create an empty array and save the transformed input to array
         $data = [];
