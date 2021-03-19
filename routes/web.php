@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\ApproveAttendanceController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\DeactivatedEmployeeController;
-use App\Http\Controllers\DivisionController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\OvertimeController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\TimeSettingController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\DeactivatedEmployeeController;
+use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\OfficeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TimeSettingController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Employee\AttendanceController;
+use App\Http\Controllers\Employee\OvertimeController;
+use App\Http\Controllers\Parent\ApproveAttendanceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,7 +57,7 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])->name('deactivated-employees.destroy');
     });
 
-    Route::prefix('employee')->name('employee.')->middleware('web.employee')->group(function () {
+    Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
         Route::resource('/attendances', AttendanceController::class);
         Route::resource('/overtimes', OvertimeController::class)
         ->except(['create', 'store']);

@@ -5,6 +5,8 @@ namespace App\Http;
 use App\Http\Middleware\Web\AdminAccess;
 use App\Http\Middleware\Web\ApproveAttendance;
 use App\Http\Middleware\Web\EmployeeAccess;
+use App\Http\Middleware\Web\AttendanceAccess;
+use App\Http\Middleware\Web\HasOvertime;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -68,6 +70,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'web.admin' => AdminAccess::class,
         'web.employee' => EmployeeAccess::class,
-        'web.approveAttendance' => ApproveAttendance::class
+        'web.approveAttendance' => ApproveAttendance::class,
+        'web.attendanceAccess' => AttendanceAccess::class,
     ];
 }

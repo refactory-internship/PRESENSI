@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
+use App\Http\Controllers\Controller;
 use App\Http\Services\OvertimeService;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
@@ -24,13 +25,13 @@ class OvertimeController extends Controller
 
     public function show($id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
         return view('user.overtime.show', compact('attendance'));
     }
 
     public function edit($id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
         return view('user.overtime.edit', compact('attendance'));
     }
 
@@ -42,7 +43,7 @@ class OvertimeController extends Controller
 
     public function destroy($id)
     {
-        Attendance::query()->find($id)->delete();
+        Attendance::query()->findOrFail($id)->delete();
         return redirect()->route('web.employee.overtimes.index')->with('danger', 'Overtime Deleted!');
     }
 }
