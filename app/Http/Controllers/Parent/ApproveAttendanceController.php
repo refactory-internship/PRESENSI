@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class ApproveAttendanceController extends Controller
 {

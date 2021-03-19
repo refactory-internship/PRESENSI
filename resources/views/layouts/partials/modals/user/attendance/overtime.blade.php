@@ -2,7 +2,7 @@
 <div class="modal fade" id="createOvertime" data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <form action="{{ route('web.employee.attendances.store') }}" method="POST">
             @csrf
             <div class="modal-content">
@@ -22,6 +22,12 @@
                     <div class="form-group mb-3">
                         <label for="task_report">Task Report</label>
                         <input type="text" name="task_report" id="task_report" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="note">Additional Note</label>
+                        <textarea class="form-control" id="note" name="note"
+                                  style="resize: none"></textarea>
+                        <small class="text-muted">Provide details about your overtime if seems necessary</small>
                     </div>
                     <input type="hidden" name="overtimeStatus" id="overtimeStatus" value="">
                 </div>

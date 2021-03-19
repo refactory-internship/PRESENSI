@@ -19,7 +19,7 @@
             columnDefs: [
                 {
                     orderable: false,
-                    targets: [0, 6]
+                    targets: [6]
                 }
             ],
             order: []

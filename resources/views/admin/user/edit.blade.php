@@ -96,7 +96,7 @@
                                                 @if($user->parent === null)
                                                     <option value="">Parent</option>
                                                 @else
-                                                    <option value="{{ $user->parent->id }}">{{ $user->parent->name }}</option>
+                                                    <option value="{{ $user->parent->id }}">{{ $user->parent->getFullNameAttribute() }}</option>
                                                 @endif
                                             </select>
                                         </div>

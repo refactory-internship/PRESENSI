@@ -5,16 +5,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Store;
+use App\Http\Services\UserService;
 use App\Models\DivisionOffice;
 use App\Models\Office;
 use App\Models\Role;
 use App\Models\TimeSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
         $users = User::all();
@@ -31,22 +38,7 @@ class UserController extends Controller
 
     public function store(Store $request)
     {
-        $division_office_id = DivisionOffice::query()
-            ->where('division_id', $request->division)
-            ->where('office_id', $request->office)
-            ->value('id');
-
-        User::query()->create([
-            'role_id' => $request->role,
-            'division_office_id' => $division_office_id,
-            'time_setting_id' => $request->shift,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'parent_id' => $request->parent,
-            'isAutoApproved' => $request->has('auto_approve') ? true : false
-        ]);
+        $this->userService->store($request);
         return redirect()->route('web.admin.users.index')->with('message', 'Employee Added!');
     }
 
@@ -65,20 +57,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $division_office_id = DivisionOffice::query()
-            ->where('division_id', $request->division)
-            ->where('office_id', $request->office)
-            ->value('id');
-
-        $user->update([
-            'role_id' => $request->role,
-            'division_office_id' => $division_office_id,
-            'time_setting_id' => $request->shift,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'parent_id' => $request->parent,
-            'isAutoApproved' => $request->has('auto_approve') ? true : false
-        ]);
+        $this->userService->update($request, $user);
         return redirect()->route('web.admin.users.show', $user->id)->with('message', 'Employee Updated!');
     }
 
