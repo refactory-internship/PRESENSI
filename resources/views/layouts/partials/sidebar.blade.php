@@ -39,11 +39,14 @@
             </li>
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="#">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-attendances.index') }}">
                         <div class="c-sidebar-nav-icon">
                             <i class="cil-puzzle"></i>
                         </div>
                         Approve Attendance
+                        <span class="badge badge-danger">
+                        {{ \App\Models\Attendance::query()->where('approverId', auth()->id())->where('isApproved', false)->count() }}
+                        </span>
                     </a>
                 </li>
             @endif

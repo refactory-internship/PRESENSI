@@ -12,7 +12,6 @@
                                 {!! $attendance->isOvertime === true
                                 ? '<span class="badge badge-warning">Overtime</span>'
                                 : ''!!}
-
                             </h5>
                             <div class="mb-3">
                                 <form action="{{ route('web.employee.overtimes.update', $attendance->id) }}"

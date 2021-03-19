@@ -4,10 +4,44 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
+
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Overtime Details</h5>
+                                <h5>Employee Details</h5>
+                                <div class="mb-3">
+                                    <table class="table table-sm table-borderless" aria-label="employee"
+                                           style="font-size: 14px;">
+                                        <tr>
+                                            <th scope="row" style="width: 20%;">Employee Name</th>
+                                            <td>{{ $attendance->user->getFullNameAttribute() }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" style="width: 20%;">Role</th>
+                                            <td>{{ $attendance->user->role->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" style="width: 20%;">Office and Division</th>
+                                            <td>
+                                                {{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h5>Attendance Details {!! $attendance->isApproved === true
+                                    ? '<span class="badge badge-success">Approved</span>'
+                                    : '<span class="badge badge-danger">Not Approved</span>'!!}
+                                    {!! $attendance->isOvertime === true
+                                    ? '<span class="badge badge-warning">Overtime</span>'
+                                    : ''!!}
+                                </h5>
                                 <small>{{ $attendance->created_at->diffForHumans() }}</small>
                             </div>
 
@@ -53,16 +87,20 @@
                                                        disabled>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Overtime Duration</span>
+
+                                        @if($attendance->isOvertime === true)
+                                            <div class="col">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Overtime Duration</span>
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                           aria-label="overtime_duration"
+                                                           value="{{ $attendance->overtimeDuration . ' Hour' }}"
+                                                           disabled>
                                                 </div>
-                                                <input type="text" class="form-control" aria-label="overtime_duration"
-                                                       value="{{ $attendance->overtimeDuration . ' Hour' }}"
-                                                       disabled>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -77,22 +115,14 @@
                                 <table class="table table-sm table-borderless" aria-label="statuses"
                                        style="font-size: 14px;">
                                     <tr>
-                                        <th scope="row" style="width: 20%;">Approval Status</th>
-                                        <td>
-                                            @if($attendance->isApproved === true)
-                                                <span class="badge badge-success">Approved</span>
-                                            @else
-                                                <span class="badge badge-danger">Not Approved</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row" style="width: 20%;">Attendance Status</th>
                                         <td>
-                                            @if($attendance->isOvertime === true)
-                                                <span class="badge badge-warning">Overtime</span>
-                                            @else
-                                                <span class="badge badge-info">Regular</span>
+                                            @if($attendance->status == 1)
+                                                <span class="badge badge-info">Present</span>
+                                            @elseif($attendance->status == 2)
+                                                <span class="badge badge-warning">Absent</span>
+                                            @elseif($attendance->status == 3)
+                                                <span class="badge badge-info">Leave</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -112,52 +142,33 @@
                                             @endif
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Approved By</th>
-                                        <td>
-                                            @if($attendance->approvedBy == 1)
-                                                <span class="badge badge-info">Parent</span>
-                                            @else
-                                                <span class="badge badge-info">System</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Approver</th>
-                                        <td>
-                                            @if($attendance->user->parent)
-                                                {{ $attendance->user->parent->getFullNameAttribute() . ', ' .
-                                                   $attendance->user->parent->role->name . ' of ' .
-                                                   $attendance->user->parent->division_office->division->name }}
-                                            @else
-                                                <span
-                                                    class="badge badge-success">Automatically Approved By System</span>
-                                            @endif
-                                        </td>
-                                    </tr>
                                 </table>
                             </div>
 
-                            <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
+                            <a href="{{ route('web.employee.approve-attendances.index') }}" class="btn btn-dark">
                                 <svg class="c-icon">
                                     <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
                                 </svg>
                                 Back
                             </a>
-                            <div class="btn-group float-right">
-                                <a href="{{ route('web.employee.overtimes.edit', $attendance->id) }}"
-                                   class="btn btn-outline-dark">
-                                    Edit
-                                </a>
-                                <button type="button" class="btn btn-outline-danger" id="deleteButton"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"
-                                        data-bs-url="{{ route('web.employee.overtimes.destroy', $attendance->id) }}">
-                                    Delete
+
+                            <div class="float-right">
+                                <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+                                   onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
+                                   class="btn btn-outline-success">
                                     <svg class="c-icon">
-                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-ban"></use>
+                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
                                     </svg>
-                                </button>
+                                    Approve Attendance
+                                </a>
+                                <a href="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
+                                   onclick="event.preventDefault(); document.getElementById('reject-attendance').submit();"
+                                   class="btn btn-outline-danger">
+                                    Reject Attendance
+                                    <svg class="c-icon">
+                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>
+                                    </svg>
+                                </a>
                             </div>
 
                         </div>
@@ -166,8 +177,14 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.user.attendance.delete')
-@endsection
-@section('script')
-    @include('layouts.partials.modals.script')
+    <form id="approve-attendance" action="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+          method="POST" class="d-none">
+        @csrf
+        @method('PUT')
+    </form>
+    <form id="reject-attendance" action="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
+          method="POST" class="d-none">
+        @csrf
+        @method('PUT')
+    </form>
 @endsection

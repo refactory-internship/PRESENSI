@@ -7,7 +7,13 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Attendance Details</h5>
+                                <h5>Attendance Details {!! $attendance->isApproved === true
+                                    ? '<span class="badge badge-success">Approved</span>'
+                                    : '<span class="badge badge-danger">Not Approved</span>'!!}
+                                    {!! $attendance->isOvertime === true
+                                    ? '<span class="badge badge-warning">Overtime</span>'
+                                    : ''!!}
+                                </h5>
                                 <small>{{ $attendance->created_at->diffForHumans() }}</small>
                             </div>
 
@@ -157,6 +163,7 @@
                 </div>
             </div>
         </div>
+    </div>
     @include('layouts.partials.modals.user.attendance.delete')
 @endsection
 @section('script')

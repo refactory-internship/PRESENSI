@@ -63,7 +63,11 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         ->except(['create', 'store']);
 
         Route::middleware('web.approveAttendance')->group(function () {
-            Route::resource('/approve-attendances', ApproveAttendanceController::class);
+            Route::put('/approve-attendance/{id}/approve', [ApproveAttendanceController::class, 'approve'])->name('approve-attendances.approve');
+            Route::put('/approve-attendance/{id}/reject', [ApproveAttendanceController::class, 'reject'])->name('approve-attendances.reject');
+
+            Route::resource('/approve-attendances', ApproveAttendanceController::class)
+            ->only(['index', 'show']);
         });
     });
 });
