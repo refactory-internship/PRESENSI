@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'role_id' => 1,
-                'division_office_id' => 2,
-                'time_setting_id' => 2,
+                'division_office_id' => null,
+                'time_setting_id' => null,
                 'first_name' => 'admin',
                 'last_name' => null,
                 'email' => 'admin@mail.com',

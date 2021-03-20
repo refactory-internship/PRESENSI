@@ -44,9 +44,11 @@
                             <i class="cil-puzzle"></i>
                         </div>
                         Approve Attendance
-                        <span class="badge badge-danger">
-                        {{ \App\Models\Attendance::query()->where('approverId', auth()->id())->where('isApproved', false)->count() }}
-                        </span>
+                        @if($counter)
+                            <span class="badge badge-danger">
+                                {{ $counter }}
+                            </span>
+                        @endif
                     </a>
                 </li>
             @endif

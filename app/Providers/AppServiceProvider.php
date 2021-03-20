@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Attendance;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Illuminate\Support\Facades\View::share('dateStatus', 'status');
+        View::share([
+            'dateStatus' => 'status',
+        ]);
+
+        View::composer('*', function ($view) {
+            $counter = Attendance::query()
+                ->where('approverId', auth()->id())
+                ->where('isApproved', false)
+                ->count();
+
+            $view->with([
+                'counter' => $counter
+            ]);
+        });
     }
 }

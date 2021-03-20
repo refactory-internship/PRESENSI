@@ -13,7 +13,7 @@
                 @csrf
                 @method('DELETE')
                 <div class="modal-body">
-                    Are you sure want to delete this office?
+                    Are you sure want to delete this office and all of its divisions?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"

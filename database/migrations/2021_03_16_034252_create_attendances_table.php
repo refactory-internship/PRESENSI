@@ -22,7 +22,7 @@ class CreateAttendancesTable extends Migration
             $table->enum('approvedBy', \App\Enums\AttendanceApprover::getValues())->nullable();
 
             $table->unsignedBigInteger('approverId')->nullable();
-            $table->foreign('approverId')->references('parent_id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('approverId')->references('parent_id')->on('users')->onUpdate('CASCADE');
 
             $table->enum('status', \App\Enums\AttendanceStatus::getValues())->nullable();
             $table->boolean('isQRCode')->default(0);
