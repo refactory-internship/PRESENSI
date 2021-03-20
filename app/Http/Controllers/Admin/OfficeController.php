@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\OfficeService;
 use App\Models\Division;
 use App\Models\Office;
 use Illuminate\Http\Request;
@@ -11,6 +12,12 @@ use Laravolt\Indonesia\Models\Province;
 class OfficeController extends Controller
 {
     private $index = 'web.admin.offices.index';
+    private $officeService;
+
+    public function __construct(OfficeService $officeService)
+    {
+        $this->officeService = $officeService;
+    }
 
     public function index()
     {
@@ -27,13 +34,7 @@ class OfficeController extends Controller
 
     public function store(Request $request)
     {
-        $office = Office::query()->create([
-            'village_id' => $request->villages,
-            'name' => $request->name,
-            'address' => $request->address
-        ]);
-        $office->division()->attach($request->divisions);
-
+        $this->officeService->store($request);
         return redirect()->route($this->index)->with('message', 'Office Added!');
     }
 
@@ -51,13 +52,7 @@ class OfficeController extends Controller
 
     public function update(Request $request, Office $office)
     {
-        $office->update([
-            'village_id' => $request->villages,
-            'name' => $request->name,
-            'address' => $request->address
-        ]);
-        $office->division()->sync($request->divisions);
-
+        $this->officeService->update($request, $office);
         return redirect()->route($this->index)->with('message', 'Office Updated!');
     }
 
