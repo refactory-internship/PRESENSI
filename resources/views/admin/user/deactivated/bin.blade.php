@@ -15,7 +15,7 @@
                                     <th scope="col">Office</th>
                                     <th scope="col">Division</th>
                                     <th scope="col">Role</th>
-                                    <th scope="col">Parent</th>
+                                    <th scope="col">Deleted</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                                 </thead>
@@ -43,13 +43,7 @@
 
                                         <td>{{ $user->role->name }}</td>
 
-                                        @if($user->parent === null)
-                                            <td>
-                                                <span class="badge badge-danger">No Data</span>
-                                            </td>
-                                        @else
-                                            <td>{{ $user->parent->first_name . ' ' . $user->parent->last_name }}</td>
-                                        @endif
+                                        <td>{{ $user->deleted_at->diffForHumans() }}</td>
 
                                         <td class="text-center">
                                             <div class="btn-group">

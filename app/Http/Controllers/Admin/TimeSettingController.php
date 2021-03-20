@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\TimeSettingService;
 use App\Models\Division;
 use App\Models\TimeSetting;
 use Illuminate\Http\Request;
@@ -10,6 +11,12 @@ use Illuminate\Http\Request;
 class TimeSettingController extends Controller
 {
     private $index = 'web.admin.time-settings.index';
+    private $timeSettingService;
+
+    public function __construct(TimeSettingService $timeSettingService)
+    {
+        $this->timeSettingService = $timeSettingService;
+    }
 
     public function index()
     {
@@ -25,13 +32,7 @@ class TimeSettingController extends Controller
 
     public function store(Request $request)
     {
-        $start_time = date('H:i', strtotime($request->start_time));
-        $end_time = date('H:i', strtotime($request->end_time));
-        TimeSetting::query()->create([
-            'division_id' => $request->division,
-            'start_time' => $start_time,
-            'end_time' => $end_time
-        ]);
+        $this->timeSettingService->store($request);
         return redirect()->route($this->index)->with('message', 'Time Setting Added!');
     }
 
@@ -43,13 +44,7 @@ class TimeSettingController extends Controller
 
     public function update(Request $request, TimeSetting $timeSetting)
     {
-        $start_time = date('H:i', strtotime($request->start_time));
-        $end_time = date('H:i', strtotime($request->end_time));
-        $timeSetting->update([
-            'division_id' => $request->division,
-            'start_time' => $start_time,
-            'end_time' => $end_time
-        ]);
+        $this->timeSettingService->update($request, $timeSetting);
         return redirect()->route($this->index)->with('message', 'Time Setting Updated!');
     }
 

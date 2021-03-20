@@ -1,5 +1,9 @@
 <fieldset>
-    <legend>{{ $dateStatus }}</legend>
+    <legend>
+        <span class="badge badge-warning">
+            {{ strtoupper($dateStatus) }}
+        </span>
+    </legend>
     {{ \Carbon\Carbon::parse($currentDate)->isoFormat('dddd, MMMM Do YYYY, kk:mm') }}
     <div class="mt-3">
         <div class="form-group">
