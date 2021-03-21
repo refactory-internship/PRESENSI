@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Create New Attendance'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-body">
                             @if($date->status === '1')
                                 @if(date('H:i:s', strtotime($currentDate)) >= auth()->user()->time_setting->start_time &&

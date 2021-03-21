@@ -6,7 +6,7 @@
                 <div class="col-md-10">
                     <form action="{{ route('web.admin.time-settings.store') }}" method="POST">
                         @csrf
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group row mb-3">

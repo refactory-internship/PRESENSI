@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Role List'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -6,7 +6,7 @@
                 <div class="col-md-10">
                     <div class="mb-3">
                         @include('layouts.partials.message')
-                        <a href="{{ route('web.admin.roles.create') }}" class="btn btn-success">
+                        <a href="{{ route('web.admin.roles.create') }}" class="btn btn-success shadow">
                             <svg class="c-icon">
                                 <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
                             </svg>
@@ -16,7 +16,7 @@
                     <div class="row">
                         @foreach($roles as $role)
                             <div class="col-md-3">
-                                <div class="card">
+                                <div class="card shadow">
                                     <div class="card-body d-flex justify-content-between align-items-start">
                                         <div>
                                             <div class="text-value">{{ $role->name }}</div>

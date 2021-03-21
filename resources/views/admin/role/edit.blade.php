@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Edit Role'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -7,7 +7,7 @@
                     <form action="{{ route('web.admin.roles.update', $role->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group mb-3">

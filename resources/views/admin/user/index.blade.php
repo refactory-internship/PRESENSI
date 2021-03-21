@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Employee List'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -6,14 +6,14 @@
                 <div class="col-md-10">
                     @include('layouts.partials.message')
                     <div class="mb-3">
-                        <a href="{{ route('web.admin.users.create') }}" class="btn btn-success">
+                        <a href="{{ route('web.admin.users.create') }}" class="btn btn-success rounded-pill">
                             <svg class="c-icon">
                                 <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
                             </svg>
                             Add New Employee
                         </a>
                     </div>
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px;">
                         <div class="card-body">
                             <table class="table table-hover" aria-label="office-table" id="dataTable">
                                 <thead>
@@ -78,4 +78,19 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: [6]
+                    }
+                ],
+                order: []
+            });
+        });
+    </script>
 @endsection

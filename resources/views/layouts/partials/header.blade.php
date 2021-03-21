@@ -1,4 +1,4 @@
-<header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+<header class="c-header c-header-light c-header-fixed c-header-with-subheader shadow-sm">
     <a class="c-header-brand d-lg-none" href="#">
         <svg width="118" height="46">
             <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#full"></use>
@@ -31,6 +31,13 @@
             </div>
         </li>
     </ul>
+    <div class="c-subheader px-3">
+        <ol class="breadcrumb border-0 m-0">
+            <li class="breadcrumb-item">
+                <h5>{{ $pageTitle }}</h5>
+            </li>
+        </ol>
+    </div>
 </header>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf

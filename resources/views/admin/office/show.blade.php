@@ -1,18 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Office Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <h5 class="mb-3">Office Details</h5>
-                            <div class="row mb-3">
+                            <div class="form-group row mb-3">
                                 <div class="col-md-3">
-                                    Office Name
+                                    <label for="name">Office Name</label>
                                 </div>
                                 <div class="col-md-9">
-                                    {{ $office->name }}
+                                    <input type="text" class="form-control" id="name" value="{{ $office->name }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -21,7 +20,9 @@
                                 </div>
                                 <div class="col-md-9">
                                     @foreach($office->division as $division)
-                                        {{ $division->name . ', ' }}
+                                        <span class="badge badge-secondary">
+                                            {{ $division->name }}
+                                        </span>
                                     @endforeach
                                 </div>
                             </div>
@@ -52,10 +53,10 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-3">
-                                    Office Address
+                                    <label for="address">Office Address</label>
                                 </div>
                                 <div class="col-md-9">
-                                    {{ $office->address }}
+                                    <input type="text" class="form-control" id="address" value="{{ $office->address }}" disabled>
                                 </div>
                             </div>
                             <div class="row">

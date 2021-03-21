@@ -1,12 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Edit Your Attendance'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <h5 class="mb-3">Edit Your Attendance {!! $attendance->isApproved === true
+                            <h5 class="mb-3">
+                                {!! $attendance->isApproved === true
                                 ? '<span class="badge badge-success">Approved</span>'
                                 : '<span class="badge badge-danger">Not Approved</span>'!!}
                             </h5>

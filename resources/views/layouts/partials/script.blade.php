@@ -9,20 +9,3 @@
 {{--Datatables Script--}}
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
 <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js" defer></script>
-
-<script>
-    //select2 multiple dropdown
-    $('.select2-dropdown-multiple').select2();
-
-    $(document).ready(function () {
-        $('#dataTable').DataTable({
-            columnDefs: [
-                {
-                    orderable: false,
-                    targets: [6]
-                }
-            ],
-            order: []
-        });
-    });
-</script>

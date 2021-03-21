@@ -4,7 +4,7 @@
     <title>{{ config('app.name') }}</title>
     @include('layouts.partials.head')
 </head>
-<body class="c-app flex-row align-items-center">
+<body class="c-app flex-row align-items-center bg-gray-200">
 @yield('content')
 @include('layouts.partials.script')
 </body>

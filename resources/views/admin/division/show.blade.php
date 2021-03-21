@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Division Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <h5 class="mb-3">Division Details</h5>
                             <div class="form-group mb-3">
                                 <label for="name">Division Name</label>
                                 <input type="text" id="name" class="form-control" value="{{ $division->name }}" disabled>

@@ -1,41 +1,37 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Attendance Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
 
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <div class="mb-3">
-                                <h5>Employee Details</h5>
-                                <div class="mb-3">
-                                    <table class="table table-sm table-borderless" aria-label="employee"
-                                           style="font-size: 14px;">
-                                        <tr>
-                                            <th scope="row" style="width: 20%;">Employee Name</th>
-                                            <td>{{ $attendance->user->getFullNameAttribute() }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" style="width: 20%;">Role</th>
-                                            <td>{{ $attendance->user->role->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" style="width: 20%;">Office and Division</th>
-                                            <td>
-                                                {{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
+                            <table class="table table-sm table-borderless" aria-label="employee"
+                                   style="font-size: 14px;">
+                                <tr>
+                                    <th scope="row" style="width: 20%;">Employee Name</th>
+                                    <td>{{ $attendance->user->getFullNameAttribute() }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="width: 20%;">Role</th>
+                                    <td>{{ $attendance->user->role->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="width: 20%;">Office and Division</th>
+                                    <td>
+                                        {{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Attendance Details {!! $attendance->isApproved === true
+                                <h5>
+                                    {!! $attendance->isApproved === true
                                     ? '<span class="badge badge-success">Approved</span>'
                                     : '<span class="badge badge-danger">Not Approved</span>'!!}
                                     {!! $attendance->isOvertime === true
@@ -155,7 +151,7 @@
                             <div class="float-right">
                                 <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
                                    onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
-                                   class="btn btn-outline-success">
+                                   class="btn btn-outline-success {{ $attendance->isApproved === true ? 'disabled' : '' }}">
                                     <svg class="c-icon">
                                         <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
                                     </svg>
@@ -163,7 +159,7 @@
                                 </a>
                                 <a href="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
                                    onclick="event.preventDefault(); document.getElementById('reject-attendance').submit();"
-                                   class="btn btn-outline-danger">
+                                   class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}">
                                     Reject Attendance
                                     <svg class="c-icon">
                                         <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>

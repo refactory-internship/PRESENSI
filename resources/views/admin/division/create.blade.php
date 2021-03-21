@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Add New Division'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -6,8 +6,7 @@
                 <div class="col-md-10">
                     <form action="{{ route('web.admin.divisions.store') }}" method="POST">
                         @csrf
-                        <div class="card">
-                            <div class="card-header">Add New Division</div>
+                        <div class="card shadow p-4" style="border-radius: 20px">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group mb-3">

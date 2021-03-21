@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Employee Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <h5 class="mb-3">Employee Details</h5>
                             <div class="mb-3">
@@ -23,11 +23,23 @@
                                     </tr>
                                     <tr>
                                         <th scope="col">Office and Division</th>
+                                        @if($user->division_office === null)
+                                            <td>
+                                                <span class="badge badge-danger">No Data</span>
+                                            </td>
+                                        @else
                                         <td>{{ $user->division_office->division->name . ' on ' . $user->division_office->office->name }}</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <th scope="col">Working Shift</th>
+                                        @if($user->time_setting === null)
+                                            <td>
+                                                <span class="badge badge-danger">No Data</span>
+                                            </td>
+                                        @else
                                         <td>{{ $user->time_setting->getShiftAttribute() }}</td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <th scope="col">Parent</th>

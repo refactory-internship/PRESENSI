@@ -1,21 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Division List'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     @include('layouts.partials.message')
-                    <div class="card">
+                    <div class="mb-3">
+                        <a href="{{ route('web.admin.divisions.create') }}" class="btn btn-success rounded-pill">
+                            <svg class="c-icon">
+                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
+                            </svg>
+                            Add New Division
+                        </a>
+                    </div>
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <table class="table table-hover" aria-label="division-table">
-                                <caption style="caption-side: top;">
-                                    <a href="{{ route('web.admin.divisions.create') }}" class="btn btn-outline-success">
-                                        <svg class="c-icon">
-                                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                                        </svg>
-                                        Add New Division
-                                    </a>
-                                </caption>
                                 <thead>
                                 <tr>
                                     <th scope="col" style="width: 10%">#</th>

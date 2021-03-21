@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-body">
                             <h5 class="mb-3">Office Details</h5>
                             <div class="row mb-3">

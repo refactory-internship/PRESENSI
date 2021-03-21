@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Edit Time Setting'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -7,7 +7,7 @@
                     <form action="{{ route('web.admin.time-settings.update', $timeSetting->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="card">
+                        <div class="card shadow p-4" style="border-radius: 20px">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group row mb-3">

@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Attendance Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Attendance Details {!! $attendance->isApproved === true
+                                <h5>
+                                    {!! $attendance->isApproved === true
                                     ? '<span class="badge badge-success">Approved</span>'
                                     : '<span class="badge badge-danger">Not Approved</span>'!!}
                                     {!! $attendance->isOvertime === true
@@ -73,16 +74,6 @@
                                 <table class="table table-sm table-borderless" aria-label="statuses"
                                        style="font-size: 14px;">
                                     <tr>
-                                        <th scope="row" style="width: 20%;">Approval Status</th>
-                                        <td>
-                                            @if($attendance->isApproved === true)
-                                                <span class="badge badge-success">Approved</span>
-                                            @else
-                                                <span class="badge badge-danger">Not Approved</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row" style="width: 20%;">Attendance Status</th>
                                         <td>
                                             @if($attendance->status == 1)
@@ -144,10 +135,10 @@
                             </a>
                             <div class="btn-group float-right">
                                 <a href="{{ route('web.employee.attendances.edit', $attendance->id) }}"
-                                   class="btn btn-outline-dark">
+                                   class="btn btn-outline-dark {{ $attendance->isApproved === true ? 'disabled' : '' }}">
                                     Edit
                                 </a>
-                                <button type="button" class="btn btn-outline-danger" id="deleteButton"
+                                <button type="button" class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}" id="deleteButton"
                                         data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop"
                                         data-bs-url="{{ route('web.employee.attendances.destroy', $attendance->id) }}">

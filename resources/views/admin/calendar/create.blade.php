@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Calendar'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     @include('layouts.partials.message')
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <div class="mb-5">
                                 <table class="table table-sm" aria-label="calendar-table">

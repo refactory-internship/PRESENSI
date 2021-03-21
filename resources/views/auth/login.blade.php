@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card p-4">
+                    <div class="card p-4 shadow">
                         <div class="card-body">
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>
@@ -14,7 +14,7 @@
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
                                            value="{{ old('email') }}" autocomplete="email" aria-label="email"
-                                           placeholder="Email Address">
+                                           placeholder="Email Address" autofocus>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">

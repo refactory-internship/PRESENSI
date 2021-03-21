@@ -1,13 +1,20 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Your Overtime Details'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card">
+                    <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>Overtime Details</h5>
+                                <h5>
+                                    {!! $attendance->isApproved === true
+                                    ? '<span class="badge badge-success">Approved</span>'
+                                    : '<span class="badge badge-danger">Not Approved</span>'!!}
+                                    {!! $attendance->isOvertime === true
+                                    ? '<span class="badge badge-warning">Overtime</span>'
+                                    : ''!!}
+                                </h5>
                                 <small>{{ $attendance->created_at->diffForHumans() }}</small>
                             </div>
 
@@ -77,26 +84,6 @@
                                 <table class="table table-sm table-borderless" aria-label="statuses"
                                        style="font-size: 14px;">
                                     <tr>
-                                        <th scope="row" style="width: 20%;">Approval Status</th>
-                                        <td>
-                                            @if($attendance->isApproved === true)
-                                                <span class="badge badge-success">Approved</span>
-                                            @else
-                                                <span class="badge badge-danger">Not Approved</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Attendance Status</th>
-                                        <td>
-                                            @if($attendance->isOvertime === true)
-                                                <span class="badge badge-warning">Overtime</span>
-                                            @else
-                                                <span class="badge badge-info">Regular</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row" style="width: 20%;">QR Code Attendance</th>
                                         <td>
                                             @if($attendance->isQRCode === true)
@@ -146,10 +133,10 @@
                             </a>
                             <div class="btn-group float-right">
                                 <a href="{{ route('web.employee.overtimes.edit', $attendance->id) }}"
-                                   class="btn btn-outline-dark">
+                                   class="btn btn-outline-dark {{ $attendance->isApproved === true ? 'disabled' : '' }}">
                                     Edit
                                 </a>
-                                <button type="button" class="btn btn-outline-danger" id="deleteButton"
+                                <button type="button" class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}" id="deleteButton"
                                         data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop"
                                         data-bs-url="{{ route('web.employee.overtimes.destroy', $attendance->id) }}">

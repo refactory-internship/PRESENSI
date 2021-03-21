@@ -8,9 +8,9 @@
 @include('layouts.partials.sidebar')
 
 <div class="c-wrapper c-fixed-components">
-    @include('layouts.partials.header')
+    @include('layouts.partials.header', ['pageTitle' => $pageTitle])
     <div class="c-body">
-        <main class="c-main">
+        <main class="c-main bg-gray-200">
             @yield('content')
         </main>
         @include('layouts.partials.footer')

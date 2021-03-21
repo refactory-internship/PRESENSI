@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Add New Role'])
 @section('content')
     <div class="container">
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <form action="{{ route('web.admin.roles.store') }}" method="POST">
-                        @csrf
-                        <div class="card">
-                            <div class="card-body">
+                    <div class="card shadow p-4" style="border-radius: 20px;">
+                        <div class="card-body">
+                            <form action="{{ route('web.admin.roles.store') }}" method="POST">
+                                @csrf
                                 <div class="mb-3">
                                     <div class="form-group mb-3">
                                         <label for="name" class="form-label">Role Name</label>
@@ -20,9 +20,9 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

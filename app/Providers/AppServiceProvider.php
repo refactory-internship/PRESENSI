@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::share([
             'dateStatus' => 'status',
+            'pageTitle' => 'title'
         ]);
 
         View::composer('*', function ($view) {

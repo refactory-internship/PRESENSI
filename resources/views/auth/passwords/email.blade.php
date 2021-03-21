@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card p-4">
+                    <div class="card p-4 shadow">
                         <div class="card-body">
                             <h1>Forgot your password?</h1>
                             <p>Send us your email address</p>
