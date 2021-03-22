@@ -7,9 +7,7 @@
                     @include('layouts.partials.message')
                     <div class="mb-3">
                         <a href="{{ route('web.admin.offices.create') }}" class="btn btn-success rounded-pill">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Office
                         </a>
                     </div>
@@ -34,8 +32,8 @@
                                         <td>{{ $office->village->district->city->province->name }}</td>
                                         <td>{{ $office->address }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.admin.offices.show', $office->id) }}"
-                                               class="btn btn-sm btn-outline-dark">
+                                            <a href="{{ route('web.admin.offices.show', $office->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

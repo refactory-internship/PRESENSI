@@ -7,9 +7,7 @@
                     <div class="mb-3">
                         @include('layouts.partials.message')
                         <a href="{{ route('web.admin.roles.create') }}" class="btn btn-success shadow">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Role
                         </a>
                     </div>

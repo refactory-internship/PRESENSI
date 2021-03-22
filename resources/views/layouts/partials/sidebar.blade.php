@@ -1,11 +1,18 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand">
-        <svg class="c-sidebar-brand-full" width="118" height="46">
-            <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#full"></use>
-        </svg>
-        <svg class="c-sidebar-brand-minimized" width="46" height="46">
-            <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#signet"></use>
-        </svg>
+        <div class="c-sidebar-brand-full fade-in">
+            <div class="row justify-content-center fade-in">
+                <img class="p-0" src="{{ asset('coreui/brand/laravel-white.svg') }}" style="width: auto; height: 55px;"
+                     alt="logo-full">
+                <div class="col my-auto pl-0">
+                    <p class="mb-0 h5">{{ ucwords(strtolower(config('app.name'))) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="c-sidebar-brand-minimized fade-in">
+            <img src="{{ asset('coreui/brand/laravel-white.svg') }}#signet" style="height: 46px; width: 46px"
+                 alt="logo-min">
+        </div>
     </div>
 
     @if(auth()->user()->can('master-crud'))

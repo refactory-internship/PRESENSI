@@ -1,4 +1,6 @@
 <footer class="c-footer">
-    <div><a href="https://coreui.io">CoreUI</a> © 2020 creativeLabs.</div>
-    <div class="ml-auto">Powered by&nbsp;<a href="https://coreui.io/">CoreUI</a></div>
+    <div>
+        <a href="https://github.com/refactory-internship/PRESENSI">{{ config('app.name') }}</a>
+        on Github
+    </div>
 </footer>

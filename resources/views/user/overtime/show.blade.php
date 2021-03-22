@@ -87,15 +87,9 @@
                                         <th scope="row" style="width: 20%;">QR Code Attendance</th>
                                         <td>
                                             @if($attendance->isQRCode === true)
-                                                <svg class="c-icon text-success">
-                                                    <use
-                                                        xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
-                                                </svg>
+                                                <i class="text-success bi bi-check-circle"></i>
                                             @else
-                                                <svg class="c-icon text-danger">
-                                                    <use
-                                                        xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>
-                                                </svg>
+                                                <i class="text-danger bi bi-x-circle"></i>
                                             @endif
                                         </td>
                                     </tr>
@@ -126,14 +120,13 @@
                             </div>
 
                             <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
-                                <svg class="c-icon">
-                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
-                                </svg>
+                                <i class="bi bi-arrow-left-circle"></i>
                                 Back
                             </a>
                             <div class="btn-group float-right">
                                 <a href="{{ route('web.employee.overtimes.edit', $attendance->id) }}"
                                    class="btn btn-outline-dark {{ $attendance->isApproved === true ? 'disabled' : '' }}">
+                                    <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
                                 <button type="button" class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}" id="deleteButton"
@@ -141,9 +134,7 @@
                                         data-bs-target="#staticBackdrop"
                                         data-bs-url="{{ route('web.employee.overtimes.destroy', $attendance->id) }}">
                                     Delete
-                                    <svg class="c-icon">
-                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-ban"></use>
-                                    </svg>
+                                    <i class="bi bi-x-circle"></i>
                                 </button>
                             </div>
 

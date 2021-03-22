@@ -7,9 +7,7 @@
                     @include('layouts.partials.message')
                     <div class="mb-3">
                         <a href="{{ route('web.admin.time-settings.create') }}" class="btn btn-success rounded-pill">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Time Setting
                         </a>
                     </div>
@@ -33,8 +31,8 @@
                                         <td>{{ date('H:i', strtotime($time->start_time)) }}</td>
                                         <td>{{ date('H:i', strtotime($time->end_time)) }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.admin.time-settings.edit', $time->id) }}"
-                                               class="btn btn-sm btn-outline-dark">
+                                            <a href="{{ route('web.admin.time-settings.edit', $time->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-pencil-square"></i>
                                                 Edit Schedule
                                             </a>
                                         </td>

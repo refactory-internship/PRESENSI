@@ -126,15 +126,9 @@
                                         <th scope="row" style="width: 20%;">QR Code Attendance</th>
                                         <td>
                                             @if($attendance->isQRCode === true)
-                                                <svg class="c-icon text-success">
-                                                    <use
-                                                        xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
-                                                </svg>
+                                                <i class="text-success bi bi-check-circle"></i>
                                             @else
-                                                <svg class="c-icon text-danger">
-                                                    <use
-                                                        xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>
-                                                </svg>
+                                                <i class="text-danger bi bi-x-circle"></i>
                                             @endif
                                         </td>
                                     </tr>
@@ -142,9 +136,7 @@
                             </div>
 
                             <a href="{{ route('web.employee.approve-attendances.index') }}" class="btn btn-dark">
-                                <svg class="c-icon">
-                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
-                                </svg>
+                                <i class="bi bi-arrow-left-circle"></i>
                                 Back
                             </a>
 
@@ -152,18 +144,14 @@
                                 <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
                                    onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
                                    class="btn btn-outline-success {{ $attendance->isApproved === true ? 'disabled' : '' }}">
-                                    <svg class="c-icon">
-                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
-                                    </svg>
+                                    <i class="bi bi-check-circle"></i>
                                     Approve Attendance
                                 </a>
                                 <a href="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
                                    onclick="event.preventDefault(); document.getElementById('reject-attendance').submit();"
                                    class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}">
                                     Reject Attendance
-                                    <svg class="c-icon">
-                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>
-                                    </svg>
+                                    <i class="bi bi-x-circle"></i>
                                 </a>
                             </div>
 

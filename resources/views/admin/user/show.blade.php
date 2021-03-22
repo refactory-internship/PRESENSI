@@ -69,14 +69,12 @@
                                 </table>
                             </div>
                             <a href="{{ route('web.admin.users.index') }}" class="btn btn-dark">
-                                <svg class="c-icon">
-                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
-                                </svg>
+                                <i class="bi bi-arrow-left-circle"></i>
                                 Back
                             </a>
                             <div class="btn-group float-right">
-                                <a href="{{ route('web.admin.users.edit', $user->id) }}"
-                                   class="btn btn-outline-dark">
+                                <a href="{{ route('web.admin.users.edit', $user->id) }}" class="btn btn-outline-dark">
+                                    <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
                                 <button type="button" class="btn btn-outline-danger"
@@ -84,9 +82,7 @@
                                         data-bs-target="#staticBackdrop"
                                         data-bs-url="{{ route('web.admin.users.destroy', $user->id) }}">
                                     Deactivate
-                                    <svg class="c-icon">
-                                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-ban"></use>
-                                    </svg>
+                                    <i class="bi bi-x-circle"></i>
                                 </button>
                             </div>
                         </div>

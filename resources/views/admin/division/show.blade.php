@@ -13,27 +13,21 @@
                             <div class="row">
                                 <div class="col">
                                     <a href="{{ route('web.admin.divisions.index') }}" class="btn btn-dark">
-                                        <svg class="c-icon">
-                                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-arrow-left"></use>
-                                        </svg>
+                                        <i class="bi bi-arrow-left-circle"></i>
                                         Back
                                     </a>
                                     <div class="btn-group float-right">
                                         <a href="{{ route('web.admin.divisions.edit', $division->id) }}"
                                            class="btn btn-outline-dark">
+                                            <i class="bi bi-pencil-square"></i>
                                             Edit
-                                            <svg class="c-icon">
-                                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-pencil"></use>
-                                            </svg>
                                         </a>
-                                        <button type="button" class="btn btn-outline-dark"
+                                        <button type="button" class="btn btn-outline-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop"
                                                 data-bs-url="{{ route('web.admin.divisions.destroy', $division->id) }}">
                                             Delete
-                                            <svg class="c-icon">
-                                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-trash"></use>
-                                            </svg>
+                                            <i class="bi bi-x-circle"></i>
                                         </button>
                                     </div>
                                 </div>

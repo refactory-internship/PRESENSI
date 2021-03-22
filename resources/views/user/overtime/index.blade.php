@@ -40,6 +40,7 @@
                                         @endif
                                         <td>
                                             <a href="{{ route('web.employee.overtimes.show', $attendance->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

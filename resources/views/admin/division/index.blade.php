@@ -7,9 +7,7 @@
                     @include('layouts.partials.message')
                     <div class="mb-3">
                         <a href="{{ route('web.admin.divisions.create') }}" class="btn btn-success rounded-pill">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Division
                         </a>
                     </div>
@@ -29,8 +27,8 @@
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $division->name }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('web.admin.divisions.show', $division->id) }}"
-                                               class="btn btn-sm btn-outline-dark">
+                                            <a href="{{ route('web.admin.divisions.show', $division->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

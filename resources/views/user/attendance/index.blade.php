@@ -7,9 +7,7 @@
                     @include('layouts.partials.message')
                     <div class="mb-3">
                         <a href="{{ route('web.employee.attendances.create') }}" class="btn btn-success rounded-pill">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Attendance
                         </a>
                     </div>
@@ -34,15 +32,11 @@
                                         <td>{{ date('d F Y', strtotime($attendance->calendar->date)) }}</td>
                                         @if($attendance->isQRCode === true)
                                             <td>
-                                                <svg class="c-icon text-success">
-                                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
-                                                </svg>
+                                                <i class="text-success bi bi-check-circle"></i>
                                             </td>
                                         @else
                                             <td>
-                                                <svg class="c-icon text-danger">
-                                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-ban"></use>
-                                                </svg>
+                                                <i class="text-danger bi bi-x-circle"></i>
                                             </td>
                                         @endif
                                         <td>{{ date('H:i', strtotime($attendance->clock_in_time)) }}</td>
@@ -58,6 +52,7 @@
                                         @endif
                                         <td>
                                             <a href="{{ route('web.employee.attendances.show', $attendance->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

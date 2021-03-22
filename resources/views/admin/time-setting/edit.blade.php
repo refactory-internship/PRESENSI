@@ -52,9 +52,7 @@
                                                 data-bs-target="#staticBackdrop"
                                                 data-bs-url="{{ route('web.admin.time-settings.destroy', $timeSetting->id) }}">
                                             Delete
-                                            <svg class="c-icon">
-                                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-trash"></use>
-                                            </svg>
+                                            <i class="bi bi-x-circle"></i>
                                         </button>
                                     </div>
                                 </div>

@@ -72,4 +72,13 @@
             Time Settings
         </a>
     </li>
+    <li class="c-sidebar-nav-title">Attendance</li>
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link" href="{{ route('web.admin.QRCode.create') }}">
+            <div class="c-sidebar-nav-icon">
+                <i class="cil-qr-code"></i>
+            </div>
+            QR Code Attendance
+        </a>
+    </li>
 </ul>

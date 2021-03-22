@@ -7,9 +7,7 @@
                     @include('layouts.partials.message')
                     <div class="mb-3">
                         <a href="{{ route('web.admin.users.create') }}" class="btn btn-success rounded-pill">
-                            <svg class="c-icon">
-                                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-plus"></use>
-                            </svg>
+                            <i class="bi bi-plus"></i>
                             Add New Employee
                         </a>
                     </div>
@@ -61,6 +59,7 @@
 
                                         <td>
                                             <a href="{{ route('web.admin.users.show', $user->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

@@ -12,7 +12,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">QR Code Attendance</th>
+                                    <th scope="col">Employee</th>
                                     <th scope="col">Overtime</th>
                                     <th scope="col">Clock In Time</th>
                                     <th scope="col">Clock Out Time</th>
@@ -25,19 +25,7 @@
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ date('d F Y', strtotime($attendance->calendar->date)) }}</td>
-                                        @if($attendance->isQRCode === true)
-                                            <td>
-                                                <svg class="c-icon text-success">
-                                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-alt"></use>
-                                                </svg>
-                                            </td>
-                                        @else
-                                            <td>
-                                                <svg class="c-icon text-danger">
-                                                    <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-x"></use>
-                                                </svg>
-                                            </td>
-                                        @endif
+                                        <td>{{ $attendance->user->getFullNameAttribute() }}</td>
                                         @if($attendance->isOvertime === true)
                                             <td>
                                                 <span class="badge badge-warning">Yes</span>
@@ -60,6 +48,7 @@
                                         @endif
                                         <td>
                                             <a href="{{ route('web.employee.approve-attendances.show', $attendance->id) }}" class="btn btn-sm btn-outline-dark">
+                                                <i class="bi bi-eye-fill"></i>
                                                 Check Details
                                             </a>
                                         </td>

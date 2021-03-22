@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DeactivatedEmployeeController;
 use App\Http\Controllers\Admin\DivisionController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\OfficeController;
+use App\Http\Controllers\Admin\QRCodeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TimeSettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -50,11 +51,13 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::resource('/roles', RoleController::class);
         Route::resource('/time-settings', TimeSettingController::class)
             ->except(['show']);
-        Route::resource('users', UserController::class);
+        Route::resource('/users', UserController::class);
 
         Route::get('/deactivated', [DeactivatedEmployeeController::class, 'bin'])->name('deactivated-employees');
         Route::put('/deactivated/{id}', [DeactivatedEmployeeController::class, 'restore'])->name('deactivated-employees.restore');
         Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])->name('deactivated-employees.destroy');
+
+        Route::get('/QRCode/create', [QRCodeController::class, 'create'])->name('QRCode.create');
     });
 
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
