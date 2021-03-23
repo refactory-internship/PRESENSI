@@ -58,6 +58,7 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])->name('deactivated-employees.destroy');
 
         Route::get('/QRCode/create', [QRCodeController::class, 'create'])->name('QRCode.create');
+        Route::get('/QRCode/generate', [QRCodeController::class, 'generateQRCode'])->name('QRCode.generate');
     });
 
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {

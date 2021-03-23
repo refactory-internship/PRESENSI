@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-imagick": "*",
         "bensampo/laravel-enum": "^3.3",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -18,7 +19,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
-        "simplesoftwareio/simple-qrcode": "~4"
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
