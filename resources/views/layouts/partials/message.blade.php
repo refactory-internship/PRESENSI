@@ -1,13 +1,9 @@
-<div class="mb-3">
-    @if(session()->has('danger'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session()->get('danger') }}
-        </div>
-    @elseif(session()->has('message'))
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session()->get('message') }}
-        </div>
-    @endif
-</div>
+@if(session()->has('danger'))
+    <script>
+        toastr.error('{{ \Illuminate\Support\Facades\Session::get('danger') }}')
+    </script>
+@elseif(session()->has('message'))
+    <script>
+        toastr.success('{{ \Illuminate\Support\Facades\Session::get('message') }}')
+    </script>
+@endif

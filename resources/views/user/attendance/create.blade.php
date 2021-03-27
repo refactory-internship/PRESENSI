@@ -4,8 +4,15 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card shadow">
+                    <div class="card shadow p-4" style="border-radius: 20px;">
                         <div class="card-body">
+                            <h5>Time Today: {{ date('H:i', strtotime($currentDate)) }}</h5>
+                            <h5>
+                                @if(date('H:i:s', strtotime($currentDate)) >= \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  &&
+                                    date('H:i:s', strtotime($currentDate)) <= auth()->user()->time_setting->end_time)
+                                    <span class="badge badge-warning">Late Attendance</span>
+                                @endif
+                            </h5>
                             @if($date->status === '1')
                                 @if(date('H:i:s', strtotime($currentDate)) >= auth()->user()->time_setting->start_time &&
                                     date('H:i:s', strtotime($currentDate)) <= auth()->user()->time_setting->end_time)

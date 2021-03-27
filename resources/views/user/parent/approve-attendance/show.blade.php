@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-
+                    @include('layouts.partials.message')
                     <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <table class="table table-sm table-borderless" aria-label="employee"
@@ -30,15 +30,33 @@
                     <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
                             <div class="mb-3">
-                                <h5>
-                                    {!! $attendance->isApproved === true
-                                    ? '<span class="badge badge-success">Approved</span>'
-                                    : '<span class="badge badge-danger">Not Approved</span>'!!}
-                                    {!! $attendance->isOvertime === true
-                                    ? '<span class="badge badge-warning">Overtime</span>'
-                                    : ''!!}
-                                </h5>
-                                <small>{{ $attendance->created_at->diffForHumans() }}</small>
+                                <table class="table table-sm table-borderless" aria-label="statuses"
+                                       style="font-size: 14px;">
+                                    <tr>
+                                        <th scope="row" style="width: 20%;">Attendance Status</th>
+                                        <td>
+                                            @if($attendance->approvalStatus === '1')
+                                                <span class="badge badge-warning">NEEDS_APPROVAL</span>
+                                            @elseif($attendance->approvalStatus === '2')
+                                                <span class="badge badge-secondary">CLOCK_OUT_ALLOWED</span>
+                                            @elseif($attendance->approvalStatus === '3')
+                                                <span class="badge badge-success">APPROVED</span>
+                                            @elseif($attendance->approvalStatus === '4')
+                                                <span class="badge badge-danger">REJECTED</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="width: 20%;">QR Code Attendance</th>
+                                        <td>
+                                            @if($attendance->isQRCode === true)
+                                                <i class="text-success bi bi-check-circle"></i>
+                                            @else
+                                                <i class="text-danger bi bi-x-circle"></i>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
                             <div class="mb-3">
@@ -48,11 +66,14 @@
                                            value="{{ $attendance->task_plan }}" disabled>
                                 </div>
 
-                                <div class="form-group mb-3">
-                                    <label for="task_report">Task Report</label>
-                                    <input type="text" class="form-control" id="task_report"
-                                           value="{{ $attendance->task_report }}" disabled>
-                                </div>
+                                @if($attendance->approvalStatus !== '1' || $attendance->task_report !== null)
+                                    <div class="form-group mb-3">
+                                        <label for="task_report">Task Report</label>
+                                        <input type="text" class="form-control" id="task_report"
+                                               value="{{ $attendance->task_report === null ? 'NOT_CLOCKED_OUT' : $attendance->task_report}}"
+                                               disabled>
+                                    </div>
+                                @endif
 
                                 <div class="form-group mb-4">
                                     <label for="date">Date</label>
@@ -73,26 +94,15 @@
                                                        disabled>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Clock-Out Time</span>
-                                                </div>
-                                                <input type="text" class="form-control" aria-label="clock_out_time"
-                                                       value="{{ date('H:i', strtotime($attendance->clock_out_time)) }}"
-                                                       disabled>
-                                            </div>
-                                        </div>
 
-                                        @if($attendance->isOvertime === true)
+                                        @if($attendance->approvalStatus !== '1' || $attendance->clock_out_time !== null)
                                             <div class="col">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text">Overtime Duration</span>
+                                                        <span class="input-group-text">Clock-Out Time</span>
                                                     </div>
-                                                    <input type="text" class="form-control"
-                                                           aria-label="overtime_duration"
-                                                           value="{{ $attendance->overtimeDuration . ' Hour' }}"
+                                                    <input type="text" class="form-control" aria-label="clock_out_time"
+                                                           value="{{ $attendance->clock_out_time === null ? 'NOT_CLOCKED_OUT' : date('H:i', strtotime($attendance->clock_out_time)) }}"
                                                            disabled>
                                                 </div>
                                             </div>
@@ -101,39 +111,29 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="note">Attendance Note</label>
-                                    <textarea class="form-control" id="note" name="note"
-                                              style="resize: none" disabled>{{ $attendance->note }}</textarea>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="note">Attendance Note</label>
+                                            <textarea class="form-control" id="note" name="note"
+                                                      style="resize: none" cols="30" rows="5"
+                                                      disabled>{{ $attendance->note }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <small>Submitted {{ $attendance->created_at->diffForHumans() }}</small>
                             </div>
 
-                            <div class="mb-4">
-                                <table class="table table-sm table-borderless" aria-label="statuses"
-                                       style="font-size: 14px;">
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Attendance Status</th>
-                                        <td>
-                                            @if($attendance->status == 1)
-                                                <span class="badge badge-info">Present</span>
-                                            @elseif($attendance->status == 2)
-                                                <span class="badge badge-warning">Absent</span>
-                                            @elseif($attendance->status == 3)
-                                                <span class="badge badge-info">Leave</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">QR Code Attendance</th>
-                                        <td>
-                                            @if($attendance->isQRCode === true)
-                                                <i class="text-success bi bi-check-circle"></i>
-                                            @else
-                                                <i class="text-danger bi bi-x-circle"></i>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                            @if($attendance->rejectionNote !== null && $attendance->approvalStatus === '4')
+                                <div class="card shadow-sm mt-3" style="border-left: 2px solid #e55353">
+                                    <div class="card-body">
+                                        <label for="rejectionNote">Reason of Rejection</label>
+                                        <textarea name="rejectionNote" id="rejectionNote" style="resize: none;"
+                                                  class="form-control"
+                                                  disabled>{{ $attendance->rejectionNote }}</textarea>
+                                    </div>
+                                </div>
+                            @endif
 
                             <a href="{{ route('web.employee.approve-attendances.index') }}" class="btn btn-dark">
                                 <i class="bi bi-arrow-left-circle"></i>
@@ -141,20 +141,33 @@
                             </a>
 
                             <div class="float-right">
-                                <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
-                                   onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
-                                   class="btn btn-outline-success {{ $attendance->isApproved === true ? 'disabled' : '' }}">
-                                    <i class="bi bi-check-circle"></i>
-                                    Approve Attendance
-                                </a>
-                                <a href="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
-                                   onclick="event.preventDefault(); document.getElementById('reject-attendance').submit();"
-                                   class="btn btn-outline-danger {{ $attendance->isApproved === true ? 'disabled' : '' }}">
-                                    Reject Attendance
-                                    <i class="bi bi-x-circle"></i>
-                                </a>
+                                @if($attendance->approvalStatus === '1')
+                                    @if($attendance->clock_out_time !== null)
+                                        <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+                                           onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
+                                           class="btn btn-outline-success">
+                                            <i class="bi bi-check-circle"></i>
+                                            Approve
+                                        </a>
+                                    @else
+                                        <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+                                           onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
+                                           class="btn btn-primary">
+                                            <i class="bi bi-check-circle"></i>
+                                            Allow Clock-out
+                                        </a>
+                                    @endif
+                                    <button type="button"
+                                            class="btn btn-outline-danger"
+                                            id="rejectButton"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            data-bs-url="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}">
+                                        Reject
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                @endif
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -166,9 +179,8 @@
         @csrf
         @method('PUT')
     </form>
-    <form id="reject-attendance" action="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}"
-          method="POST" class="d-none">
-        @csrf
-        @method('PUT')
-    </form>
+    @include('layouts.partials.modals.user.attendance.reject')
+@endsection
+@section('script')
+    @include('layouts.partials.modals.script')
 @endsection

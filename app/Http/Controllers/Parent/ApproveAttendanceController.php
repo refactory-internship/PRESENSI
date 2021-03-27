@@ -3,14 +3,24 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\AttendanceService;
 use App\Models\Attendance;
+use Illuminate\Http\Request;
 
 class ApproveAttendanceController extends Controller
 {
+    private $attendanceService;
+
+    public function __construct(AttendanceService $attendanceService)
+    {
+        $this->attendanceService = $attendanceService;
+    }
+
     public function index()
     {
         $attendances = Attendance::query()
             ->where('approverId', auth()->id())
+            ->latest()
             ->get();
         return view('user.parent.approve-attendance.index', compact('attendances'));
     }
@@ -23,17 +33,13 @@ class ApproveAttendanceController extends Controller
 
     public function approve($id)
     {
-        Attendance::query()->find($id)->update([
-           'isApproved' => true
-        ]);
-        return redirect()->route('web.employee.approve-attendances.index')->with('message', 'Attendance Approved!');
+        $this->attendanceService->approveAttendance($id);
+        return redirect()->back()->with('message', 'Attendance Approved!');
     }
 
-    public function reject($id)
+    public function reject(Request $request, $id)
     {
-        Attendance::query()->find($id)->update([
-            'isApproved' => false
-        ]);
-        return redirect()->route('web.employee.approve-attendances.index')->with('danger', 'Attendance Rejected!');
+        $this->attendanceService->rejectAttendance($request, $id);
+        return redirect()->back()->with('danger', 'Attendance Rejected!');
     }
 }

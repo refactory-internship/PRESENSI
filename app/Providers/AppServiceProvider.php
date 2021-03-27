@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\AttendanceApprovalStatus;
 use App\Models\Attendance;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -33,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $counter = Attendance::query()
                 ->where('approverId', auth()->id())
-                ->where('isApproved', false)
+                ->where('approvalStatus', AttendanceApprovalStatus::NEEDS_APPROVAL)
                 ->count();
 
             $view->with([

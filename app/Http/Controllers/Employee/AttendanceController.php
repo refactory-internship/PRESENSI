@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Employee;
 
+use App\Enums\AttendanceApprovalStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Services\AttendanceService;
 use App\Models\Attendance;
@@ -19,7 +20,11 @@ class AttendanceController extends Controller
     public function index()
     {
         $user = auth()->id();
-        $attendances = Attendance::query()->where('user_id', $user)->where('isOvertime', false)->get();
+        $attendances = Attendance::query()
+            ->where('user_id', $user)
+            ->where('isOvertime', false)
+            ->latest()
+            ->get();
         return view('user.attendance.index', compact('attendances'));
     }
 
@@ -52,7 +57,11 @@ class AttendanceController extends Controller
     public function update(Request $request, $id)
     {
         $attendance = Attendance::query()->findOrFail($id);
-        $attendance->update($request->all());
+        $attendance->update([
+            'task_plan' => $request->task_plan,
+            'note' => $request->note,
+            'approvalStatus' => AttendanceApprovalStatus::NEEDS_APPROVAL
+        ]);
         return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Updated!');
     }
 
@@ -60,5 +69,18 @@ class AttendanceController extends Controller
     {
         Attendance::query()->findOrFail($id)->delete();
         return redirect()->route('web.employee.attendances.index')->with('danger', 'Attendance Deleted!');
+    }
+
+    public function clockOut($id)
+    {
+        $currentDate = $this->attendanceService->getCurrentDate();
+        $attendance = Attendance::query()->find($id);
+        return view('user.attendance.clock-out', compact('attendance', 'currentDate'));
+    }
+
+    public function submitClockOut(Request $request, $id)
+    {
+        $this->attendanceService->submitClockOut($request, $id);
+        return redirect()->route('web.employee.attendances.index')->with('message', 'Clock-Out Submitted!');
     }
 }

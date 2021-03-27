@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card card-accent-primary shadow-sm">
+                                <div class="card shadow-sm" style="border-left: 2px solid #321fdb">
                                     <div class="card-body">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input"

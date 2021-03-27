@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\AttendanceApprovalStatus;
+use App\Enums\AttendanceApprover;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,24 +21,26 @@ class CreateAttendancesTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('CASCADE');
             $table->foreignId('calendar_id')->nullable()->constrained('calendars')->onDelete('CASCADE');
 
-            $table->enum('approvedBy', \App\Enums\AttendanceApprover::getValues())->nullable();
+            $table->enum('approvedBy', AttendanceApprover::getValues())->nullable();
 
             $table->unsignedBigInteger('approverId')->nullable();
-            $table->foreign('approverId')->references('parent_id')->on('users')->onUpdate('CASCADE');
+            $table->foreign('approverId')->references('parent_id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
 
-            $table->enum('status', \App\Enums\AttendanceStatus::getValues())->nullable();
             $table->boolean('isQRCode')->default(0);
             $table->string('gps_lat')->nullable();
             $table->string('gps_long')->nullable();
-            $table->time('clock_in_time');
-            $table->time('clock_out_time');
-            $table->text('note')->nullable();
+
             $table->text('task_plan')->nullable();
+            $table->time('clock_in_time')->nullable();
+            $table->text('note')->nullable();
             $table->text('task_report')->nullable();
+            $table->time('clock_out_time')->nullable();
+
             $table->boolean('isOvertime')->default(0);
             $table->integer('overtimeDuration')->nullable();
-            $table->boolean('isApproved')->default(0);
 
+            $table->enum('approvalStatus', AttendanceApprovalStatus::getValues())->default(AttendanceApprovalStatus::NEEDS_APPROVAL);
+            $table->text('rejectionNote')->nullable();
             $table->timestamps();
         });
     }
