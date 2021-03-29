@@ -207,7 +207,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.user.attendance.delete')
+    @include('user.attendance.modal.delete')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

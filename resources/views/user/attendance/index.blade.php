@@ -26,7 +26,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($attendances as $attendance)
+                                @foreach($attendances as $attendance)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ date('d F Y', strtotime($attendance->calendar->date)) }}</td>
@@ -66,9 +66,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @empty
-                                    <td colspan="8">No Data</td>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

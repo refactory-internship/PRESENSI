@@ -17,9 +17,12 @@
                         data-bs-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-dark" onclick="openOvertimeModal()">
+{{--                <button type="button" class="btn btn-dark" onclick="openOvertimeModal()">--}}
+{{--                    Yes, Create Overtime--}}
+{{--                </button>--}}
+                <a href="{{ route('web.employee.overtimes.create') }}" class="btn btn-dark">
                     Yes, Create Overtime
-                </button>
+                </a>
             </div>
         </div>
     </div>

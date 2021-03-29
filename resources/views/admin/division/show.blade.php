@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.delete-division')
+    @include('admin.division.modal.delete-division')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

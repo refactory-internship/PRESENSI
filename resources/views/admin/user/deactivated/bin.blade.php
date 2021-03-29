@@ -20,7 +20,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($users as $user)
+                                @foreach($users as $user)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $user->getFullNameAttribute() }}</td>
@@ -66,11 +66,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No Data</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -79,7 +75,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.delete-employee')
+    @include('admin.user.modal.delete-employee')
 @endsection
 @section('script')
     <script>

@@ -35,9 +35,9 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.user.attendance.option')
-    @include('layouts.partials.modals.user.attendance.overtime')
+    @include('user.attendance.modal.option')
+    @include('user.overtime.modal.overtime')
 @endsection
 @section('script')
-    @include('layouts.partials.modals.user.attendance.script')
+    @include('user.attendance.modal.script')
 @endsection

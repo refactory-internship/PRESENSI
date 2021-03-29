@@ -41,8 +41,8 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.user.attendance.early-clock-out')
+    @include('user.attendance.modal.early-clock-out')
 @endsection
 @section('script')
-    @include('layouts.partials.modals.user.attendance.early-script')
+    @include('user.attendance.modal.early-script')
 @endsection

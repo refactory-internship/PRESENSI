@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.delete-office')
+    @include('admin.office.modal.delete-office')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

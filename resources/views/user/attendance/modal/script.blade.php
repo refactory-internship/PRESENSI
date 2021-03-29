@@ -32,10 +32,10 @@
         $('#overtimeOption').modal('show');
     }
 
-    function openOvertimeModal() {
-        $('#overtimeOption').modal('hide');
-        $('#createOvertime').modal('show');
-        const overtimeStatus = document.getElementById('overtimeStatus').value = 1
-        console.log(overtimeStatus)
-    }
+    // function openOvertimeModal() {
+    //     $('#overtimeOption').modal('hide');
+    //     $('#createOvertime').modal('show');
+    //     const overtimeStatus = document.getElementById('overtimeStatus').value = 1
+    //     console.log(overtimeStatus)
+    // }
 </script>

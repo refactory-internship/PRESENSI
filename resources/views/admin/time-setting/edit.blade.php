@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.delete-time-setting')
+    @include('admin.time-setting.modal.delete-time-setting')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

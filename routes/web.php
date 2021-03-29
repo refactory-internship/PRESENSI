@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Employee\AttendanceController;
 use App\Http\Controllers\Employee\OvertimeController;
 use App\Http\Controllers\Parent\ApproveAttendanceController;
+use App\Http\Controllers\Parent\ApproveOvertimeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -80,8 +81,11 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             ->name('attendances.submit-clock-out');
 
         Route::resource('/attendances', AttendanceController::class);
-        Route::resource('/overtimes', OvertimeController::class)
-            ->except(['create', 'store']);
+
+        Route::put('/overtimes/{id}/update-progress', [OvertimeController::class, 'updateOvertimeProgress'])
+            ->name('overtimes.update-progress');
+
+        Route::resource('/overtimes', OvertimeController::class);
 
         Route::middleware('web.approveAttendance')->group(function () {
             Route::put('/approve-attendance/{id}/approve', [ApproveAttendanceController::class, 'approve'])
@@ -90,6 +94,14 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
                 ->name('approve-attendances.reject');
 
             Route::resource('/approve-attendances', ApproveAttendanceController::class)
+                ->only(['index', 'show']);
+
+            Route::put('/approve-overtimes/{id}/approve', [ApproveOvertimeController::class, 'approve'])
+                ->name('approve-overtimes.approve');
+            Route::put('/approve-overtimes/{id}/reject', [ApproveOvertimeController::class, 'reject'])
+                ->name('approve-overtimes.reject');
+
+            Route::resource('/approve-overtimes', ApproveOvertimeController::class)
                 ->only(['index', 'show']);
         });
     });

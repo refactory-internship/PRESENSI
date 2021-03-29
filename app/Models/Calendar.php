@@ -17,4 +17,9 @@ class Calendar extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function overtime()
+    {
+        return $this->hasMany(Overtime::class);
+    }
 }

@@ -179,7 +179,7 @@
         @csrf
         @method('PUT')
     </form>
-    @include('layouts.partials.modals.user.attendance.reject')
+    @include('user.parent.approve-attendance.modal.reject')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

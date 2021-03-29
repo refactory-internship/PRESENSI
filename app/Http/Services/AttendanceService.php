@@ -100,7 +100,7 @@ class AttendanceService
     public function getCurrentDate()
     {
         date_default_timezone_set('Asia/Jakarta');
-        return Carbon::create('2021', '03', '29', '16', '40');
+        return Carbon::create('2021', '03', '30', '19', '30');
 //        return Carbon::now();
     }
 

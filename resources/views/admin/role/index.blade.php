@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.delete-role')
+    @include('admin.role.modal.delete-role')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

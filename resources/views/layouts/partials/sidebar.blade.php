@@ -19,36 +19,49 @@
         @include('admin.sidebar')
     @else
         <ul class="c-sidebar-nav ps">
-            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <li class="c-sidebar-nav-title">ATTENDANCE MENU</li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.employee.attendances.index') }}">
                     <div class="c-sidebar-nav-icon">
                         <i class="cil-task"></i>
                     </div>
                     Attendance
                 </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('web.employee.attendances.index') }}">
-                            Your Attendances
-                        </a>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('web.employee.overtimes.index') }}">
-                            Overtimes
-                        </a>
-                    </li>
-                </ul>
             </li>
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-attendances.index') }}">
                         <div class="c-sidebar-nav-icon">
-                            <i class="cil-puzzle"></i>
+                            <i class="cil-check-circle"></i>
                         </div>
                         Approve Attendance
-                        @if($counter)
+                        @if($attendanceCounter)
                             <span class="badge badge-danger">
-                                {{ $counter }}
+                                {{ $attendanceCounter }}
+                            </span>
+                        @endif
+                    </a>
+                </li>
+            @endif
+            <li class="c-sidebar-nav-title">OVERTIME MENU</li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.employee.overtimes.index') }}">
+                    <div class="c-sidebar-nav-icon">
+                        <i class="cil-clock"></i>
+                    </div>
+                    Overtime
+                </a>
+            </li>
+            @if(auth()->user()->can('approve-attendances'))
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-overtimes.index') }}">
+                        <div class="c-sidebar-nav-icon">
+                            <i class="cil-check-circle"></i>
+                        </div>
+                        Approve Overtime
+                        @if($overtimeCounter)
+                            <span class="badge badge-danger">
+                                {{ $overtimeCounter }}
                             </span>
                         @endif
                     </a>

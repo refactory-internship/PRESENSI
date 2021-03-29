@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.modals.deactivate-employee')
+    @include('admin.user.modal.deactivate-employee')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

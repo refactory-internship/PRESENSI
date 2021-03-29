@@ -13,7 +13,6 @@
         <main class="c-main bg-gray-200">
             @yield('content')
         </main>
-        @include('layouts.partials.footer')
     </div>
 </div>
 @include('layouts.partials.script')

@@ -1,12 +1,12 @@
 <?php
 
-use App\Enums\AttendanceApprovalStatus;
 use App\Enums\AttendanceApprover;
+use App\Enums\OvertimeStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttendancesTable extends Migration
+class CreateOvertimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('overtimes', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')->nullable()->constrained('users')
@@ -29,22 +29,18 @@ class CreateAttendancesTable extends Migration
             $table->foreign('approverId')->references('parent_id')->on('users')
                 ->onUpdate('CASCADE')->onDelete('CASCADE');
 
-            $table->boolean('isQRCode')->default(0);
-            $table->string('gps_lat')->nullable();
-            $table->string('gps_long')->nullable();
+            $table->time('start_time')->nullable();
+            $table->integer('duration')->nullable();
+            $table->time('end_time')->nullable();
 
             $table->text('task_plan')->nullable();
-            $table->time('clock_in_time')->nullable();
-            $table->text('note')->nullable();
             $table->text('task_report')->nullable();
-            $table->time('clock_out_time')->nullable();
+            $table->text('note')->nullable();
 
-            $table->boolean('isOvertime')->default(0);
-            $table->integer('overtimeDuration')->nullable();
-
-            $table->enum('approvalStatus', AttendanceApprovalStatus::getValues())
-                ->default(AttendanceApprovalStatus::NEEDS_APPROVAL);
+            $table->enum('approvalStatus', OvertimeStatus::getValues())
+                ->default(OvertimeStatus::NEEDS_APPROVAL);
             $table->text('rejectionNote')->nullable();
+
             $table->timestamps();
         });
     }
@@ -56,6 +52,6 @@ class CreateAttendancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('overtimes');
     }
 }
