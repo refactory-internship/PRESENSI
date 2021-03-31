@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Employee;
 
-use App\Enums\AttendanceApprovalStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Services\AttendanceService;
 use App\Models\Attendance;
@@ -19,12 +18,7 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        $user = auth()->id();
-        $attendances = Attendance::query()
-            ->where('user_id', $user)
-            ->where('isOvertime', false)
-            ->latest()
-            ->get();
+        $attendances = $this->attendanceService->getAttendance();
         return view('user.attendance.index', compact('attendances'));
     }
 
@@ -56,12 +50,7 @@ class AttendanceController extends Controller
 
     public function update(Request $request, $id)
     {
-        $attendance = Attendance::query()->findOrFail($id);
-        $attendance->update([
-            'task_plan' => $request->task_plan,
-            'note' => $request->note,
-            'approvalStatus' => AttendanceApprovalStatus::NEEDS_APPROVAL
-        ]);
+        $this->attendanceService->update($request, $id);
         return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Updated!');
     }
 

@@ -33,8 +33,8 @@ class CreateOvertimesTable extends Migration
             $table->integer('duration')->nullable();
             $table->time('end_time')->nullable();
 
-            $table->text('task_plan')->nullable();
-            $table->text('task_report')->nullable();
+            $table->string('task_plan')->nullable();
+            $table->string('task_report')->nullable();
             $table->text('note')->nullable();
 
             $table->enum('approvalStatus', OvertimeStatus::getValues())

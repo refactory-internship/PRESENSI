@@ -33,14 +33,11 @@ class CreateAttendancesTable extends Migration
             $table->string('gps_lat')->nullable();
             $table->string('gps_long')->nullable();
 
-            $table->text('task_plan')->nullable();
+            $table->string('task_plan')->nullable();
             $table->time('clock_in_time')->nullable();
             $table->text('note')->nullable();
-            $table->text('task_report')->nullable();
+            $table->string('task_report')->nullable();
             $table->time('clock_out_time')->nullable();
-
-            $table->boolean('isOvertime')->default(0);
-            $table->integer('overtimeDuration')->nullable();
 
             $table->enum('approvalStatus', AttendanceApprovalStatus::getValues())
                 ->default(AttendanceApprovalStatus::NEEDS_APPROVAL);

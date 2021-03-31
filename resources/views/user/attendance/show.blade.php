@@ -10,7 +10,7 @@
                                 <table class="table table-sm table-borderless" aria-label="statuses"
                                        style="font-size: 14px;">
                                     <tr>
-                                        <th scope="row" style="width: 20%;">Attendance Status Status</th>
+                                        <th scope="row" style="width: 20%;">Attendance Status</th>
                                         <td>
                                             @if($attendance->approvalStatus === '1')
                                                 <span class="badge badge-warning">NEEDS_APPROVAL</span>
@@ -46,13 +46,13 @@
                                     <tr>
                                         <th scope="row" style="width: 20%;">Approver</th>
                                         <td>
-                                            @if($attendance->user->parent)
+                                            @if($attendance->approverId !== null)
                                                 {{ $attendance->user->parent->getFullNameAttribute() . ', ' .
                                                    $attendance->user->parent->role->name . ' of ' .
                                                    $attendance->user->parent->division_office->division->name }}
-                                            @else
+                                            @elseif($attendance->user->isAutoApproved === true)
                                                 <span class="badge badge-success">
-                                                    Automatically Approved By System
+                                                    AUTOMATICALLY_APPROVED_BY_SYSTEM
                                                 </span>
                                             @endif
                                         </td>
@@ -150,6 +150,32 @@
                                                     Clock-Out
                                                 </a>
                                             </div>
+                                        </div>
+                                    @elseif($attendance->user->isAutoApproved === true)
+                                        <div class="row">
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6">
+                                                <div class="btn-group float-right">
+                                                    <a href="{{ route('web.employee.attendances.clock-out', $attendance->id) }}"
+                                                       class="btn btn-primary mr-1">
+                                                        Clock-Out
+                                                    </a>
+                                                    <button type="button"
+                                                            class="btn btn-outline-danger"
+                                                            id="deleteButton"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#staticBackdrop"
+                                                            data-bs-url="{{ route('web.employee.attendances.destroy', $attendance->id) }}">
+                                                        Delete
+                                                        <i class="bi bi-x-circle"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <small class="text-muted text-right">
+                                                This attendance has been approved automatically by system
+                                            </small>
                                         </div>
                                     @elseif($attendance->approvalStatus === '3')
                                         <div class="row">

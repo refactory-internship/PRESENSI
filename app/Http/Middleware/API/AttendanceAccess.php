@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Web;
+namespace App\Http\Middleware\API;
 
 use App\Models\Attendance;
 use App\Models\Overtime;
@@ -23,7 +23,9 @@ class AttendanceAccess
 
         if ($attendance && $attendance->user->id !== auth()->id() ||
             $overtime && $overtime->user->id !== auth()->id()) {
-            abort(403);
+            return response()->json([
+                'message' => 'Unauthorized!'
+            ], 403);
         }
 
         return $next($request);

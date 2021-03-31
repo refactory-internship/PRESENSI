@@ -75,30 +75,30 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
     });
 
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
-        Route::get('/attendances/clock-out/{id}', [AttendanceController::class, 'clockOut'])
+        Route::get('/attendances/clock-out/{attendance}', [AttendanceController::class, 'clockOut'])
             ->name('attendances.clock-out');
-        Route::put('/attendances/clock-out/{id}', [AttendanceController::class, 'submitClockOut'])
+        Route::put('/attendances/clock-out/{attendance}', [AttendanceController::class, 'submitClockOut'])
             ->name('attendances.submit-clock-out');
 
         Route::resource('/attendances', AttendanceController::class);
 
-        Route::put('/overtimes/{id}/update-progress', [OvertimeController::class, 'updateOvertimeProgress'])
+        Route::put('/overtimes/{overtime}/update-progress', [OvertimeController::class, 'updateOvertimeProgress'])
             ->name('overtimes.update-progress');
 
         Route::resource('/overtimes', OvertimeController::class);
 
-        Route::middleware('web.approveAttendance')->group(function () {
-            Route::put('/approve-attendance/{id}/approve', [ApproveAttendanceController::class, 'approve'])
+        Route::middleware(['web.approveAttendance', 'web.parentAccess'])->group(function () {
+            Route::put('/approve-attendance/{approve_attendance}/approve', [ApproveAttendanceController::class, 'approve'])
                 ->name('approve-attendances.approve');
-            Route::put('/approve-attendance/{id}/reject', [ApproveAttendanceController::class, 'reject'])
+            Route::put('/approve-attendance/{approve_attendance}/reject', [ApproveAttendanceController::class, 'reject'])
                 ->name('approve-attendances.reject');
 
             Route::resource('/approve-attendances', ApproveAttendanceController::class)
                 ->only(['index', 'show']);
 
-            Route::put('/approve-overtimes/{id}/approve', [ApproveOvertimeController::class, 'approve'])
+            Route::put('/approve-overtimes/{approve_overtime}/approve', [ApproveOvertimeController::class, 'approve'])
                 ->name('approve-overtimes.approve');
-            Route::put('/approve-overtimes/{id}/reject', [ApproveOvertimeController::class, 'reject'])
+            Route::put('/approve-overtimes/{approve_overtime}/reject', [ApproveOvertimeController::class, 'reject'])
                 ->name('approve-overtimes.reject');
 
             Route::resource('/approve-overtimes', ApproveOvertimeController::class)

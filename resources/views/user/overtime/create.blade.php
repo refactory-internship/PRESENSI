@@ -8,19 +8,11 @@
                         <div class="card-body">
                             <h5 class="mb-3">{{ \Carbon\Carbon::parse($currentDate)->isoFormat('dddd, MMMM Do YYYY, kk:mm') }}</h5>
                             @if($date->status === '1')
-                                @if(\Carbon\Carbon::parse($currentDate)->toTimeString() >= auth()->user()->time_setting->start_time &&
-                                    \Carbon\Carbon::parse($currentDate)->toTimeString() <= auth()->user()->time_setting->end_time)
-                                    <p>
-                                        We're sorry, you cannot create an overtime during working hour
-                                    </p>
-                                    <a href="{{ route('web.employee.attendances.index') }}" class="btn btn-primary">
-                                        Go to your attendance
-                                    </a>
-                                    <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
-                                        Cancel
-                                    </a>
-                                @elseif(\Carbon\Carbon::parse($currentDate)->toTimeString() >
-                                        \Carbon\Carbon::parse(auth()->user()->time_setting->end_time)->toTimeString())
+                                @if(date('H:i:s', strtotime($currentDate)) >= auth()->user()->time_setting->start_time &&
+                                    date('H:i:s', strtotime($currentDate)) <= auth()->user()->time_setting->end_time)
+                                    @include('user.overtime.button', ['dateStatus' => 'Working Hour'])
+                                @elseif(date('H:i:s', strtotime($currentDate)) < auth()->user()->time_setting->start_time ||
+                                        date('H:i:s', strtotime($currentDate)) > auth()->user()->time_setting->end_time)
                                     @include('user.overtime._form')
                                 @endif
                             @else

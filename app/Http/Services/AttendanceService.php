@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Enums\AttendanceApprovalStatus;
 use App\Enums\AttendanceApprover;
+use App\Http\Resources\AttendanceResource;
 use App\Models\Attendance;
 use App\Models\Calendar;
 use App\Models\User;
@@ -12,6 +13,15 @@ use Illuminate\Http\Request;
 
 class AttendanceService
 {
+    public function getAttendance()
+    {
+        $user = auth()->id();
+        $attendances = Attendance::query()
+            ->where('user_id', $user)
+            ->latest()
+            ->get();
+        return AttendanceResource::collection($attendances);
+    }
 
     public function store(Request $request)
     {
@@ -19,39 +29,45 @@ class AttendanceService
         $timeToday = $this->getCurrentDate();
         $calendar = $this->getDateFromDatabase();
 
-        if ($user->parent === null) {
-            $approver = AttendanceApprover::SYSTEM;
-            $parent = null;
+        if ($user->isAutoApproved === true) {
+            $approvedBy = AttendanceApprover::SYSTEM;
             $approvalStatus = AttendanceApprovalStatus::APPROVED;
-        } else {
-            $approver = AttendanceApprover::PARENT;
-            $parent = $user->parent->id;
-            $approvalStatus = AttendanceApprovalStatus::NEEDS_APPROVAL;
-        }
+            $approverId = null;
 
-        if ($request->has('overtimeStatus')) {
-            $isOvertime = true;
-            $overtimeDuration = $request->overtime_duration;
-            $clockOutTime = Carbon::parse($timeToday)->addHours($overtimeDuration)->toTimeString();
         } else {
-            $isOvertime = false;
-            $overtimeDuration = null;
-            $clockOutTime = null;
+            $approvedBy = AttendanceApprover::PARENT;
+            $approvalStatus = AttendanceApprovalStatus::NEEDS_APPROVAL;
+            $approverId = $user->parent->id;
         }
 
         return Attendance::query()->create([
             'user_id' => $user->id,
             'calendar_id' => $calendar->id,
-            'approvedBy' => $approver,
-            'approverId' => $parent,
+            'approvedBy' => $approvedBy,
+            'approverId' => $approverId,
             'isQRCode' => false,
             'task_plan' => $request->task_plan,
             'clock_in_time' => date('H:i:s', strtotime($timeToday)),
             'note' => $request->note,
-            'clock_out_time' => $clockOutTime,
-            'isOvertime' => $isOvertime,
-            'overtimeDuration' => $overtimeDuration,
+            'clock_out_time' => null,
             'approvalStatus' => $approvalStatus,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $attendance = Attendance::query()->find($id);
+
+        if ($attendance->approvalStatus === '1' || $attendance->approvalStatus === '4') {
+            $approvalStatus = AttendanceApprovalStatus::NEEDS_APPROVAL;
+        } else {
+            $approvalStatus = $attendance->approvalStatus;
+        }
+
+        return $attendance->update([
+            'task_plan' => $request->task_plan,
+            'note' => $request->note,
+            'approvalStatus' => $approvalStatus
         ]);
     }
 
@@ -59,12 +75,25 @@ class AttendanceService
     {
         $clockOutTime = $this->getCurrentDate();
         $timeToday = Carbon::parse($clockOutTime)->toTimeString();
+        $attendance = Attendance::query()->find($id);
 
-        return Attendance::query()->find($id)->update([
+        if ($attendance->user->isAutoApproved === true) {
+            $approvalStatus = AttendanceApprovalStatus::APPROVED;
+        } else {
+            $approvalStatus = AttendanceApprovalStatus::NEEDS_APPROVAL;
+        }
+
+        if ($request->has('note')) {
+            $note = $request->note;
+        } else {
+            $note = $attendance->note;
+        }
+
+        return $attendance->update([
             'task_report' => $request->task_report,
             'clock_out_time' => $timeToday,
-            'note' => $request->note,
-            'approvalStatus' => AttendanceApprovalStatus::NEEDS_APPROVAL
+            'note' => $note,
+            'approvalStatus' => $approvalStatus
         ]);
     }
 
@@ -100,8 +129,8 @@ class AttendanceService
     public function getCurrentDate()
     {
         date_default_timezone_set('Asia/Jakarta');
-        return Carbon::create('2021', '03', '30', '19', '30');
-//        return Carbon::now();
+//        return Carbon::create('2021', '03', '30', '08', '45');
+        return Carbon::now();
     }
 
     public function getDateFromDatabase()

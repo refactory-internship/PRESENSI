@@ -36,7 +36,6 @@
         </div>
     </div>
     @include('user.attendance.modal.option')
-    @include('user.overtime.modal.overtime')
 @endsection
 @section('script')
     @include('user.attendance.modal.script')

@@ -86,8 +86,8 @@ class OvertimeService
     public function getCurrentDate()
     {
         date_default_timezone_set('Asia/Jakarta');
-        return Carbon::create('2021', '03', '29', '16', '45');
-//        return Carbon::now();
+//        return Carbon::create('2021', '03', '30', '08', '45');
+        return Carbon::now();
     }
 
     public function getDateFromDatabase()
