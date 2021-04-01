@@ -36,9 +36,6 @@ Route::name('api.')->group(function () {
     });
 
     Route::prefix('employee')->middleware(['auth:sanctum', 'api.attendanceAccess', 'api.employee'])->name('employee.')->group(function () {
-        Route::put('/attendances/clock-out/{attendance}', [AttendanceController::class, 'submitClockOut'])
-            ->name('attendances.submit-clock-out');
-
         Route::apiResource('/attendances', AttendanceController::class);
 
         Route::middleware(['api.approveAttendance', 'api.parentAccess'])->group(function () {

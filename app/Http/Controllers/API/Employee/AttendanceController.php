@@ -48,13 +48,4 @@ class AttendanceController extends Controller
             'message' => 'Attendance Deleted'
         ]);
     }
-
-    public function submitClockOut(Request $request, $id)
-    {
-        $this->attendanceService->submitClockOut($request, $id);
-        return response()->json([
-            'data' => new AttendanceResource(Attendance::query()->findOrFail($id)),
-            'message' => 'Clock-Out Submitted'
-        ]);
-    }
 }

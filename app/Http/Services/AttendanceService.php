@@ -61,7 +61,7 @@ class AttendanceService
 
     public function update(Request $request, $id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
         $timeToday = $this->dateTimeService->getCurrentDate();
 
         if ($request->has('isFinished')) {
@@ -86,7 +86,7 @@ class AttendanceService
 
     public function approveAttendance($id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
 
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::APPROVED
@@ -95,7 +95,7 @@ class AttendanceService
 
     public function rejectAttendance(Request $request, $id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
 
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::REJECTED,

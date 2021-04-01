@@ -21,6 +21,7 @@ class ApproveAttendanceController extends Controller
     {
         $attendances = Attendance::query()
             ->where('approverId', auth()->id())
+            ->where('isFinished', true)
             ->latest()
             ->get();
         return response()->json(AttendanceResource::collection($attendances));

@@ -45,7 +45,7 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-9">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="isFinished"
+                                                <input class="form-check-input" type="checkbox" id="isFinished" value="1"
                                                        name="isFinished" {{ $attendance->isFinished === true ? 'checked' : '' }}>
                                                 <label class="form-check-label ml-2" for="isFinished">
                                                     Attendance Finished
