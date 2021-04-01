@@ -29,16 +29,15 @@ class CreateOvertimesTable extends Migration
             $table->foreign('approverId')->references('parent_id')->on('users')
                 ->onUpdate('CASCADE')->onDelete('CASCADE');
 
+            $table->string('task_plan')->nullable();
             $table->time('start_time')->nullable();
             $table->integer('duration')->nullable();
-            $table->time('end_time')->nullable();
-
-            $table->string('task_plan')->nullable();
-            $table->string('task_report')->nullable();
             $table->text('note')->nullable();
+            $table->time('end_time')->nullable();
+            $table->string('task_report')->nullable();
+            $table->boolean('isFinished')->default(0);
 
-            $table->enum('approvalStatus', OvertimeStatus::getValues())
-                ->default(OvertimeStatus::NEEDS_APPROVAL);
+            $table->enum('approvalStatus', OvertimeStatus::getValues())->nullable();
             $table->text('rejectionNote')->nullable();
 
             $table->timestamps();

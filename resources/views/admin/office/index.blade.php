@@ -13,7 +13,7 @@
                     </div>
                     <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <table class="table table-hover" aria-label="office-table">
+                            <table class="table table-hover" aria-label="office-table" id="officeTable">
 
                                 <thead>
                                 <tr>
@@ -25,7 +25,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($offices as $office)
+                                @foreach($offices as $office)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $office->name }}</td>
@@ -38,11 +38,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No Data</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
                             {{ $offices->links('vendor.pagination.bootstrap-4') }}
@@ -52,4 +48,19 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#officeTable').DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: [4]
+                    }
+                ],
+                order: []
+            });
+        });
+    </script>
 @endsection

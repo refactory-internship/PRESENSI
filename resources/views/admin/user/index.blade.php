@@ -13,7 +13,7 @@
                     </div>
                     <div class="card shadow p-4" style="border-radius: 20px;">
                         <div class="card-body">
-                            <table class="table table-hover" aria-label="office-table" id="dataTable">
+                            <table class="table table-hover" aria-label="office-table" id="employeeTable">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -26,7 +26,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($users as $user)
+                                @foreach($users as $user)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $user->getFullNameAttribute() }}</td>
@@ -64,11 +64,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No Data</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -81,7 +77,7 @@
 @section('script')
     <script>
         $(document).ready(function () {
-            $('#dataTable').DataTable({
+            $('#employeeTable').DataTable({
                 columnDefs: [
                     {
                         orderable: false,

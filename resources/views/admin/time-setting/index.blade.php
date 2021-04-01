@@ -13,7 +13,7 @@
                     </div>
                     <div class="card shadow p-4" style="border-radius: 20px">
                         <div class="card-body">
-                            <table class="table table-hover" aria-label="time setting table">
+                            <table class="table table-hover" aria-label="time setting table" id="timeSettingTable">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -24,7 +24,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($times as $time)
+                                @foreach($times as $time)
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $time->division->name }}</td>
@@ -37,18 +37,28 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No Data</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                                 </tbody>
                             </table>
-                            {{ $times->links('vendor.pagination.bootstrap-4') }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#timeSettingTable').DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: [4]
+                    }
+                ],
+                order: []
+            });
+        });
+    </script>
 @endsection

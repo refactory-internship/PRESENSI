@@ -6,12 +6,12 @@
                 <div class="col-md-10">
                     @include('layouts.partials.message')
                     <div class="mb-3">
-                        <a href="{{ route('web.employee.attendances.create') }}" class="btn btn-success rounded-pill">
+                        <a href="{{ route('web.employee.attendances.create') }}" class="btn btn-success">
                             <i class="bi bi-plus"></i>
                             Add New Attendance
                         </a>
                     </div>
-                    <div class="card shadow p-4" style="border-radius: 20px">
+                    <div class="card shadow p-4">
                         <div class="card-body">
                             <table class="table table-hover text-center" aria-label="attendance-table"
                                    id="attendanceTable">
@@ -40,19 +40,25 @@
                                             <td>{{ date('H:i', strtotime($attendance->clock_out_time)) }}</td>
                                         @endif
 
-                                        @if($attendance->approvalStatus === '1')
+                                        @if($attendance->approvalStatus === null)
+                                            @if($attendance->isFinished === true)
+                                                <td>
+                                                    <span class="badge badge-success">FINISHED</span>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <span class="badge badge-warning">ON_PROGRESS</span>
+                                                </td>
+                                            @endif
+                                        @elseif($attendance->approvalStatus === '1')
                                             <td>
                                                 <span class="badge badge-warning">NEEDS_APPROVAL</span>
                                             </td>
                                         @elseif($attendance->approvalStatus === '2')
                                             <td>
-                                                <span class="badge badge-secondary">CLOCK_OUT_ALLOWED</span>
-                                            </td>
-                                        @elseif($attendance->approvalStatus === '3')
-                                            <td>
                                                 <span class="badge badge-success">APPROVED</span>
                                             </td>
-                                        @elseif($attendance->approvalStatus === '4')
+                                        @elseif($attendance->approvalStatus === '3')
                                             <td>
                                                 <span class="badge badge-danger">REJECTED</span>
                                             </td>

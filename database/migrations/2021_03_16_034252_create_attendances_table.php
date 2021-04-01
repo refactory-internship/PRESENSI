@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\AttendanceApprovalStatus;
+use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -38,9 +38,9 @@ class CreateAttendancesTable extends Migration
             $table->text('note')->nullable();
             $table->string('task_report')->nullable();
             $table->time('clock_out_time')->nullable();
+            $table->boolean('isFinished')->default(0);
 
-            $table->enum('approvalStatus', AttendanceApprovalStatus::getValues())
-                ->default(AttendanceApprovalStatus::NEEDS_APPROVAL);
+            $table->enum('approvalStatus', ApprovalStatus::getValues())->nullable();
             $table->text('rejectionNote')->nullable();
             $table->timestamps();
         });

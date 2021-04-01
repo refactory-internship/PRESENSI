@@ -13,8 +13,7 @@ class Attendance extends Model
     protected $guarded = [];
     protected $casts = [
         'isQRCode' => 'boolean',
-        'isOvertime' => 'boolean',
-        'isApproved' => 'boolean',
+        'isFinished' => 'boolean',
     ];
 
     public function calendar()

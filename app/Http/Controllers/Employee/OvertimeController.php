@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\DateTimeService;
 use App\Http\Services\OvertimeService;
 use App\Models\Overtime;
 use Illuminate\Http\Request;
@@ -10,10 +11,12 @@ use Illuminate\Http\Request;
 class OvertimeController extends Controller
 {
     private $overtimeService;
+    private $dateTimeService;
 
-    public function __construct(OvertimeService $overtimeService)
+    public function __construct(OvertimeService $overtimeService, DateTimeService $dateTimeService)
     {
         $this->overtimeService = $overtimeService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function index()
@@ -25,8 +28,8 @@ class OvertimeController extends Controller
 
     public function create()
     {
-        $currentDate = $this->overtimeService->getCurrentDate();
-        $date = $this->overtimeService->getDateFromDatabase();
+        $currentDate = $this->dateTimeService->getCurrentDate();
+        $date = $this->dateTimeService->getDateFromDatabase();
         return view('user.overtime.create', compact('date', 'currentDate'));
     }
 

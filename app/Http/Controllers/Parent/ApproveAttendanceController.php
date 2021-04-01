@@ -20,6 +20,7 @@ class ApproveAttendanceController extends Controller
     {
         $attendances = Attendance::query()
             ->where('approverId', auth()->id())
+            ->where('isFinished', true)
             ->latest()
             ->get();
         return view('user.parent.approve-attendance.index', compact('attendances'));

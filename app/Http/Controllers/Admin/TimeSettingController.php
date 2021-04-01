@@ -20,7 +20,7 @@ class TimeSettingController extends Controller
 
     public function index()
     {
-        $times = TimeSetting::query()->paginate(5);
+        $times = TimeSetting::all();
         return view('admin.time-setting.index', compact('times'));
     }
 

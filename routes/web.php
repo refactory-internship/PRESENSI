@@ -75,11 +75,6 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
     });
 
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
-        Route::get('/attendances/clock-out/{attendance}', [AttendanceController::class, 'clockOut'])
-            ->name('attendances.clock-out');
-        Route::put('/attendances/clock-out/{attendance}', [AttendanceController::class, 'submitClockOut'])
-            ->name('attendances.submit-clock-out');
-
         Route::resource('/attendances', AttendanceController::class);
 
         Route::put('/overtimes/{overtime}/update-progress', [OvertimeController::class, 'updateOvertimeProgress'])

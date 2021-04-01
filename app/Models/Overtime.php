@@ -11,6 +11,9 @@ class Overtime extends Model
 
     protected $table = 'overtimes';
     protected $guarded = [];
+    protected $casts = [
+        'isFinished' => 'boolean',
+    ];
 
     public function calendar() {
         return $this->belongsTo(Calendar::class);

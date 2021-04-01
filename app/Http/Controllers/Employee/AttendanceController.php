@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\AttendanceService;
+use App\Http\Services\DateTimeService;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    protected $attendanceService;
+    private $attendanceService;
+    private $dateTimeService;
 
-    public function __construct(AttendanceService $attendanceService)
+    public function __construct(AttendanceService $attendanceService, DateTimeService $dateTimeService)
     {
         $this->attendanceService = $attendanceService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function index()
@@ -25,8 +28,8 @@ class AttendanceController extends Controller
     public function create()
     {
         //variable to be used on the script section
-        $currentDate = $this->attendanceService->getCurrentDate();
-        $date = $this->attendanceService->getDateFromDatabase();
+        $currentDate = $this->dateTimeService->getCurrentDate();
+        $date = $this->dateTimeService->getDateFromDatabase();
         return view('user.attendance.create', compact('date', 'currentDate'));
     }
 
@@ -44,8 +47,9 @@ class AttendanceController extends Controller
 
     public function edit($id)
     {
+        $currentDate = $this->dateTimeService->getCurrentDate();
         $attendance = Attendance::query()->findOrFail($id);
-        return view('user.attendance.edit', compact('attendance'));
+        return view('user.attendance.edit', compact('attendance', 'currentDate'));
     }
 
     public function update(Request $request, $id)
@@ -58,18 +62,5 @@ class AttendanceController extends Controller
     {
         Attendance::query()->findOrFail($id)->delete();
         return redirect()->route('web.employee.attendances.index')->with('danger', 'Attendance Deleted!');
-    }
-
-    public function clockOut($id)
-    {
-        $currentDate = $this->attendanceService->getCurrentDate();
-        $attendance = Attendance::query()->find($id);
-        return view('user.attendance.clock-out', compact('attendance', 'currentDate'));
-    }
-
-    public function submitClockOut(Request $request, $id)
-    {
-        $this->attendanceService->submitClockOut($request, $id);
-        return redirect()->route('web.employee.attendances.index')->with('message', 'Clock-Out Submitted!');
     }
 }

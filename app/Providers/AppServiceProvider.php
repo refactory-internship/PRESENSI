@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Enums\AttendanceApprovalStatus;
+use App\Enums\ApprovalStatus;
 use App\Enums\OvertimeStatus;
 use App\Models\Attendance;
 use App\Models\Overtime;
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $attendanceCounter = Attendance::query()
                 ->where('approverId', auth()->id())
-                ->where('approvalStatus', AttendanceApprovalStatus::NEEDS_APPROVAL)
+                ->where('approvalStatus', ApprovalStatus::NEEDS_APPROVAL)
                 ->count();
 
             $overtimeCounter = Overtime::query()
