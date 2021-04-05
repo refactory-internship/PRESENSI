@@ -81,10 +81,6 @@
                                         <p>{{ $attendance->note }}</p>
                                     </div>
                                 </div>
-
-                                <div class="btn-group float-right">
-
-                                </div>
                             </div>
 
                             <div class="card-footer">
@@ -92,11 +88,11 @@
                                     Submitted {{ $attendance->created_at->diffForHumans() }}
                                 </small>
 
-                                @if($attendance->approvalStatus === '2')
+                                @if($attendance->approvalStatus === '2' && $attendance->isAutoApproved === false)
                                     <div class="text-value-sm text-success">
                                         This attendance has been approved
                                     </div>
-                                @elseif($attendance->approvalStatus === '3')
+                                @elseif($attendance->approvalStatus === '3' && $attendance->isAutoApproved === false)
                                     <div class="text-value-sm text-danger">
                                         This attendance has been rejected
                                     </div>

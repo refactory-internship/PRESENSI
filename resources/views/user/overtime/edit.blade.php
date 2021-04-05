@@ -34,6 +34,15 @@
                                                    value="{{ $overtime->task_plan }}">
                                         </div>
                                     </div>
+
+                                    <div class="form-group row mb-3">
+                                        <label for="task_report" class="col-form-label col-md-3">Task Report</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="task_report" id="task_report" class="form-control"
+                                                   value="{{ $overtime->task_report }}">
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row mb-3">
                                         <label class="col-form-label col-md-3" for="note">Overtime Note</label>
                                         <div class="col-md-9">
@@ -42,12 +51,26 @@
                                             <small class="text-muted">Provide details about your overtime if seems necessary</small>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Update Overtime</button>
+
+                                    <div class="form-group row mb-3">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-9">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="isFinished" value="1"
+                                                       name="isFinished" {{ $overtime->isFinished === true ? 'checked' : '' }}>
+                                                <label class="form-check-label ml-2" for="isFinished">
+                                                    Overtime Finished
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group float-right">
                                         <a href="{{ route('web.employee.overtimes.show', $overtime->id) }}"
                                            class="btn btn-dark">
                                             Cancel
                                         </a>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
                             </div>

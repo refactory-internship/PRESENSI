@@ -38,10 +38,12 @@ class AttendanceService
         if ($user->isAutoApproved === true) {
             $approvedBy = AttendanceApprover::SYSTEM;
             $approverId = null;
+            $approvalStatus = ApprovalStatus::APPROVED;
 
         } else {
             $approvedBy = AttendanceApprover::PARENT;
             $approverId = $user->parent->id;
+            $approvalStatus = null;
         }
 
         return Attendance::query()->create([
@@ -55,7 +57,7 @@ class AttendanceService
             'note' => $request->note,
             'clock_out_time' => null,
             'isFinished' => false,
-            'approvalStatus' => null,
+            'approvalStatus' => $approvalStatus,
         ]);
     }
 
@@ -67,12 +69,22 @@ class AttendanceService
         if ($request->has('isFinished')) {
             $clockOutTime = $timeToday;
             $isFinished = true;
-            $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
+            if ($attendance->user->isAutoApproved === true) {
+                $approvalStatus = ApprovalStatus::APPROVED;
+            } else {
+                $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
+            }
+            if ($attendance->approvalStatus === '1' || $attendance->approvalStatus === '2' || $attendance->approvalStatus === '3') {
+                $isFinished = $attendance->isFinished;
+                $clockOutTime = $attendance->clock_out_time;
+                $approvalStatus = $attendance->approvalStatus;
+            }
         } else {
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;
             $approvalStatus = $attendance->approvalStatus;
         }
+
 
         return $attendance->update([
             'task_plan' => $request->task_plan,

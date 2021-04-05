@@ -7,7 +7,7 @@
                     <div class="card shadow p-4">
                         <div class="card-body">
                             <h5 class="mb-3">{{ \Carbon\Carbon::parse($currentDate)->isoFormat('dddd, MMMM Do YYYY, kk:mm') }}</h5>
-                            <h5>
+                            <h5 class="mb-3">
                                 @if(date('H:i:s', strtotime($currentDate)) >= \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  &&
                                     date('H:i:s', strtotime($currentDate)) <= auth()->user()->time_setting->end_time)
                                     <span class="badge badge-warning">Late Attendance</span>

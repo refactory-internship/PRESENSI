@@ -2,164 +2,169 @@
 @section('content')
     <div class="container">
         <div class="fade-in">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
+                        <i class="bi bi-arrow-left-circle"></i>
+                        Back
+                    </a>
+                </div>
+            </div>
             <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <div class="card shadow p-4" style="border-radius: 20px">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <table class="table table-sm table-borderless" aria-label="statuses"
-                                       style="font-size: 14px;">
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Approval Status</th>
-                                        <td>
-                                            @if($overtime->approvalStatus === '1')
-                                                <span class="badge badge-warning">NEEDS_APPROVAL</span>
-                                            @elseif($overtime->approvalStatus === '2')
-                                                <span class="badge badge-success">APPROVED</span>
-                                            @elseif($overtime->approvalStatus === '3')
-                                                <span class="badge badge-danger">REJECTED</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Approved By</th>
-                                        <td>
-                                            @if($overtime->approvedBy == 1)
-                                                <span class="badge badge-info">PARENT</span>
-                                            @else
-                                                <span class="badge badge-info">SYSTEM</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" style="width: 20%;">Approver</th>
-                                        <td>
-                                            @if($overtime->user->parent)
-                                                {{ $overtime->user->parent->getFullNameAttribute() . ', ' .
-                                                   $overtime->user->parent->role->name . ' of ' .
-                                                   $overtime->user->parent->division_office->division->name }}
-                                            @else
-                                                <span
-                                                    class="badge badge-success">Automatically Approved By System</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-group mb-3">
-                                    <label for="task_plan">Task Plan</label>
-                                    <input type="text" class="form-control" id="task_plan"
-                                           value="{{ $overtime->task_plan }}" disabled>
-                                </div>
-
-                                @if($overtime->task_report !== null)
-                                    <div class="form-group mb-3">
-                                        <label for="task_report">Task Report</label>
-                                        <input type="text" class="form-control" id="task_report"
-                                               value="{{ $overtime->task_report }}" disabled>
-                                    </div>
-                                @endif
-
-                                <div class="form-group mb-4">
-                                    <label for="date">Date</label>
-                                    <input type="text" class="form-control" id="date"
-                                           value="{{ date('l, F jS Y', strtotime($overtime->calendar->date)) }}"
-                                           disabled>
-                                </div>
-
-                                <div class="form-group mb-3">
+                <div class="col-md-9">
+                    <div class="card-group shadow" style="min-height: 25rem">
+                        <div class="card col-md-5 p-4">
+                            <div class="card-body">
+                                <div class="mb-2">
                                     <div class="row">
-                                        <div class="col">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Start Time</span>
-                                                </div>
-                                                <input type="text" class="form-control" aria-label="clock_in_time"
-                                                       value="{{ date('H:i', strtotime($overtime->start_time)) }}"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Overtime Duration</span>
-                                                </div>
-                                                <input type="text" class="form-control" aria-label="overtime_duration"
-                                                       value="{{ $overtime->duration . ' Hour' }}"
-                                                       disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">End Time</span>
-                                                </div>
-                                                <input type="text" class="form-control" aria-label="clock_out_time"
-                                                       value="{{ date('H:i', strtotime($overtime->end_time)) }}"
-                                                       disabled>
-                                            </div>
+                                        <strong>Date</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{ date('l, F jS Y', strtotime($overtime->calendar->date)) }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="row">
+                                        <strong>Start Time</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{ date('H:i', strtotime($overtime->start_time)) }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="row">
+                                        <strong>Overtime Duration</strong>
+                                    </div>
+                                    <div class="row">
+                                        <div class="text-value mb-3">
+                                            {{ $overtime->duration . ' Hour' }}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group mb-3">
-                                    <label for="note">Overtime Note</label>
-                                    <textarea class="form-control" id="note" name="note"
-                                              style="resize: none" disabled>{{ $overtime->note }}</textarea>
+                                <div class="mb-2">
+                                    <div class="row">
+                                        <strong>End Time</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{ date('H:i', strtotime($overtime->end_time)) }}</p>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="card pt-4">
+                            <div class="card-body">
+                                <div class="mb-2 pl-4">
+                                    <div class="row">
+                                        <strong>Task Plan</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{ $overtime->task_plan }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 pl-4">
+                                    <div class="row">
+                                        <strong>Task Report</strong>
+                                    </div>
+                                    <div class="row">
+                                        @if($overtime->task_report === null)
+                                            <div class="text-value-sm text-warning mb-3">
+                                                NO REPORT
+                                            </div>
+                                        @else
+                                            <p>{{ $overtime->task_report }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 pl-4">
+                                    <div class="row">
+                                        <strong>Overtime Note</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p>{{ $overtime->note }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
                                 <small class="text-muted">
                                     Submitted {{ $overtime->created_at->diffForHumans() }}
                                 </small>
-                            </div>
 
-                            @if($overtime->rejectionNote !== null && $overtime->approvalStatus === '3')
-                                <div class="card shadow-sm mt-3" style="border-left: 2px solid #e55353">
-                                    <div class="card-body">
-                                        <label for="rejectionNote">Reason of Rejection</label>
-                                        <textarea name="rejectionNote" id="rejectionNote" style="resize: none;"
-                                                  class="form-control"
-                                                  disabled>{{ $overtime->rejectionNote }}</textarea>
-                                    </div>
-                                </div>
-                            @endif
-
-                            <a href="{{ route('web.employee.overtimes.index') }}" class="btn btn-dark">
-                                <i class="bi bi-arrow-left-circle"></i>
-                                Back
-                            </a>
-
-                            <div class="btn-group float-right">
-                                @if($overtime->approvalStatus === '2')
-                                    <button type="button" class="btn btn-primary" onclick="updateOvertimeProgress()">
-                                        Update Overtime Progress
-                                    </button>
-                                @else
+                                <div class="btn-group float-right">
                                     <a href="{{ route('web.employee.overtimes.edit', $overtime->id) }}"
-                                       class="btn btn-outline-dark">
+                                       class="btn btn-primary">
                                         <i class="bi bi-pencil-square"></i>
-                                        Edit
+                                        Update Overtime
                                     </a>
-                                @endif
-                                <button type="button"
-                                        class="btn btn-outline-danger"
-                                        id="deleteButton"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"
-                                        data-bs-url="{{ route('web.employee.overtimes.destroy', $overtime->id) }}">
-                                    Delete
-                                    <i class="bi bi-x-circle"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            id="deleteButton"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            data-bs-url="{{ route('web.employee.overtimes.destroy', $overtime->id) }}">
+                                        Delete
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
                             </div>
-
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="text-uppercase font-weight-bold small">Overtime Status</div>
+                            @if($overtime->approvalStatus === null)
+                                @if($overtime->isFinished === true)
+                                    <div class="text-value-sm text-success">FINISHED</div>
+                                @else
+                                    <div class="text-value-sm text-warning">ON PROGRESS</div>
+                                @endif
+                            @elseif($overtime->approvalStatus === '1')
+                                <div class="text-value-sm text-warning">NEEDS APPROVAL</div>
+                            @elseif($overtime->approvalStatus === '2')
+                                <div class="text-value-sm text-success">APPROVED</div>
+                            @elseif($overtime->approvalStatus === '3')
+                                <div class="text-value-sm text-danger">REJECTED</div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="text-uppercase font-weight-bold small">Approver</div>
+                            @if($overtime->user->parent)
+                                <div class="text-value-sm">
+                                    {{ $overtime->user->parent->getFullNameAttribute() }}
+                                </div>
+                            @else
+                                <div class="text-value-sm text-info">SYSTEM</div>
+                            @endif
+                        </div>
+                    </div>
+
+                    @if($overtime->approvalStatus === '3')
+                        <div class="card shadow" style="border-left: 3px solid red">
+                            <div class="card-body">
+                                <div class="text-uppercase font-weight-bold small">Reason of Rejection</div>
+                                <div class="text-value-sm text-danger">
+                                    {{ $overtime->rejectionNote }}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     @include('user.overtime.modal.delete-overtime')
-    @include('user.overtime.update-progress')
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')

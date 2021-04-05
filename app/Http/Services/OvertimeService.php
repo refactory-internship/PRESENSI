@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
 use App\Enums\OvertimeStatus;
 use App\Models\Overtime;
@@ -27,14 +28,14 @@ class OvertimeService
         $endTime = Carbon::parse($timeToday)->addHours($overtimeDuration)->toTimeString();
         $user = User::query()->find(auth()->id());
 
-        if ($user->parent === null) {
+        if ($user->isAutoApproved === true) {
             $approver = AttendanceApprover::SYSTEM;
             $parent = null;
             $approvalStatus = OvertimeStatus::APPROVED;
         } else {
             $approver = AttendanceApprover::PARENT;
             $parent = $user->parent->id;
-            $approvalStatus = OvertimeStatus::NEEDS_APPROVAL;
+            $approvalStatus = null;
         }
 
         return Overtime::query()->create([
@@ -47,6 +48,7 @@ class OvertimeService
             'end_time' => $endTime,
             'task_plan' => $request->task_plan,
             'note' => $request->note,
+            'isFinished' => false,
             'approvalStatus' => $approvalStatus,
         ]);
     }
@@ -55,21 +57,32 @@ class OvertimeService
     {
         $overtime = Overtime::query()->find($id);
         $endTime = Carbon::parse($overtime->start_time)->addHours($request->duration)->toTimeString();
+
+        if ($request->has('isFinished')) {
+            $isFinished = true;
+            if ($overtime->user->isAutoApproved === true) {
+                $approvalStatus = ApprovalStatus::APPROVED;
+            } else {
+                $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
+            }
+        } elseif ($overtime->approvalStatus === '1' || $overtime->approvalStatus === '2' || $overtime->approvalStatus === '3') {
+            $isFinished = $overtime->isFinished;
+            $approvalStatus = $overtime->approvalStatus;
+        } else {
+            $isFinished = $overtime->isFinished;
+            $approvalStatus = $overtime->approvalStatus;
+        }
+
         $overtime->update([
             'task_plan' => $request->task_plan,
+            'task_report' => $request->task_report,
             'duration' => $request->duration,
             'end_time' => $endTime,
             'note' => $request->note,
-            'approvalStatus'=> OvertimeStatus::NEEDS_APPROVAL
+            'isFinished' => $isFinished,
+            'approvalStatus'=> $approvalStatus
         ]);
         return $overtime;
-    }
-
-    public function updateOvertimeProgress(Request $request, $id)
-    {
-        return Overtime::query()->find($id)->update([
-           'task_report' => $request->get('modal_task_report')
-        ]);
     }
 
     public function approveOvertime($id)

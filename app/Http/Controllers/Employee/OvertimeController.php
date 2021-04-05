@@ -62,10 +62,4 @@ class OvertimeController extends Controller
         Overtime::query()->findOrFail($id)->delete();
         return redirect()->route('web.employee.overtimes.index')->with('danger', 'Overtime Deleted!');
     }
-
-    public function updateOvertimeProgress(Request $request, $id)
-    {
-        $this->overtimeService->updateOvertimeProgress($request, $id);
-        return redirect()->route('web.employee.overtimes.index')->with('message', 'Overtime Progress Updated!');
-    }
 }

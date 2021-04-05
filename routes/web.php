@@ -76,10 +76,6 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
         Route::resource('/attendances', AttendanceController::class);
-
-        Route::put('/overtimes/{overtime}/update-progress', [OvertimeController::class, 'updateOvertimeProgress'])
-            ->name('overtimes.update-progress');
-
         Route::resource('/overtimes', OvertimeController::class);
 
         Route::middleware(['web.approveAttendance', 'web.parentAccess'])->group(function () {
