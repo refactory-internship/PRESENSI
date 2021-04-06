@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Parent;
+namespace App\Http\Controllers\API\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OvertimeResource;
 use App\Http\Services\OvertimeService;
 use App\Models\Overtime;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ class ApproveOvertimeController extends Controller
         $this->overtimeService = $overtimeService;
     }
 
-
     public function index()
     {
         $overtimes = Overtime::query()
@@ -24,24 +24,29 @@ class ApproveOvertimeController extends Controller
             ->where('isFinished', true)
             ->latest()
             ->get();
-        return view('user.parent.approve-overtime.index', compact('overtimes'));
+        return response()->json(OvertimeResource::collection($overtimes));
     }
 
     public function show($id)
     {
-        $overtime = Overtime::query()->find($id);
-        return view('user.parent.approve-overtime.show', compact('overtime'));
+        return response()->json(new OvertimeResource(Overtime::query()->findOrFail($id)));
     }
 
     public function approve($id)
     {
         $this->overtimeService->approveOvertime($id);
-        return redirect()->back()->with('message', 'Overtime Approved!');
+        return response()->json([
+           'data' => new OvertimeResource(Overtime::query()->findOrFail($id)),
+           'message' => 'Overtime Approved'
+        ]);
     }
 
     public function reject(Request $request, $id)
     {
         $this->overtimeService->rejectOvertime($request, $id);
-        return redirect()->back()->with('danger', 'Attendance Rejected!');
+        return response()->json([
+           'data' => new OvertimeResource(Overtime::query()->findOrFail($id)),
+           'message' => 'Overtime Rejected'
+        ]);
     }
 }

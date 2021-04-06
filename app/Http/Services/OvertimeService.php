@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
 use App\Enums\OvertimeStatus;
+use App\Http\Resources\OvertimeResource;
 use App\Models\Overtime;
 use App\Models\User;
 use Carbon\Carbon;
@@ -17,6 +18,16 @@ class OvertimeService
     public function __construct(DateTimeService $dateTimeService)
     {
         $this->dateTimeService = $dateTimeService;
+    }
+
+    public function getOvertime()
+    {
+        $user = auth()->id();
+        $overtimes = Overtime::query()
+            ->where('user_id', $user)
+            ->latest()
+            ->get();
+        return OvertimeResource::collection($overtimes);
     }
 
     public function store(Request $request)
@@ -65,24 +76,24 @@ class OvertimeService
             } else {
                 $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
             }
-        } elseif ($overtime->approvalStatus === '1' || $overtime->approvalStatus === '2' || $overtime->approvalStatus === '3') {
-            $isFinished = $overtime->isFinished;
-            $approvalStatus = $overtime->approvalStatus;
+            if ($overtime->approvalStatus === '1' || $overtime->approvalStatus === '2' || $overtime->approvalStatus === '3') {
+                $isFinished = $overtime->isFinished;
+                $approvalStatus = $overtime->approvalStatus;
+            }
         } else {
             $isFinished = $overtime->isFinished;
             $approvalStatus = $overtime->approvalStatus;
         }
 
-        $overtime->update([
+        return $overtime->update([
             'task_plan' => $request->task_plan,
             'task_report' => $request->task_report,
             'duration' => $request->duration,
             'end_time' => $endTime,
             'note' => $request->note,
             'isFinished' => $isFinished,
-            'approvalStatus'=> $approvalStatus
+            'approvalStatus' => $approvalStatus
         ]);
-        return $overtime;
     }
 
     public function approveOvertime($id)
@@ -95,8 +106,8 @@ class OvertimeService
     public function rejectOvertime(Request $request, $id)
     {
         return Overtime::query()->find($id)->update([
-           'approvalStatus' => OvertimeStatus::REJECTED,
-           'rejectionNote' => $request->get('rejectionNote')
+            'approvalStatus' => OvertimeStatus::REJECTED,
+            'rejectionNote' => $request->get('rejectionNote')
         ]);
     }
 }
