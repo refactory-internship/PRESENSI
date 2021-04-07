@@ -1,26 +1,26 @@
 <ul class="c-sidebar-nav ps">
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link" href="{{ route('web.home') }}">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-speedometer"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-speedometer"></use>
+            </svg>
             Dashboard
         </a>
     </li>
     <li class="c-sidebar-nav-title">Components</li>
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link" href="{{ route('web.admin.roles.index') }}">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-puzzle"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-puzzle"></use>
+            </svg>
             Roles
         </a>
     </li>
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-people"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-people"></use>
+            </svg>
             Employees
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
@@ -38,9 +38,9 @@
     </li>
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-building"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-building"></use>
+            </svg>
             Office Data
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
@@ -58,26 +58,26 @@
     </li>
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-settings"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-settings"></use>
+            </svg>
             Calendar
         </a>
     </li>
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link" href="{{ route('web.admin.time-settings.index') }}">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-settings"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-settings"></use>
+            </svg>
             Time Settings
         </a>
     </li>
     <li class="c-sidebar-nav-title">Attendance</li>
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link" href="{{ route('web.admin.QRCode.create') }}">
-            <div class="c-sidebar-nav-icon">
-                <i class="cil-qr-code"></i>
-            </div>
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-qr-code"></use>
+            </svg>
             QR Code Attendance
         </a>
     </li>

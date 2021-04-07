@@ -6,12 +6,12 @@
                 <div class="col-md-10">
                     @include('layouts.partials.message')
                     <div class="mb-3">
-                        <a href="{{ route('web.admin.time-settings.create') }}" class="btn btn-success rounded-pill">
+                        <a href="{{ route('web.admin.time-settings.create') }}" class="btn btn-success">
                             <i class="bi bi-plus"></i>
                             Add New Time Setting
                         </a>
                     </div>
-                    <div class="card shadow p-4" style="border-radius: 20px">
+                    <div class="card shadow p-4">
                         <div class="card-body">
                             <table class="table table-hover" aria-label="time setting table" id="timeSettingTable">
                                 <thead>

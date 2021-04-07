@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <div class="card shadow p-4" style="border-radius: 20px">
+                    <div class="card shadow p-4">
                         <div class="card-body">
                             <form action="{{ route('web.admin.users.store') }}" method="POST">
                                 @csrf

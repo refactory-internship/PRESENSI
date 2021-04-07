@@ -6,7 +6,7 @@
                 <div class="col-md-10">
                     <form action="{{ route('web.admin.divisions.store') }}" method="POST">
                         @csrf
-                        <div class="card shadow p-4" style="border-radius: 20px">
+                        <div class="card shadow p-4">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group mb-3">

@@ -21,13 +21,12 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
 
 {{--Bootstrap 5 CDN--}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-{{--coreui CDN--}}
-<link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" crossorigin="anonymous">
+{{--coreui local styles--}}
+<link rel="stylesheet" href="{{ asset('coreui/dist/css/coreui.min.css') }}">
 {{--coreui Icons CDN--}}
-<link rel="stylesheet" href="https://unpkg.com/@coreui/icons@2.0.0-beta.3/css/all.min.css">
+<link rel="stylesheet" href="{{ asset('coreui/icons/css/all.min.css') }}">
 
 <!-- Styles -->
 {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}

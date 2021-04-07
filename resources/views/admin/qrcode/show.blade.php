@@ -4,7 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card p-4 shadow" style="border-radius: 20px;">
+                    <div class="card p-4 shadow">
                         <div class="card-body">
                             <h5 class="text-center mb-3">Remaining Time:</h5>
                             <div class="visible-print text-center mb-3">

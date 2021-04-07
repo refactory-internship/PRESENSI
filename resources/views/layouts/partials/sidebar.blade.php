@@ -19,21 +19,29 @@
         @include('admin.sidebar')
     @else
         <ul class="c-sidebar-nav ps">
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.home') }}">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-speedometer"></use>
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
             <li class="c-sidebar-nav-title">ATTENDANCE MENU</li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="{{ route('web.employee.attendances.index') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-task"></i>
-                    </div>
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-task"></use>
+                    </svg>
                     Attendance
                 </a>
             </li>
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-attendances.index') }}">
-                        <div class="c-sidebar-nav-icon">
-                            <i class="cil-check-circle"></i>
-                        </div>
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-circle"></use>
+                        </svg>
                         Approve Attendance
                         @if($attendanceCounter)
                             <span class="badge badge-danger">
@@ -46,18 +54,18 @@
             <li class="c-sidebar-nav-title">OVERTIME MENU</li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="{{ route('web.employee.overtimes.index') }}">
-                    <div class="c-sidebar-nav-icon">
-                        <i class="cil-clock"></i>
-                    </div>
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-clock"></use>
+                    </svg>
                     Overtime
                 </a>
             </li>
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-overtimes.index') }}">
-                        <div class="c-sidebar-nav-icon">
-                            <i class="cil-check-circle"></i>
-                        </div>
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-circle"></use>
+                        </svg>
                         Approve Overtime
                         @if($overtimeCounter)
                             <span class="badge badge-danger">

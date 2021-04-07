@@ -35,7 +35,9 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <i class="cil-people"></i>
+                                        <svg class="c-icon">
+                                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-people"></use>
+                                        </svg>
                                         {{ count($role->user) }}
                                     </div>
                                 </div>

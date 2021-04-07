@@ -7,7 +7,7 @@
                     <form action="{{ route('web.admin.divisions.update', $division->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="card shadow p-4" style="border-radius: 20px">
+                        <div class="card shadow p-4">
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-group mb-3">

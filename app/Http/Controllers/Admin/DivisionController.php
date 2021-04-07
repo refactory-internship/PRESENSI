@@ -12,7 +12,7 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $divisions = Division::query()->paginate(5);
+        $divisions = Division::all();
         return view('admin.division.index', compact('divisions'));
     }
 

@@ -6,7 +6,7 @@
                 <div class="col-md-10">
                     @include('layouts.partials.message')
                     <div class="mb-3">
-                        <a href="{{ route('web.admin.users.create') }}" class="btn btn-success rounded-pill">
+                        <a href="{{ route('web.admin.users.create') }}" class="btn btn-success">
                             <i class="bi bi-plus"></i>
                             Add New Employee
                         </a>
