@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Enums\AbsentStatus;
 use App\Enums\ApprovalStatus;
+use App\Enums\LeaveStatus;
 use App\Enums\OvertimeStatus;
 use App\Models\Absent;
 use App\Models\Attendance;
+use App\Models\Leave;
 use App\Models\Overtime;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -51,10 +53,16 @@ class AppServiceProvider extends ServiceProvider
                 ->where('approvalStatus', AbsentStatus::NEEDS_APPROVAL)
                 ->count();
 
+            $leaveCounter = Leave::query()
+                ->where('approverId', auth()->id())
+                ->where('approvalStatus', LeaveStatus::NEEDS_APPROVAL)
+                ->count();
+
             $view->with([
                 'attendanceCounter' => $attendanceCounter,
                 'overtimeCounter' => $overtimeCounter,
-                'absentCounter' => $absentCounter
+                'absentCounter' => $absentCounter,
+                'leaveCounter' => $leaveCounter
             ]);
         });
     }

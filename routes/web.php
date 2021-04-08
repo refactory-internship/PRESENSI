@@ -11,9 +11,11 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TimeSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Employee\AttendanceController;
+use App\Http\Controllers\Employee\LeaveController;
 use App\Http\Controllers\Employee\OvertimeController;
 use App\Http\Controllers\Parent\ApproveAbsentController;
 use App\Http\Controllers\Parent\ApproveAttendanceController;
+use App\Http\Controllers\Parent\ApproveLeaveController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +98,8 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::resource('/overtimes', OvertimeController::class);
         //ABSENT ROUTES
         Route::resource('/absents', AbsentController::class);
+        //LEAVE ROUTES
+        Route::resource('/leaves', LeaveController::class);
 
         //PARENT APPROVAL ROUTES
         Route::middleware(['web.approveAttendance', 'web.parentAccess'])->group(function () {
@@ -128,6 +132,16 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             Route::resource('/approve-absents', ApproveAbsentController::class)
                 ->only(['index', 'show']);
             //END OF APPROVE/REJECT ABSENT ROUTES
+
+            //APPROVE/REJECT LEAVE ROUTES
+            Route::put('/approve-leaves/{approve_leaves}/approve', [ApproveLeaveController::class, 'approve'])
+                ->name('approve-leaves.approve');
+            Route::put('/approve-leaves/{approve_leaves}/reject', [ApproveLeaveController::class, 'reject'])
+                ->name('approve-leaves.reject');
+
+            Route::resource('/approve-leaves', ApproveLeaveController::class)
+                ->only(['index', 'show']);
+            //END OF APPROVE/REJECT LEAVE ROUTES
         });
         //END OF PARENT APPROVAL ROUTES
     });

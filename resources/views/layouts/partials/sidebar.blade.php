@@ -52,6 +52,14 @@
                     Absent
                 </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('web.employee.leaves.index') }}">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-mood-good"></use>
+                    </svg>
+                    Leave
+                </a>
+            </li>
 
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-title">Approval</li>
@@ -61,6 +69,9 @@
                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-check-circle"></use>
                         </svg>
                         Approval
+                        @if($attendanceCounter || $overtimeCounter || $absentCounter || $leaveCounter)
+                            <span class="badge badge-danger">N</span>
+                        @endif
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item">
@@ -68,8 +79,8 @@
                                 Attendance
                                 @if($attendanceCounter)
                                     <span class="badge badge-danger">
-                                {{ $attendanceCounter }}
-                            </span>
+                                        {{ $attendanceCounter }}
+                                    </span>
                                 @endif
                             </a>
                         </li>
@@ -78,8 +89,8 @@
                                 Overtime
                                 @if($overtimeCounter)
                                     <span class="badge badge-danger">
-                                {{ $overtimeCounter }}
-                            </span>
+                                        {{ $overtimeCounter }}
+                                    </span>
                                 @endif
                             </a>
                         </li>
@@ -88,8 +99,18 @@
                                 Absent
                                 @if($absentCounter)
                                     <span class="badge badge-danger">
-                                {{ $absentCounter }}
-                            </span>
+                                        {{ $absentCounter }}
+                                    </span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a class="c-sidebar-nav-link" href="{{ route('web.employee.approve-leaves.index') }}">
+                                Leave
+                                @if($leaveCounter)
+                                    <span class="badge badge-danger">
+                                        {{ $leaveCounter }}
+                                    </span>
                                 @endif
                             </a>
                         </li>

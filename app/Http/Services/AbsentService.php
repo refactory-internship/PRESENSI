@@ -16,9 +16,8 @@ class AbsentService
 {
     public function getAbsent()
     {
-        $user = auth()->id();
         $absents = Absent::query()
-            ->where('user_id', $user)
+            ->where('user_id', auth()->id())
             ->latest()
             ->get();
         return AbsentResource::collection($absents);

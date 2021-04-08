@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\Employee\AbsentController;
+use App\Http\Controllers\API\Employee\LeaveController;
 use App\Http\Controllers\API\Employee\OvertimeController;
 use App\Http\Controllers\API\Parent\ApproveAbsentController;
 use App\Http\Controllers\API\Parent\ApproveAttendanceController;
+use App\Http\Controllers\API\Parent\ApproveLeaveController;
 use App\Http\Controllers\API\Parent\ApproveOvertimeController;
 use App\Http\Controllers\API\SanctumAuthController;
 use App\Http\Controllers\API\Employee\AttendanceController;
@@ -49,6 +51,8 @@ Route::name('api.')->group(function () {
         Route::apiResource('/overtimes', OvertimeController::class);
         //ABSENT CRUD ROUTES
         Route::apiResource('/absents', AbsentController::class);
+        //LEAVE CRUD ROUTES
+        Route::resource('/leaves', LeaveController::class);
 
         //PARENT APPROVAL ROUTES
         Route::middleware(['api.approveAttendance', 'api.parentAccess'])->group(function () {
@@ -73,12 +77,21 @@ Route::name('api.')->group(function () {
             //END OF APPROVE/REJECT OVERTIME ROUTES
 
             //APPROVE/REJECT ABSENT ROUTES
-            Route::put('/approve-absents/{approve_absents}/approve', [ApproveAbsentController::class, 'approve'])
+            Route::put('/approve-absents/{approve_absent}/approve', [ApproveAbsentController::class, 'approve'])
                 ->name('approve-absents.approve');
-            Route::put('/approve-absents/{approve_absents}/reject', [ApproveAbsentController::class, 'reject'])
+            Route::put('/approve-absents/{approve_absent}/reject', [ApproveAbsentController::class, 'reject'])
                 ->name('approve-absents.reject');
 
             Route::apiResource('/approve-absents', ApproveAbsentController::class);
+            //END OF APPROVE/REJECT ABSENT ROUTES
+
+            //APPROVE/REJECT LEAVE ROUTES
+            Route::put('/approve-leaves/{approve_leave}/approve', [ApproveLeaveController::class, 'approve'])
+                ->name('approve-leaves.approve');
+            Route::put('/approve-leaves/{approve_leave}/reject', [ApproveLeaveController::class, 'reject'])
+                ->name('approve-leaves.reject');
+
+            Route::apiResource('/approve-leaves', ApproveLeaveController::class);
             //END OF APPROVE/REJECT ABSENT ROUTES
         });
         //END OF PARENT APPROVAL ROUTES
