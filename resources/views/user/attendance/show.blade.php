@@ -88,11 +88,11 @@
                                     Submitted {{ $attendance->created_at->diffForHumans() }}
                                 </small>
 
-                                @if($attendance->approvalStatus === '2' && $attendance->isAutoApproved === false)
+                                @if($attendance->approvalStatus === '2' && $attendance->user->isAutoApproved === false)
                                     <div class="text-value-sm text-success">
                                         This attendance has been approved
                                     </div>
-                                @elseif($attendance->approvalStatus === '3' && $attendance->isAutoApproved === false)
+                                @elseif($attendance->approvalStatus === '3' && $attendance->user->isAutoApproved === false)
                                     <div class="text-value-sm text-danger">
                                         This attendance has been rejected
                                     </div>

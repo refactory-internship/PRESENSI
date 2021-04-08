@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Enums\AbsentStatus;
 use App\Enums\ApprovalStatus;
 use App\Enums\OvertimeStatus;
+use App\Models\Absent;
 use App\Models\Attendance;
 use App\Models\Overtime;
 use Illuminate\Support\ServiceProvider;
@@ -44,9 +46,15 @@ class AppServiceProvider extends ServiceProvider
                 ->where('approvalStatus', OvertimeStatus::NEEDS_APPROVAL)
                 ->count();
 
+            $absentCounter = Absent::query()
+                ->where('approverId', auth()->id())
+                ->where('approvalStatus', AbsentStatus::NEEDS_APPROVAL)
+                ->count();
+
             $view->with([
                 'attendanceCounter' => $attendanceCounter,
-                'overtimeCounter' => $overtimeCounter
+                'overtimeCounter' => $overtimeCounter,
+                'absentCounter' => $absentCounter
             ]);
         });
     }

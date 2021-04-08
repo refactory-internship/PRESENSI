@@ -22,4 +22,9 @@ class Calendar extends Model
     {
         return $this->hasMany(Overtime::class);
     }
+
+    public function absent()
+    {
+        return $this->hasMany(Absent::class);
+    }
 }

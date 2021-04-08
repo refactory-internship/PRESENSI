@@ -32,6 +32,7 @@ class UserSeeder extends Seeder
                 'last_name' => null,
                 'email' => 'admin@mail.com',
                 'password' => Hash::make($password),
+                'isAutoApproved' => false,
                 'created_at' => date($today),
                 'updated_at' => date($today)
             ],
@@ -43,6 +44,7 @@ class UserSeeder extends Seeder
                 'last_name' => $last_name,
                 'email' => $email,
                 'password' => Hash::make($password),
+                'isAutoApproved' => true,
                 'created_at' => date($today),
                 'updated_at' => date($today)
             ],

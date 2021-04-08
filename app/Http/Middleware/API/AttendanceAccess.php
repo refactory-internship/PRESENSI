@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\API;
 
+use App\Models\Absent;
 use App\Models\Attendance;
 use App\Models\Overtime;
 use Closure;
@@ -20,9 +21,11 @@ class AttendanceAccess
     {
         $attendance = Attendance::query()->find($request->route('attendance'));
         $overtime = Overtime::query()->find($request->route('overtime'));
+        $absent = Absent::query()->find($request->route('absent'));
 
         if ($attendance && $attendance->user->id !== auth()->id() ||
-            $overtime && $overtime->user->id !== auth()->id()) {
+            $overtime && $overtime->user->id !== auth()->id() ||
+            $absent && $absent->user->id !== auth()->id()) {
             return response()->json([
                 'message' => 'Unauthorized!'
             ], 403);

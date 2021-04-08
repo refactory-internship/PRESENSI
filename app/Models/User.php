@@ -94,4 +94,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Overtime::class);
     }
+
+    public function absent()
+    {
+        return $this->hasMany(Absent::class);
+    }
 }

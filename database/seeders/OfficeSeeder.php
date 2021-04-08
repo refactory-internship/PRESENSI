@@ -32,13 +32,6 @@ class OfficeSeeder extends Seeder
                 'created_at' => date($today),
                 'updated_at' => date($today)
             ],
-            [
-                'village_id' => 3404120005,
-                'name' => 'Office Branch C',
-                'address' => $address,
-                'created_at' => date($today),
-                'updated_at' => date($today)
-            ],
         ]);
     }
 }

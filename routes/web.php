@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Employee\AbsentController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\DeactivatedEmployeeController;
 use App\Http\Controllers\Admin\DivisionController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Admin\TimeSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Employee\AttendanceController;
 use App\Http\Controllers\Employee\OvertimeController;
+use App\Http\Controllers\Parent\ApproveAbsentController;
 use App\Http\Controllers\Parent\ApproveAttendanceController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +35,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//LOCATION DEPENDENT DROPDOWN AXIOS ROUTES
 Route::get('/getCities/{id}', [LocationController::class, 'getCities'])
     ->name('city');
 Route::get('/getDistricts/{id}', [LocationController::class, 'getDistricts'])
@@ -40,6 +43,7 @@ Route::get('/getDistricts/{id}', [LocationController::class, 'getDistricts'])
 Route::get('/getVillages/{id}', [LocationController::class, 'getVillages'])
     ->name('village');
 
+//PARENT DEPENDENT DROPDOWN AXIOS ROUTES
 Route::get('/getDivision/{id}', [UserController::class, 'getDivision'])
     ->name('division');
 Route::get('/getShift/{id}', [UserController::class, 'getShift'])
@@ -51,16 +55,24 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
 
+    //ADMIN MASTER-CRUD ROUTES
     Route::prefix('admin')->name('admin.')->middleware('web.admin')->group(function () {
+        //OFFICE CRUD ROUTES
         Route::resource('/offices', OfficeController::class);
+        //DIVISION CRUD ROUTES
         Route::resource('/divisions', DivisionController::class);
+        //CALENDAR CRUD ROUTES
         Route::resource('/calendars', CalendarController::class)
             ->only(['create', 'store']);
+        //ROLES CRUD ROUTES
         Route::resource('/roles', RoleController::class);
+        //TIME SETTING CRUD ROUTES
         Route::resource('/time-settings', TimeSettingController::class)
             ->except(['show']);
+        //USER/EMPLOYEE CRUD ROUTES
         Route::resource('/users', UserController::class);
 
+        //DEACTIVATED EMPLOYEE ROUTES
         Route::get('/deactivated', [DeactivatedEmployeeController::class, 'bin'])
             ->name('deactivated-employees');
         Route::put('/deactivated/{id}', [DeactivatedEmployeeController::class, 'restore'])
@@ -68,17 +80,26 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         Route::delete('/deactivated/{id}', [DeactivatedEmployeeController::class, 'destroy'])
             ->name('deactivated-employees.destroy');
 
+        //QRCODE ROUTES
         Route::get('/QRCode/create', [QRCodeController::class, 'create'])
             ->name('QRCode.create');
         Route::get('/QRCode/generate', [QRCodeController::class, 'generateQRCode'])
             ->name('QRCode.generate');
     });
+    //END OF ADMIN MASTER-CRUD ROUTES
 
+    //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
+        //ATTENDANCE ROUTES
         Route::resource('/attendances', AttendanceController::class);
+        //OVERTIME ROUTES
         Route::resource('/overtimes', OvertimeController::class);
+        //ABSENT ROUTES
+        Route::resource('/absents', AbsentController::class);
 
+        //PARENT APPROVAL ROUTES
         Route::middleware(['web.approveAttendance', 'web.parentAccess'])->group(function () {
+            //APPROVE/REJECT ATTENDANCE ROUTES
             Route::put('/approve-attendance/{approve_attendance}/approve', [ApproveAttendanceController::class, 'approve'])
                 ->name('approve-attendances.approve');
             Route::put('/approve-attendance/{approve_attendance}/reject', [ApproveAttendanceController::class, 'reject'])
@@ -86,7 +107,9 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
             Route::resource('/approve-attendances', ApproveAttendanceController::class)
                 ->only(['index', 'show']);
+            //END OF APPROVE/REJECT ATTENDANCE ROUTES
 
+            //APPROVE/REJECT OVERTIME ROUTES
             Route::put('/approve-overtimes/{approve_overtime}/approve', [ApproveOvertimeController::class, 'approve'])
                 ->name('approve-overtimes.approve');
             Route::put('/approve-overtimes/{approve_overtime}/reject', [ApproveOvertimeController::class, 'reject'])
@@ -94,6 +117,19 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
             Route::resource('/approve-overtimes', ApproveOvertimeController::class)
                 ->only(['index', 'show']);
+            //END OF APPROVE/REJECT OVERTIME ROUTES
+
+            //APPROVE/REJECT ABSENT ROUTES
+            Route::put('/approve-absents/{approve_absent}/approve', [ApproveAbsentController::class, 'approve'])
+                ->name('approve-absents.approve');
+            Route::put('/approve-absents/{approve_absent}/reject', [ApproveAbsentController::class, 'reject'])
+                ->name('approve-absents.reject');
+
+            Route::resource('/approve-absents', ApproveAbsentController::class)
+                ->only(['index', 'show']);
+            //END OF APPROVE/REJECT ABSENT ROUTES
         });
+        //END OF PARENT APPROVAL ROUTES
     });
+    //END OF USER/EMPLOYEE ROUTES
 });

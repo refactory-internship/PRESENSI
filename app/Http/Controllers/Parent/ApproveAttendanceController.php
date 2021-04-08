@@ -28,7 +28,7 @@ class ApproveAttendanceController extends Controller
 
     public function show($id)
     {
-        $attendance = Attendance::query()->find($id);
+        $attendance = Attendance::query()->findOrFail($id);
         return view('user.parent.approve-attendance.show', compact('attendance'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware\API;
 
+use App\Models\Absent;
 use App\Models\Attendance;
 use App\Models\Overtime;
 use Closure;
@@ -20,9 +21,11 @@ class ParentAccess
     {
         $attendance = Attendance::query()->find($request->route('approve_attendance'));
         $overtime = Overtime::query()->find($request->route('approve_overtime'));
+        $absent = Absent::query()->find($request->route('approve_absent'));
 
         if ($attendance && $attendance->approverId !== auth()->id() ||
-            $overtime && $overtime->approverId !== auth()->id()) {
+            $overtime && $overtime->approverId !== auth()->id() ||
+            $absent && $absent->approverId !== auth()->id()) {
             return response()->json([
                 'message' => 'Unauthorized, you are not the parent of this user!'
             ], 403);

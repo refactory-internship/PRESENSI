@@ -168,9 +168,4 @@
 @endsection
 @section('script')
     @include('layouts.partials.modals.script')
-    <script>
-        function updateOvertimeProgress() {
-            $('#updateOvertimeProgress').modal('show');
-        }
-    </script>
 @endsection
