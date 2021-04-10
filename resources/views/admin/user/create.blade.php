@@ -62,7 +62,7 @@
                                     <div class="col-md-9">
                                         <div class="input-group">
                                             <input type="text" name="password"
-                                                   class="form-control @error('email') is-invalid @enderror"
+                                                   class="form-control @error('password') is-invalid @enderror"
                                                    id="password">
                                             <span class="input-group-append">
                                                     <button class="btn btn-primary" type="button"

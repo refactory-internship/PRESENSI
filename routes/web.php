@@ -17,6 +17,7 @@ use App\Http\Controllers\Parent\ApproveAbsentController;
 use App\Http\Controllers\Parent\ApproveAttendanceController;
 use App\Http\Controllers\Parent\ApproveLeaveController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,15 @@ Route::get('/getParent/{office}/{division}', [UserController::class, 'getParent'
 Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
+    //PROFILE ROUTES
+    Route::get('/profile', [ProfileController::class, 'show'])
+        ->name('profile');
+    Route::put('/profile/{user}', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::get('/profile/password', [ProfileController::class, 'editPassword'])
+        ->name('profile.password');
+    Route::put('/profile/password/{user}', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password-update');
 
     //ADMIN MASTER-CRUD ROUTES
     Route::prefix('admin')->name('admin.')->middleware('web.admin')->group(function () {

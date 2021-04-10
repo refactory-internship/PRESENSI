@@ -14,7 +14,7 @@
                 <div class="dropdown-header bg-light py-2">
                     <strong>Account</strong>
                 </div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('web.profile') }}">
                     <svg class="c-icon mr-2">
                         <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-user"></use>
                     </svg>
