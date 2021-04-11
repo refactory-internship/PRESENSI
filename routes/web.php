@@ -17,6 +17,7 @@ use App\Http\Controllers\Parent\ApproveAbsentController;
 use App\Http\Controllers\Parent\ApproveAttendanceController;
 use App\Http\Controllers\Parent\ApproveLeaveController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+//RESET PASSWORD ROUTES
+Route::prefix('auth')->name('auth.')->group(function () {
+    //SEND RESET PASSWORD EMAIL
+    Route::post('/password', [PasswordController::class, 'sendEmailToAdmin'])
+        ->name('password.email');
+    //RESET PASSWORD
+    Route::get('/password/reset/{id}', [PasswordController::class, 'resetPassword'])
+        ->name('password.reset');
+});
+//END RESET PASSWORD ROUTES
 
 Auth::routes();
 

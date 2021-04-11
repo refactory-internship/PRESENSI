@@ -4,6 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-6">
+                    @include('layouts.partials.message')
                     <div class="card p-4 shadow">
                         <div class="card-body">
                             <h1>Login</h1>

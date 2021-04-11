@@ -4,6 +4,7 @@
         <div class="fade-in">
             <div class="row justify-content-center">
                 <div class="col-md-6">
+                    @include('layouts.partials.message')
                     <div class="card p-4 shadow">
                         <div class="card-body">
                             <h1>Forgot your password?</h1>
@@ -14,7 +15,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('password.email') }}">
+                            <form method="POST" action="{{ route('auth.password.email') }}">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <input id="email" type="email"
