@@ -7,6 +7,8 @@ use App\Http\Controllers\API\Parent\ApproveAbsentController;
 use App\Http\Controllers\API\Parent\ApproveAttendanceController;
 use App\Http\Controllers\API\Parent\ApproveLeaveController;
 use App\Http\Controllers\API\Parent\ApproveOvertimeController;
+use App\Http\Controllers\API\PasswordController;
+use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\SanctumAuthController;
 use App\Http\Controllers\API\Employee\AttendanceController;
 use Illuminate\Http\Request;
@@ -33,13 +35,30 @@ Route::name('api.')->group(function () {
         //LOGIN
         Route::post('/login', [SanctumAuthController::class, 'login'])
             ->name('login');
-        //GET USER'S PROFILE ROUTE TEST
-        Route::get('/me', function () {
-            return auth()->user();
-        })->name('me')->middleware('auth:sanctum');
-        //LOGOUT
-        Route::post('/logout', [SanctumAuthController::class, 'logout'])
-            ->name('logout')->middleware('auth:sanctum');
+
+        //RESET PASSWORD ROUTES
+        //SEND RESET PASSWORD EMAIL
+        Route::post('/password', [PasswordController::class, 'sendEmailToAdmin'])
+            ->name('password.email');
+        //RESET PASSWORD
+        Route::get('/password/{id}/{token}', [PasswordController::class, 'resetPassword'])
+            ->name('password.reset');
+        //END RESET PASSWORD ROUTES
+
+        Route::middleware('auth:sanctum')->group(function () {
+            //LOGOUT
+            Route::post('/logout', [SanctumAuthController::class, 'logout'])
+                ->name('logout');
+
+            //PROFILE ROUTES
+            Route::get('/profile', [ProfileController::class, 'show'])
+                ->name('profile');
+            Route::put('/profile/{user}', [ProfileController::class, 'update'])
+                ->name('profile.update');
+            Route::put('/profile/password/{user}', [ProfileController::class, 'updatePassword'])
+                ->name('profile.password-update');
+            //END PROFILE ROUTES
+        });
     });
     //END OF AUTH ROUTES
 

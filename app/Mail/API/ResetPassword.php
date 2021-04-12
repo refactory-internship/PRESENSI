@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\API;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -34,7 +34,7 @@ class ResetPassword extends Mailable
     public function build()
     {
         $user = User::query()->findOrFail($this->userId);
-        return $this->markdown('email.password.reset')
+        return $this->markdown('email.password.API.reset')
             ->subject('Reset Password Request')
             ->with([
                 'user' => $user,

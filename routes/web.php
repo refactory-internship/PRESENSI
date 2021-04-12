@@ -43,7 +43,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('/password', [PasswordController::class, 'sendEmailToAdmin'])
         ->name('password.email');
     //RESET PASSWORD
-    Route::get('/password/reset/{id}', [PasswordController::class, 'resetPassword'])
+    Route::get('/password/reset/{id}/{token}', [PasswordController::class, 'resetPassword'])
         ->name('password.reset');
 });
 //END RESET PASSWORD ROUTES

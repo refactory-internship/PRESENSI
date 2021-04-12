@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
-        "simplesoftwareio/simple-qrcode": "^4.2"
+        "simplesoftwareio/simple-qrcode": "^4.2",
+      "ext-openssl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

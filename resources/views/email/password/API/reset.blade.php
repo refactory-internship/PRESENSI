@@ -10,7 +10,7 @@
 
 If you do not recognize this request, please ignore this email.
 
-@component('mail::button', ['url' => route('auth.password.reset', [$user->id, $token])])
+@component('mail::button', ['url' => route('api.auth.password.reset', [$user->id, $token])])
 Reset Password
 @endcomponent
 @endcomponent

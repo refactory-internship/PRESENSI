@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Mail\ResetPassword;
+use App\Http\Controllers\Controller;
+use App\Mail\API\ResetPassword;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,7 +28,9 @@ class PasswordController extends Controller
 
         Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
 
-        return redirect()->back()->with('message', 'An email has been sent to Administrator');
+        return response()->json([
+            'message' => 'An email has been sent to Administrator'
+        ]);
     }
 
     public function resetPassword($id, $token)
@@ -44,9 +47,13 @@ class PasswordController extends Controller
 
             DB::table('password_resets')->where('email', $user->email)->delete();
 
-            return redirect()->route('login')->with('message', 'Password has been reset successfully');
+            return response()->json([
+                'message' => 'Password has been reset successfully'
+            ]);
         } else {
-            return redirect()->route('login')->with('danger', 'Token does not match');
+            return response()->json([
+                'message' => 'Token does not match'
+            ]);
         }
     }
 }
