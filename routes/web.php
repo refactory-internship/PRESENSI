@@ -86,8 +86,10 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
         //DIVISION CRUD ROUTES
         Route::resource('/divisions', DivisionController::class);
         //CALENDAR CRUD ROUTES
-        Route::resource('/calendars', CalendarController::class)
-            ->only(['create', 'store']);
+        Route::get('/calendars/search', [CalendarController::class, 'search'])
+            ->name('calendars.search');
+
+        Route::resource('/calendars', CalendarController::class);
         //ROLES CRUD ROUTES
         Route::resource('/roles', RoleController::class);
         //TIME SETTING CRUD ROUTES

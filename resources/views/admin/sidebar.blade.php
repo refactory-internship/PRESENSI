@@ -57,7 +57,7 @@
         </ul>
     </li>
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.create') }}">
+        <a class="c-sidebar-nav-link" href="{{ route('web.admin.calendars.index') }}">
             <svg class="c-sidebar-nav-icon">
                 <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-settings"></use>
             </svg>

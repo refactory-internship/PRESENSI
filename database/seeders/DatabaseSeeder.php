@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             DivisionOfficeSeeder::class,
             UserSeeder::class,
             ChildSeeder::class,
-            CalendarSeeder::class,
+//            CalendarSeeder::class,
         ]);
     }
 }

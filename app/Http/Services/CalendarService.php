@@ -8,19 +8,19 @@ use App\Enums\CalendarStatus;
 use App\Models\Calendar;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
 
 class CalendarService
 {
-    public function store($first, $last)
+    public function store(Request $request)
     {
-        //Truncate all records
-        Calendar::query()->delete();
+        //Create dates from selected year interval
+        $firstRange = Carbon::createFromDate($request->first_range, '01', '01')->toDateString();
+        $lastRange = Carbon::createFromDate($request->last_range, '12', '31')->toDateString();
+        $dates = CarbonPeriod::create($firstRange, $lastRange);
 
         //Create an empty array and save the transformed input to array
         $data = [];
-
-        //Get the date range
-        $dates = CarbonPeriod::create($first, $last);
 
         //For each dates create a transformed data
         foreach ($dates as $date) {
@@ -49,11 +49,6 @@ class CalendarService
 
     public function dayStatus($date)
     {
-        //parse date to get the month and date
-        $dayMonth = Carbon::parse($date)->format('m-d');
-
-        //store status and the description in a variable
-
         //check if the date is WEEK_END
         if ($date->dayName === 'Saturday' || $date->dayName === 'Sunday') {
             $result = [
@@ -67,64 +62,38 @@ class CalendarService
             ];
         }
 
-        //check for HOLIDAY
-        if ($dayMonth === '01-01') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Tahun Baru Masehi'
-            ];
-        } else if ($dayMonth === '02-12') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Tahun Baru Imlek'
-            ];
-        } else if ($dayMonth === '03-11') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Isra\' Mi\'raj Nabi Muhammad SAW'
-            ];
-        } else if ($dayMonth === '03-14') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Hari Raya Nyepi'
-            ];
-        } else if ($dayMonth === '04-02') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Wafat Isa Al Masih'
-            ];
-        } else if ($dayMonth === '05-01') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Hari Buruh Internasional'
-            ];
-        } else if ($dayMonth === '05-26') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Kenaikan Isa Al Masih'
-            ];
-        } else if ($dayMonth === '06-01') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Hari Lahir Pancasila'
-            ];
-        } else if ($dayMonth === '08-17') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Hari Kemerdekaan Republik Indonesia'
-            ];
-        } else if ($dayMonth === '12-24') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Cuti Bersama Hari Raya Natal'
-            ];
-        } else if ($dayMonth === '12-25') {
-            $result = [
-                'status' => CalendarStatus::HOLIDAY,
-                'description' => 'Hari Raya Natal'
-            ];
-        }
-
         return $result;
+    }
+
+    public function getCurrentDates()
+    {
+        $thisYear = date('Y', strtotime(Carbon::now()));
+        $thisMonth = date('m', strtotime(Carbon::now()));
+
+        return Calendar::query()
+            ->where('year', $thisYear)
+            ->where('month', $thisMonth)
+            ->get();
+    }
+
+    public function pluckYears()
+    {
+        return Calendar::query()
+            ->groupBy('year')
+            ->pluck('year', 'year');
+    }
+
+    public function pluckMonths()
+    {
+        return Calendar::query()
+            ->pluck('month_name', 'month');
+    }
+
+    public function searchDates(Request $request)
+    {
+        return Calendar::query()
+            ->where('year', $request->year)
+            ->where('month', $request->month)
+            ->get();
     }
 }
