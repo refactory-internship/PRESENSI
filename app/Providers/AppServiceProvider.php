@@ -62,7 +62,19 @@ class AppServiceProvider extends ServiceProvider
                 'attendanceCounter' => $attendanceCounter,
                 'overtimeCounter' => $overtimeCounter,
                 'absentCounter' => $absentCounter,
-                'leaveCounter' => $leaveCounter
+                'leaveCounter' => $leaveCounter,
+            ]);
+        });
+
+        View::composer('admin.calendar.*', function ($view) {
+            if (auth()->user()->hasRole('Admin')) {
+                $calendarRoutes = 'web.admin.calendars';
+            } else {
+                $calendarRoutes = 'web.employee.calendars';
+            }
+
+            $view->with([
+               'calendarRoutes' => $calendarRoutes
             ]);
         });
     }

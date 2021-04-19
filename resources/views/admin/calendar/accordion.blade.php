@@ -44,7 +44,7 @@
                                     data-bs-target="#editDateModal"
                                     data-bs-status="{{ $calendar->status }}"
                                     data-bs-description="{{ $calendar->description }}"
-                                    data-bs-url="{{ route('web.admin.calendars.update', $calendar->id) }}">
+                                    data-bs-url="{{ route($calendarRoutes . '.update', $calendar->id) }}">
                                 <i class="bi bi-pencil-square"></i>
                                 Edit
                             </button>

@@ -1,4 +1,4 @@
-<form action="{{ route('web.admin.calendars.store') }}" method="POST">
+<form action="{{ route($calendarRoutes . '.store') }}" method="POST">
     @csrf
     <div class="form-group row mb-3">
         <label for="first_range" class="col-form-label col-md-3">First Date Range</label>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="form-group float-right">
-        <a href="{{ route('web.admin.calendars.index') }}" class="btn btn-dark">Cancel</a>
+        <a href="{{ route($calendarRoutes . '.index') }}" class="btn btn-dark">Cancel</a>
         <input type="submit" value="Add New Calendar" class="btn btn-primary">
     </div>
 </form>

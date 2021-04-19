@@ -61,6 +61,18 @@
                 </a>
             </li>
 
+            @if(auth()->user()->can('manage-calendar'))
+                <li class="c-sidebar-nav-title">HR Menu</li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('web.employee.calendars.index') }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-settings"></use>
+                        </svg>
+                        Calendar
+                    </a>
+                </li>
+            @endif
+
             @if(auth()->user()->can('approve-attendances'))
                 <li class="c-sidebar-nav-title">Approval</li>
                 <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">

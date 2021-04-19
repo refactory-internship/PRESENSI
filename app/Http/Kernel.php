@@ -13,6 +13,7 @@ use App\Http\Middleware\Web\AdminAccess;
 use App\Http\Middleware\Web\ApproveAttendance;
 use App\Http\Middleware\Web\EmployeeAccess;
 use App\Http\Middleware\Web\AttendanceAccess;
+use App\Http\Middleware\Web\HumanResourceAccess;
 use App\Http\Middleware\Web\ParentAccess;
 use Fruitcake\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -99,5 +100,6 @@ class Kernel extends HttpKernel
         'web.approveAttendance' => ApproveAttendance::class,
         'web.attendanceAccess' => AttendanceAccess::class,
         'web.parentAccess' => ParentAccess::class,
+        'web.humanResource' => HumanResourceAccess::class
     ];
 }

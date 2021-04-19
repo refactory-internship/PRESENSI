@@ -38,5 +38,12 @@ class AuthServiceProvider extends ServiceProvider
             }
             return false;
         });
+
+        Gate::define('manage-calendar', function () {
+            if (auth()->user()->division_office->division->name === 'Human Resource') {
+                return true;
+            }
+            return false;
+        });
     }
 }

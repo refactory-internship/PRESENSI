@@ -6,7 +6,8 @@
                 <div class="col-md-10">
                     @include('layouts.partials.message')
                     <div class="mb-3">
-                        <a href="{{ route('web.admin.calendars.create') }}" class="btn btn-success">
+                        <a href="{{ route($calendarRoutes . '.create') }}"
+                           class="btn btn-success">
                             <i class="bi bi-plus"></i>
                             Add New Calendar
                         </a>
@@ -14,7 +15,7 @@
 
                     <div class="card shadow p-4">
                         <div class="card-body">
-                            <form action="{{ route('web.admin.calendars.search') }}" method="GET">
+                            <form action="{{ route($calendarRoutes . '.search') }}" method="GET">
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label for="month" class="text-uppercase font-weight-bold small">
