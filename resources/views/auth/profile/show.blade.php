@@ -5,7 +5,7 @@
             <div class="row">
                 @include('layouts.partials.message')
                 <div class="col-md-6 mb-3">
-                    <a href="{{ redirect()->back() }}" class="btn btn-dark">
+                    <a href="{{ route('web.home') }}" class="btn btn-dark">
                         <i class="bi bi-arrow-left-circle"></i>
                         Back
                     </a>
@@ -47,7 +47,11 @@
                                     <strong>Division and Office</strong>
                                 </div>
                                 <div class="row">
-                                    <p>{{ $user->division_office->division->name . ' on ' . $user->division_office->office->name }}</p>
+                                    @if(!$user->division_office)
+                                        <p class="text-value-sm text-danger text-uppercase">No Data</p>
+                                    @else
+                                        <p>{{ $user->division_office->division->name . ' on ' . $user->division_office->office->name }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

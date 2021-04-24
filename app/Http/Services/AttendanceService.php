@@ -61,6 +61,38 @@ class AttendanceService
         ]);
     }
 
+    public function storeUsingQRCode(Request $request)
+    {
+        $user = User::query()->find(auth()->id());
+        $timeToday = $this->dateTimeService->getCurrentDate();
+        $calendar = $this->dateTimeService->getDateFromDatabase();
+
+        if ($user->isAutoApproved === true) {
+            $approvedBy = AttendanceApprover::SYSTEM;
+            $approverId = null;
+            $approvalStatus = ApprovalStatus::APPROVED;
+
+        } else {
+            $approvedBy = AttendanceApprover::PARENT;
+            $approverId = $user->parent->id;
+            $approvalStatus = null;
+        }
+
+        return Attendance::query()->create([
+            'user_id' => $user->id,
+            'calendar_id' => $calendar->id,
+            'approvedBy' => $approvedBy,
+            'approverId' => $approverId,
+            'isQRCode' => true,
+            'task_plan' => 'needs to be updated',
+            'clock_in_time' => date('H:i:s', strtotime($timeToday)),
+            'note' => 'attendance created using qr code',
+            'clock_out_time' => null,
+            'isFinished' => false,
+            'approvalStatus' => $approvalStatus,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $attendance = Attendance::query()->findOrFail($id);

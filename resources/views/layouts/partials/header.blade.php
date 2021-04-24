@@ -1,9 +1,9 @@
-<header class="c-header c-header-light c-header-fixed c-header-with-subheader shadow-sm">
-    <a class="c-header-brand d-lg-none" href="#">
-        <svg width="118" height="46">
-            <use xlink:href="{{ asset('coreui/brand/coreui.svg') }}#full"></use>
+<header class="c-header c-header-light  c-header-fixed c-header-with-subheader shadow-sm">
+    <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+        <svg class="c-icon c-icon-lg">
+            <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-menu"></use>
         </svg>
-    </a>
+    </button>
     <ul class="c-header-nav ml-auto mr-4">
         <li class="c-header-nav-item dropdown">
             <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"

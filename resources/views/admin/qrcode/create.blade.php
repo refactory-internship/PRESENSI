@@ -14,12 +14,20 @@
                                     <option value="60">60 Seconds</option>
                                 </select>
                             </div>
-                            <a href="{{ route('web.admin.QRCode.generate') }}" class="btn btn-primary" target="_blank">
-                                Start QR Code
-                            </a>
-                            {{--<button class="btn btn-success" onclick="startTimer()">Start QR Code</button>--}}
-                            <p id="countdown"></p>
-                            <p id="qrCode"></p>
+{{--                            <a href="{{ route('web.admin.QRCode.generate') }}" class="btn btn-primary" target="_blank" onclick="startTimer()">--}}
+{{--                                Start QR Code--}}
+{{--                            </a>--}}
+                            <button class="btn btn-success" onclick="startTimer()">Start QR Code</button>
+                            <button class="btn btn-danger" id="stopTimer">Stop QR Code</button>
+
+                            <div class="text-center mb-3">
+                                <h5>Remaining Time</h5>
+                                <h5 id="countdown">00:00</h5>
+                            </div>
+
+                            <div class="visible-print text-center mb-3">
+                                <p id="qrCode"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +43,8 @@
         function startTimer() {
             let duration = $('#timer').val();
             const timerInterval = setInterval(countdown, 1000);
-            text.innerHTML = Math.random();
+            getQRCode();
+            // text.innerHTML = Math.random();
 
             function countdown() {
                 const minute = duration / 60;
@@ -56,9 +65,17 @@
 
             $('#stopTimer').on('click', function () {
                 clearInterval(timerInterval)
-                countdownElement.innerHTML = '';
+                countdownElement.innerHTML = '00:00';
                 text.innerHTML = '';
             })
+        }
+
+        function getQRCode() {
+            axios.get('/web/admin/QRCode/generate')
+                .then(function (response) {
+                    console.log(response)
+                    text.innerHTML = response.data;
+                });
         }
     </script>
 @endsection

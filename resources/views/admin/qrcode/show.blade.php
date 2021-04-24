@@ -6,9 +6,9 @@
                 <div class="col-md-6">
                     <div class="card p-4 shadow">
                         <div class="card-body">
-                            <h5 class="text-center mb-3">Remaining Time:</h5>
+                            <h5 class="text-center mb-3" id="countdown">Remaining Time:</h5>
                             <div class="visible-print text-center mb-3">
-                                {{ $qr_code }}
+                                <p id="qrCode"></p>
                             </div>
                             <div class="text-center">
                                 <a class="btn btn-danger" href="{{ route('web.admin.QRCode.create') }}" onclick="window.close()">

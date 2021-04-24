@@ -117,6 +117,9 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
+        Route::get('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
+            ->name('QRCode.save-attendance');
+
         //ATTENDANCE ROUTES
         Route::resource('/attendances', AttendanceController::class);
         //OVERTIME ROUTES
