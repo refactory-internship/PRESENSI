@@ -8,6 +8,7 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Stevebauman\Location\Facades\Location;
 
 class QRCodeController extends Controller
 {
@@ -40,15 +41,18 @@ class QRCodeController extends Controller
 
     public function saveAttendance(Request $request, $token)
     {
-        $tokenFromDB = DB::table('qr_tokens')
-            ->where('token', $token)
-            ->value('token');
-
-        if ($token === $tokenFromDB) {
-            $this->attendanceService->storeUsingQRCode($request);
-            return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Created Using QR Code!');
-        } else {
-            return redirect()->route('web.employee.attendances.index')->with('danger', 'QR Code Expires!');
-        }
+//        $tokenFromDB = DB::table('qr_tokens')
+//            ->where('token', $token)
+//            ->value('token');
+//
+//        if ($token === $tokenFromDB) {
+//            $this->attendanceService->storeUsingQRCode($request);
+//            return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Created Using QR Code!');
+//        } else {
+//            return redirect()->route('web.employee.attendances.index')->with('danger', 'QR Code Expires!');
+//        }
+        $ipAddress = \request()->getClientIp();
+        $locationData = Location::get($ipAddress);
+        dd($ipAddress);
     }
 }

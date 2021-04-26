@@ -37,12 +37,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/location-test', function () {
-   $ipAddress = request()->ip();
-   $locationData = \Stevebauman\Location\Facades\Location::get($ipAddress);
-   dd($ipAddress);
-});
-
 //RESET PASSWORD ROUTES
 Route::prefix('auth')->name('auth.')->group(function () {
     //SEND RESET PASSWORD EMAIL
