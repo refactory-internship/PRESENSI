@@ -146,8 +146,10 @@
                                 <div class="text-value-sm">
                                     {{ $attendance->user->parent->getFullNameAttribute() }}
                                 </div>
-                            @else
+                            @elseif($attendance->user->isAutoApproved === true)
                                 <div class="text-value-sm text-info">SYSTEM</div>
+                            @else
+                                <div class="text-value-sm text-secondary">NO DATA</div>
                             @endif
                         </div>
                     </div>

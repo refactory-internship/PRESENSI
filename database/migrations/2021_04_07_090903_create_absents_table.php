@@ -26,8 +26,6 @@ class CreateAbsentsTable extends Migration
             $table->enum('approvedBy', AttendanceApprover::getValues())->nullable();
 
             $table->unsignedBigInteger('approverId')->nullable();
-            $table->foreign('approverId')->references('parent_id')->on('users')
-                ->onUpdate('CASCADE')->onDelete('CASCADE');
 
             $table->date('date')->nullable();
             $table->text('reason')->nullable();

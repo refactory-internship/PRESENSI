@@ -26,8 +26,6 @@ class CreateOvertimesTable extends Migration
             $table->enum('approvedBy', AttendanceApprover::getValues())->nullable();
 
             $table->unsignedBigInteger('approverId')->nullable();
-            $table->foreign('approverId')->references('parent_id')->on('users')
-                ->onUpdate('CASCADE')->onDelete('CASCADE');
 
             $table->string('task_plan')->nullable();
             $table->time('start_time')->nullable();

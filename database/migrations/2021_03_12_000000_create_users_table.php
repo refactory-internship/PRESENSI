@@ -25,12 +25,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('isAutoApproved')->default(0);
+            $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('CASCADE');
             $table->timestamps();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-           $table->foreignId('parent_id')->nullable()->after('isAutoApproved')->constrained('users')->onDelete('CASCADE');
-           $table->softDeletes()->after('updated_at');
+            $table->softDeletes();
         });
     }
 
