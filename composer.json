@@ -10,7 +10,9 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-imagick": "*",
+        "ext-openssl": "*",
         "bensampo/laravel-enum": "^3.3",
+        "fakerphp/faker": "^1.9.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -20,8 +22,7 @@
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "fakerphp/faker": "^1.9.1",
-      "ext-openssl": "*"
+        "stevebauman/location": "^6.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
