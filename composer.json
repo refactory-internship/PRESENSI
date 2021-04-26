@@ -20,11 +20,11 @@
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "fakerphp/faker": "^1.9.1",
       "ext-openssl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
