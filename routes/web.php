@@ -40,7 +40,7 @@ Route::get('/', function () {
 Route::get('/location-test', function () {
    $ipAddress = request()->ip();
    $locationData = \Stevebauman\Location\Facades\Location::get($ipAddress);
-   dd($locationData);
+   dd($ipAddress);
 });
 
 //RESET PASSWORD ROUTES
