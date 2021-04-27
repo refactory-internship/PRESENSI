@@ -61,38 +61,6 @@ class AttendanceService
         ]);
     }
 
-    public function storeUsingQRCode(Request $request)
-    {
-        $user = User::query()->find(auth()->id());
-        $timeToday = $this->dateTimeService->getCurrentDate();
-        $calendar = $this->dateTimeService->getDateFromDatabase();
-
-        if ($user->isAutoApproved === true) {
-            $approvedBy = AttendanceApprover::SYSTEM;
-            $approverId = null;
-            $approvalStatus = ApprovalStatus::APPROVED;
-
-        } else {
-            $approvedBy = AttendanceApprover::PARENT;
-            $approverId = $user->parent->id;
-            $approvalStatus = null;
-        }
-
-        return Attendance::query()->create([
-            'user_id' => $user->id,
-            'calendar_id' => $calendar->id,
-            'approvedBy' => $approvedBy,
-            'approverId' => $approverId,
-            'isQRCode' => true,
-            'task_plan' => 'needs to be updated',
-            'clock_in_time' => date('H:i:s', strtotime($timeToday)),
-            'note' => 'attendance created using qr code',
-            'clock_out_time' => null,
-            'isFinished' => false,
-            'approvalStatus' => $approvalStatus,
-        ]);
-    }
-
     public function update(Request $request, $id)
     {
         $attendance = Attendance::query()->findOrFail($id);
@@ -101,16 +69,19 @@ class AttendanceService
         if ($request->has('isFinished')) {
             $clockOutTime = $timeToday;
             $isFinished = true;
+
             if ($attendance->user->isAutoApproved === true) {
                 $approvalStatus = ApprovalStatus::APPROVED;
             } else {
                 $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
             }
-            if ($attendance->approvalStatus === '1' || $attendance->approvalStatus === '2' || $attendance->approvalStatus === '3') {
+
+            if ($attendance->approvalStatus === '1') {
                 $isFinished = $attendance->isFinished;
                 $clockOutTime = $attendance->clock_out_time;
                 $approvalStatus = $attendance->approvalStatus;
             }
+
         } else {
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;

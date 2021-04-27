@@ -37,6 +37,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('location-test', [QRCodeController::class, 'locationTest']);
+
 //RESET PASSWORD ROUTES
 Route::prefix('auth')->name('auth.')->group(function () {
     //SEND RESET PASSWORD EMAIL
