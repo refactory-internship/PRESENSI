@@ -119,6 +119,7 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
+        //STORE ATTENDANCE USING QR CODE
         Route::get('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
             ->name('QRCode.save-attendance');
 

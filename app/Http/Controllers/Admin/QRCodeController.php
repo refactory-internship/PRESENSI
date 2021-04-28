@@ -39,7 +39,7 @@ class QRCodeController extends Controller
             $this->qrCodeService->saveQRAttendance();
             return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Created Using QR Code!');
         } else {
-            return redirect()->route('web.employee.attendances.index')->with('danger', 'QR Code Expires!');
+            return redirect()->route('web.employee.attendances.index')->with('danger', 'QR Code Expired!');
         }
     }
 

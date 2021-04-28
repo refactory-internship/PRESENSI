@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Parent\ApproveLeaveController;
 use App\Http\Controllers\API\Parent\ApproveOvertimeController;
 use App\Http\Controllers\API\PasswordController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\QRCodeController;
 use App\Http\Controllers\API\SanctumAuthController;
 use App\Http\Controllers\API\Employee\AttendanceController;
 use Illuminate\Http\Request;
@@ -64,6 +65,10 @@ Route::name('api.')->group(function () {
 
     //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->middleware(['auth:sanctum', 'api.attendanceAccess', 'api.employee'])->name('employee.')->group(function () {
+        //STORE ATTENDANCE USING QRCODE
+        Route::get('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
+            ->name('QRCode.save-attendance');
+
         //ATTENDANCE CRUD ROUTES
         Route::apiResource('/attendances', AttendanceController::class);
         //OVERTIME CRUD ROUTES
