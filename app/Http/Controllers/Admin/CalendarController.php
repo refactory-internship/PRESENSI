@@ -41,11 +41,14 @@ class CalendarController extends Controller
             ->orWhere('year', $request->last_range)
             ->distinct()->value('year');
 
+        $first_year = $request->first_range;
+        $last_year = $request->last_range;
+
         if ($calendar) {
             return redirect()->back()->with('danger', 'Selected year already exists!');
         }
 
-        $this->calendarService->store($request);
+        $this->calendarService->store($first_year, $last_year);
         return redirect()->route('web.admin.calendars.create')->with('message', 'New Calendar Added!');
     }
 

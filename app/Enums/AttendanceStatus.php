@@ -6,7 +6,8 @@ use BenSampo\Enum\Enum;
 
 final class AttendanceStatus extends Enum
 {
-    const PRESENT = 1;
-    const ABSENT = 2;
-    const LEAVE = 3;
+    const ATTENDANCE = 1;
+    const OVERTIME = 2;
+    const ABSENT = 3;
+    const LEAVE = 4;
 }

@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 
 class CalendarService
 {
-    public function store(Request $request)
+    public function store($first_year, $last_year)
     {
         //Create dates from selected year interval
-        $firstRange = Carbon::createFromDate($request->first_range, '01', '01')->toDateString();
-        $lastRange = Carbon::createFromDate($request->last_range, '12', '31')->toDateString();
-        $dates = CarbonPeriod::create($firstRange, $lastRange);
+        $firstDate = Carbon::createFromDate($first_year, '01', '01')->toDateString();
+        $lastDate = Carbon::createFromDate($last_year, '12', '31')->toDateString();
+        $dates = CarbonPeriod::create($firstDate, $lastDate);
 
         //Create an empty array and save the transformed input to array
         $data = [];

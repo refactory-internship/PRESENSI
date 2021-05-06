@@ -27,4 +27,9 @@ class Calendar extends Model
     {
         return $this->hasMany(Absent::class);
     }
+
+//    public function leave()
+//    {
+//        return $this->hasMany(Leave::class);
+//    }
 }

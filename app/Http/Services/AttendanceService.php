@@ -4,11 +4,13 @@ namespace App\Http\Services;
 
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
+use App\Enums\AttendanceStatus;
 use App\Http\Resources\AttendanceResource;
 use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AttendanceService
 {
@@ -46,7 +48,7 @@ class AttendanceService
             $approvalStatus = null;
         }
 
-        return Attendance::query()->create([
+        $attendance = Attendance::query()->create([
             'user_id' => $user->id,
             'calendar_id' => $calendar->id,
             'approvedBy' => $approvedBy,
@@ -59,6 +61,10 @@ class AttendanceService
             'isFinished' => false,
             'approvalStatus' => $approvalStatus,
         ]);
+
+        $this->insertToAttendanceMaster($attendance);
+
+        return $attendance;
     }
 
     public function update(Request $request, $id)
@@ -96,6 +102,19 @@ class AttendanceService
             'clock_out_time' => $clockOutTime,
             'isFinished' => $isFinished,
             'approvalStatus' => $approvalStatus
+        ]);
+    }
+
+    public function insertToAttendanceMaster($attendance)
+    {
+        DB::table('attendance_master')->insert([
+            'user_id' => $attendance->user_id,
+            'attendance_id' => $attendance->id,
+            'attendance_type' => AttendanceStatus::ATTENDANCE,
+            'month' => $attendance->calendar->month,
+            'year' => $attendance->calendar->year,
+            'created_at' => $attendance->calendar->date,
+            'updated_at' => $attendance->calendar->date
         ]);
     }
 

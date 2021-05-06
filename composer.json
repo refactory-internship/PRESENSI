@@ -11,6 +11,7 @@
         "php": "^7.3|^8.0",
         "ext-imagick": "*",
         "ext-openssl": "*",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "bensampo/laravel-enum": "^3.3",
         "fakerphp/faker": "^1.9.1",
         "fideloper/proxy": "^4.4",
@@ -21,6 +22,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
+        "maatwebsite/excel": "^3.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "stevebauman/location": "^6.1"
     },

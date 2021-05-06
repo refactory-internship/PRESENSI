@@ -11,7 +11,7 @@
                             Add New Employee
                         </a>
                     </div>
-                    <div class="card shadow p-4" style="border-radius: 20px;">
+                    <div class="card shadow p-4">
                         <div class="card-body">
                             <table class="table table-hover" aria-label="office-table" id="employeeTable">
                                 <thead>

@@ -81,4 +81,12 @@
             QR Code Attendance
         </a>
     </li>
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link" href="{{ route('web.admin.attendance-report.index') }}">
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-file"></use>
+            </svg>
+            Attendance Report
+        </a>
+    </li>
 </ul>

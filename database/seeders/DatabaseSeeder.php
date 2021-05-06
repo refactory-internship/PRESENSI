@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            LaravoltIndonesiaSeeder::class,
             RoleSeeder::class,
             DivisionSeeder::class,
             OfficeSeeder::class,
@@ -21,7 +23,7 @@ class DatabaseSeeder extends Seeder
             DivisionOfficeSeeder::class,
             UserSeeder::class,
             ChildSeeder::class,
-//            CalendarSeeder::class,
+            CalendarSeeder::class,
         ]);
     }
 }

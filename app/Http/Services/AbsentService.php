@@ -6,11 +6,13 @@ namespace App\Http\Services;
 
 use App\Enums\AbsentStatus;
 use App\Enums\AttendanceApprover;
+use App\Enums\AttendanceStatus;
 use App\Http\Resources\AbsentResource;
 use App\Models\Absent;
 use App\Models\Calendar;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AbsentService
 {
@@ -39,7 +41,7 @@ class AbsentService
             $approvalStatus = AbsentStatus::NEEDS_APPROVAL;
         }
 
-        return Absent::query()->create([
+        $absent =  Absent::query()->create([
             'user_id' => $user->id,
             'calendar_id' => $calendar->id,
             'approvedBy' => $approvedBy,
@@ -48,6 +50,10 @@ class AbsentService
             'date' => $request->date,
             'approvalStatus' => $approvalStatus,
         ]);
+
+        $this->insertToAttendanceMaster($absent);
+
+        return $absent;
     }
 
     public function update(Request $request, $id)
@@ -55,6 +61,19 @@ class AbsentService
         return Absent::query()->findOrFail($id)->update([
             'reason' => $request->reason,
             'date' => $request->date
+        ]);
+    }
+
+    public function insertToAttendanceMaster($absent)
+    {
+        DB::table('attendance_master')->insert([
+            'user_id' => $absent->user_id,
+            'absent_id' => $absent->id,
+            'attendance_type' => AttendanceStatus::ABSENT,
+            'month' => $absent->calendar->month,
+            'year' => $absent->calendar->year,
+            'created_at' => $absent->calendar->date,
+            'updated_at' => $absent->calendar->date
         ]);
     }
 

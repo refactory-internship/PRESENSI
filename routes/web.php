@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttendanceReportController;
 use App\Http\Controllers\Employee\AbsentController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\DeactivatedEmployeeController;
@@ -114,6 +115,12 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             ->name('QRCode.create');
         Route::get('/QRCode/generate', [QRCodeController::class, 'generateQRCode'])
             ->name('QRCode.generate');
+
+        //ATTENDANCE REPORT ROUTES
+        Route::get('/attendances/report/export/{user}', [AttendanceReportController::class, 'export'])
+            ->name('attendance-report.export');
+        Route::get('/attendances/report', [AttendanceReportController::class, 'index'])
+            ->name('attendance-report.index');
     });
     //END OF ADMIN MASTER-CRUD ROUTES
 

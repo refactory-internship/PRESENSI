@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Http\Services\CalendarService;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Seeder;
 
 class CalendarSeeder extends Seeder
@@ -22,8 +23,10 @@ class CalendarSeeder extends Seeder
      */
     public function run()
     {
-        $first = Carbon::create('2021', '01', '01');
-        $last = Carbon::create('2026', '12', '31');
-        $this->calendarService->store($first, $last);
+        $first_year = '2021';
+        $last_year = '2021';
+        $this->calendarService->store($first_year, $last_year);
+
+
     }
 }
