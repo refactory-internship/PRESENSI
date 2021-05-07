@@ -47,29 +47,43 @@
 <table class="content" aria-label="attendancePDF">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Date</th>
-        <th scope="col">Attendance Type</th>
+        <th scope="col">Type</th>
+        <th scope="col">Total</th>
     </tr>
     </thead>
     <tbody>
-    @foreach($data as $record)
-        <tr>
-            <td>{{ $loop->index + 1 }}</td>
-            <td>{{ date('F jS Y', strtotime($record->created_at)) }}</td>
-            @if($record->attendance_type === '1')
-                <td>Attendance</td>
-            @elseif($record->attendance_type === '2')
-                <td>Overtime</td>
-            @elseif($record->attendance_type === '3')
-                <td>Absent</td>
-            @elseif($record->attendance_type === '4')
-                <td>Leave</td>
-            @else
-                <td>No Data</td>
-            @endif
-        </tr>
-    @endforeach
+    <tr>
+        <td>
+            <strong>Attendance</strong>
+        </td>
+        <td>
+            <strong>{{ $attendance }} {{ $attendance > 1 ? 'Days' : 'Day' }}</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>Overtime</strong>
+        </td>
+        <td>
+            <strong>{{ $overtime }} {{ $overtime > 1 ? 'Hours' : 'Hour' }}</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>Absent</strong>
+        </td>
+        <td>
+            <strong>{{ $absent }} {{ $absent > 1 ? 'Days' : 'Day' }}</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong>Leave</strong>
+        </td>
+        <td>
+            <strong>{{ $leave }} {{ $leave > 1 ? 'Days' : 'Day' }}</strong>
+        </td>
+    </tr>
     </tbody>
 </table>
 </body>

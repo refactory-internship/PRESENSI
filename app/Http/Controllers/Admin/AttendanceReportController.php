@@ -4,20 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AttendanceReportExport;
 use App\Http\Controllers\Controller;
+use App\Http\Services\AttendanceReportService;
 use App\Http\Services\CalendarService;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceReportController extends Controller
 {
     private $calendarService;
+    private $attendanceReportService;
 
-    public function __construct(CalendarService $calendarService)
+    public function __construct(CalendarService $calendarService, AttendanceReportService $attendanceReportService)
     {
         $this->calendarService = $calendarService;
+        $this->attendanceReportService = $attendanceReportService;
     }
 
     public function index()
@@ -34,18 +37,21 @@ class AttendanceReportController extends Controller
     public function export(Request $request, $id)
     {
         $user = User::query()->findOrFail($id);
-        $data = DB::table('attendance_master')
-            ->where('user_id', $user->id)
-            ->where('month', $request->month)
-            ->where('year', $request->year)
-            ->get();
-        $month = \DateTime::createFromFormat('!m', $request->month)->format('F');
+        $attendance = $this->attendanceReportService->getAttendanceTotal($user, $request);
+        $overtime = $this->attendanceReportService->getOvertimeHours($user, $request);
+        $absent = $this->attendanceReportService->getAbsentTotal($user, $request);
+        $leave = $this->attendanceReportService->getLeaveDuration($user, $request);
+        $month = $this->attendanceReportService->getReportMonth($request);
+        $reportDate = Carbon::now()->format('YmdHs');
+        $xlsxFileName = $user->getFullNameAttribute() . ' ' . $month . ' ' . 'Attendance Report' . ' ' . $reportDate . '.xlsx';
+        $pdf = PDF::loadView('admin.report.attendance.export', compact('user', 'month', 'attendance', 'overtime', 'absent', 'leave'))
+            ->stream();
 
         switch ($request->input('action')) {
             case 'xlsx' :
-                return Excel::download(new AttendanceReportExport($request, $id), 'report.xlsx');
+                return Excel::download(new AttendanceReportExport($request, $id, $this->attendanceReportService), $xlsxFileName);
             default:
-                return PDF::loadView('admin.report.attendance.export', compact('user', 'data', 'month'))->stream();
+                return $pdf;
         }
     }
 }

@@ -26,8 +26,8 @@ class CreateLeavesTable extends Migration
             $table->unsignedBigInteger('approverId')->nullable();
 
             $table->date('start_date')->nullable();
-            $table->text('note')->nullable();
             $table->date('end_date')->nullable();
+            $table->text('note')->nullable();
 
             $table->enum('approvalStatus', LeaveStatus::getValues())
                 ->default(LeaveStatus::NEEDS_APPROVAL);

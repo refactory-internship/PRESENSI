@@ -10,8 +10,8 @@ class DateTimeService
     public function getCurrentDate()
     {
         date_default_timezone_set('Asia/Jakarta');
-//        return Carbon::create('2021', '05', '10', '08', '45');
-        return Carbon::now();
+        return Carbon::create('2021', '05', '08', '08', '45');
+//        return Carbon::now();
     }
 
     public function getDateFromDatabase()

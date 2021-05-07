@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <small class="text-muted">
                                 Click <strong>Generate</strong>, then filter date of the report, and choose whether you
-                                want to export to PDF or XLXS
+                                want to export to PDF or XLSX
                             </small>
                             <table class="table table-hover" aria-label="attendance-report" id="attendanceReportTable">
                                 <thead>
