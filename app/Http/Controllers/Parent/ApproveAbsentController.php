@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\AbsentService;
 use App\Models\Absent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ApproveAbsentController extends Controller
 {
@@ -18,10 +19,12 @@ class ApproveAbsentController extends Controller
 
     public function index()
     {
-        $absents = Absent::query()
-            ->where('approverId', auth()->id())
-            ->latest()
-            ->get();
+        $absents = Cache::remember('approve_absent.all', 60, function () {
+            return Absent::query()
+                ->where('approverId', auth()->id())
+                ->latest()
+                ->get();
+        });
         return view('user.parent.approve-absent.index', compact('absents'));
     }
 

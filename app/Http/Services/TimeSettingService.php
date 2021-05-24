@@ -24,6 +24,9 @@ class TimeSettingService
     {
         $start_time = date('H:i', strtotime($request->start_time));
         $end_time = date('H:i', strtotime($request->end_time));
+
+        cache()->forget('time_setting.all');
+
         return $timeSetting->update([
             'division_id' => $request->division,
             'start_time' => $start_time,

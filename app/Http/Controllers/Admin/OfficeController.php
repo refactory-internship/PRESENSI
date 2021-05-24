@@ -7,6 +7,7 @@ use App\Http\Services\OfficeService;
 use App\Models\Division;
 use App\Models\Office;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Laravolt\Indonesia\Models\Province;
 
 class OfficeController extends Controller
@@ -21,7 +22,9 @@ class OfficeController extends Controller
 
     public function index()
     {
-        $offices = Office::all();
+        $offices = Cache::remember('office.all', 10, function () {
+            return Office::with('village')->get();
+        });
         return view('admin.office.index', compact('offices'));
     }
 

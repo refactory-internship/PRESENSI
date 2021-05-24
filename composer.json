@@ -23,10 +23,13 @@
         "laravel/ui": "^3.2",
         "laravolt/indonesia": "^0.29.0",
         "maatwebsite/excel": "^3.1",
+        "predis/predis": "^1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "stevebauman/location": "^6.1"
+        "stevebauman/location": "^6.1",
+      "ext-json": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.5",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",

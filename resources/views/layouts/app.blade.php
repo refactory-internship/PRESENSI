@@ -5,7 +5,12 @@
     @include('layouts.partials.head')
 </head>
 <body class="c-app">
-@include('layouts.partials.sidebar')
+
+@if(auth()->user()->can('master-crud'))
+    @include('admin.sidebar')
+@else
+    @include('layouts.partials.sidebar')
+@endif
 
 <div class="c-wrapper c-fixed-components">
     @include('layouts.partials.header', ['pageTitle' => $pageTitle])

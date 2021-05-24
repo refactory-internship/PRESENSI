@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\LeaveService;
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LeaveController extends Controller
 {
@@ -18,7 +19,13 @@ class LeaveController extends Controller
 
     public function index()
     {
-        $leaves = Leave::all();
+        $user = auth()->id();
+        $leaves = Cache::remember('leave.all', 60, function () use ($user) {
+            return Leave::query()
+                ->where('user_id', $user)
+                ->latest()
+                ->get();
+        });
         return view('user.leave.index', compact('leaves'));
     }
 

@@ -58,6 +58,7 @@ class AbsentService
 
     public function update(Request $request, $id)
     {
+        cache()->forget('absent.all');
         return Absent::query()->findOrFail($id)->update([
             'reason' => $request->reason,
             'date' => $request->date
@@ -79,6 +80,7 @@ class AbsentService
 
     public function approveAbsent($id)
     {
+        cache()->forget('absentCounter');
         return Absent::query()->findOrFail($id)->update([
            'approvalStatus' => AbsentStatus::APPROVED
         ]);
@@ -86,6 +88,7 @@ class AbsentService
 
     public function rejectAbsent(Request $request, $id)
     {
+        cache()->forget('absentCounter');
         return Absent::query()->findOrFail($id)->update([
            'approvalStatus' => AbsentStatus::REJECTED,
            'rejectionNote' => $request->get('rejectionNote')

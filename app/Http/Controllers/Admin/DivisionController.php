@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Division;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class DivisionController extends Controller
 {
@@ -12,7 +13,9 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $divisions = Division::all();
+        $divisions = Cache::remember('division.all', 60, function () {
+            return Division::all();
+        });
         return view('admin.division.index', compact('divisions'));
     }
 
@@ -40,6 +43,7 @@ class DivisionController extends Controller
     public function update(Request $request, Division $division)
     {
         $division->update($request->all());
+        Cache::forget('division.all');
         return redirect()->route($this->index)->with('message', 'Division Updated!');
     }
 

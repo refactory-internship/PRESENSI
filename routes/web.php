@@ -20,8 +20,10 @@ use App\Http\Controllers\Parent\ApproveLeaveController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
+});
+
+Route::get('/redis', function () {
+    $p = Redis::get('users.all');
+    return $p;
 });
 
 Route::get('location-test', [QRCodeController::class, 'locationTest']);

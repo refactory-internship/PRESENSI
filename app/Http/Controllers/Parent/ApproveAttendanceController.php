@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\AttendanceService;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ApproveAttendanceController extends Controller
 {
@@ -18,11 +19,13 @@ class ApproveAttendanceController extends Controller
 
     public function index()
     {
-        $attendances = Attendance::query()
-            ->where('approverId', auth()->id())
-            ->where('isFinished', true)
-            ->latest()
-            ->get();
+        $attendances = Cache::remember('approve_attendance.all', 60, function () {
+            return Attendance::query()
+                ->where('approverId', auth()->id())
+                ->where('isFinished', true)
+                ->latest()
+                ->get();
+        });
         return view('user.parent.approve-attendance.index', compact('attendances'));
     }
 

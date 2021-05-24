@@ -68,6 +68,7 @@ class LeaveService
 
     public function update(Request $request, $id)
     {
+        cache()->forget('leave.all');
         return Leave::query()->findOrFail($id)->update([
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
@@ -77,6 +78,7 @@ class LeaveService
 
     public function approveLeave($id)
     {
+        cache()->forget('leaveCounter');
         return Leave::query()->findOrFail($id)->update([
             'approvalStatus' => LeaveStatus::APPROVED
         ]);
@@ -84,6 +86,7 @@ class LeaveService
 
     public function rejectLeave(Request $request, $id)
     {
+        cache()->forget('leaveCounter');
         return Leave::query()->findOrFail($id)->update([
             'approvalStatus' => LeaveStatus::REJECTED,
             'rejectionNote' => $request->get('rejectionNote')

@@ -39,6 +39,8 @@ class UserService
             ->where('office_id', $request->office)
             ->value('id');
 
+        cache()->forget('users.all');
+
         return $user->update([
             'role_id' => $request->role,
             'division_office_id' => $division_office_id,

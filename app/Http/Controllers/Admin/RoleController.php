@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
+        $roles = Cache::remember('roles.all', 60, function () {
+            return Role::all();
+        });
         return view('admin.role.index', compact('roles'));
     }
 
@@ -40,8 +43,9 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $role->update([
-           'name' => $request->name
+            'name' => $request->name
         ]);
+        Cache::forget('roles.all');
         return redirect()->route('web.admin.roles.index')->with('message', 'Role Updated!');
     }
 

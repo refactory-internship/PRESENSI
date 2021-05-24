@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\AbsentService;
 use App\Models\Absent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AbsentController extends Controller
 {
@@ -18,7 +19,13 @@ class AbsentController extends Controller
 
     public function index()
     {
-        $absents = Absent::all();
+        $user = auth()->id();
+        $absents = Cache::remember('absent.all', 60, function () use ($user) {
+            return Absent::query()
+                ->where('user_id', $user)
+                ->latest()
+                ->get();
+        });
         return view('user.absent.index', compact('absents'));
     }
 

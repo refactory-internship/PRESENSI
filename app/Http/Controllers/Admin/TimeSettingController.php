@@ -7,6 +7,7 @@ use App\Http\Services\TimeSettingService;
 use App\Models\Division;
 use App\Models\TimeSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TimeSettingController extends Controller
 {
@@ -20,7 +21,9 @@ class TimeSettingController extends Controller
 
     public function index()
     {
-        $times = TimeSetting::all();
+        $times = Cache::remember('time_setting.all', 60, function () {
+            return TimeSetting::all();
+        });
         return view('admin.time-setting.index', compact('times'));
     }
 

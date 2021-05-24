@@ -7,6 +7,7 @@ use App\Http\Services\AttendanceService;
 use App\Http\Services\DateTimeService;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AttendanceController extends Controller
 {
@@ -21,7 +22,9 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        $attendances = $this->attendanceService->getAttendance();
+        $attendances = Cache::remember('attendance.all', 60, function () {
+            return $this->attendanceService->getAttendance();
+        });
         return view('user.attendance.index', compact('attendances'));
     }
 

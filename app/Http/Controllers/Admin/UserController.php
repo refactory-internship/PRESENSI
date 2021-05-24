@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\TimeSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -24,9 +25,13 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::query()
-            ->where('id', '!=', 1)
-            ->get();
+        $users = Cache::remember("users.all", 60, function () {
+            return User::query()
+                ->where('id', '!=', 1)
+                ->with('division_office')
+                ->with('role')
+                ->get();
+        });
         return view('admin.user.index', compact('users'));
     }
 

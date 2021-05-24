@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\LeaveService;
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ApproveLeaveController extends Controller
 {
@@ -18,10 +19,12 @@ class ApproveLeaveController extends Controller
 
     public function index()
     {
-        $leaves = Leave::query()
-            ->where('approverId', auth()->id())
-            ->latest()
-            ->get();
+        $leaves = Cache::remember('approve_leave.all', 60, function () {
+            return Leave::query()
+                ->where('approverId', auth()->id())
+                ->latest()
+                ->get();
+        });
         return view('user.parent.approve-leave.index', compact('leaves'));
     }
 

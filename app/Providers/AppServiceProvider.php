@@ -10,6 +10,7 @@ use App\Models\Absent;
 use App\Models\Attendance;
 use App\Models\Leave;
 use App\Models\Overtime;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -37,28 +38,36 @@ class AppServiceProvider extends ServiceProvider
             'pageTitle' => 'title'
         ]);
 
-        View::composer('*', function ($view) {
-            $attendanceCounter = Attendance::query()
-                ->where('approverId', auth()->id())
-                ->where('approvalStatus', ApprovalStatus::NEEDS_APPROVAL)
-                ->count();
+        View::composer(['user.*', 'layouts.partials.sidebar'], function ($view) {
+            $attendanceCounter = Cache::remember('attendanceCounter', 5, function () {
+                return Attendance::query()
+                    ->where('approverId', auth()->id())
+                    ->where('approvalStatus', ApprovalStatus::NEEDS_APPROVAL)
+                    ->count();
+            });
 
-            $overtimeCounter = Overtime::query()
-                ->where('approverId', auth()->id())
-                ->where('approvalStatus', OvertimeStatus::NEEDS_APPROVAL)
-                ->count();
+            $overtimeCounter = Cache::remember('overtimeCounter', 5, function () {
+                return Overtime::query()
+                    ->where('approverId', auth()->id())
+                    ->where('approvalStatus', OvertimeStatus::NEEDS_APPROVAL)
+                    ->count();
+            });
 
-            $absentCounter = Absent::query()
-                ->where('approverId', auth()->id())
-                ->where('approvalStatus', AbsentStatus::NEEDS_APPROVAL)
-                ->count();
+            $absentCounter = Cache::remember('absentCounter', 5, function () {
+                return Absent::query()
+                    ->where('approverId', auth()->id())
+                    ->where('approvalStatus', AbsentStatus::NEEDS_APPROVAL)
+                    ->count();
+            });
 
-            $leaveCounter = Leave::query()
-                ->where('approverId', auth()->id())
-                ->where('approvalStatus', LeaveStatus::NEEDS_APPROVAL)
-                ->count();
+            $leaveCounter = Cache::remember('leaveCounter', 5, function () {
+                return Leave::query()
+                    ->where('approverId', auth()->id())
+                    ->where('approvalStatus', LeaveStatus::NEEDS_APPROVAL)
+                    ->count();
+            });
 
-            $view->with([
+            return $view->with([
                 'attendanceCounter' => $attendanceCounter,
                 'overtimeCounter' => $overtimeCounter,
                 'absentCounter' => $absentCounter,
@@ -74,7 +83,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $view->with([
-               'calendarRoutes' => $calendarRoutes
+                'calendarRoutes' => $calendarRoutes
             ]);
         });
     }

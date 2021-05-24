@@ -91,6 +91,8 @@ class OvertimeService
             $approvalStatus = $overtime->approvalStatus;
         }
 
+        cache()->forget('overtime.all');
+
         return $overtime->update([
             'task_plan' => $request->task_plan,
             'task_report' => $request->task_report,
@@ -117,6 +119,7 @@ class OvertimeService
 
     public function approveOvertime($id)
     {
+        cache()->forget('overtimeCounter');
         return Overtime::query()->find($id)->update([
             'approvalStatus' => OvertimeStatus::APPROVED
         ]);
@@ -124,6 +127,7 @@ class OvertimeService
 
     public function rejectOvertime(Request $request, $id)
     {
+        cache()->forget('overtimeCounter');
         return Overtime::query()->find($id)->update([
             'approvalStatus' => OvertimeStatus::REJECTED,
             'rejectionNote' => $request->get('rejectionNote')

@@ -7,6 +7,7 @@ use App\Http\Services\DateTimeService;
 use App\Http\Services\OvertimeService;
 use App\Models\Overtime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class OvertimeController extends Controller
 {
@@ -22,7 +23,12 @@ class OvertimeController extends Controller
     public function index()
     {
         $user = auth()->id();
-        $overtimes = Overtime::query()->where('user_id', $user)->get();
+        $overtimes = Cache::remember('overtime.all', 60, function () use ($user) {
+           return Overtime::query()
+               ->where('user_id', $user)
+               ->latest()
+               ->get();
+        });
         return view('user.overtime.index', compact('overtimes'));
     }
 

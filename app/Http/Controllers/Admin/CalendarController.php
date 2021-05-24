@@ -7,6 +7,7 @@ use App\Http\Services\CalendarService;
 use App\Models\Calendar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class CalendarController extends Controller
 {
@@ -19,7 +20,10 @@ class CalendarController extends Controller
 
     public function index()
     {
-        $calendars = $this->calendarService->getCurrentDates();
+        $calendars = Cache::remember('calendars.all', 10, function () {
+            return $this->calendarService->getCurrentDates();
+        });
+
         $years = $this->calendarService->pluckYears();
         $months = $this->calendarService->pluckMonths();
         return view('admin.calendar.index', compact('calendars', 'years', 'months'));
@@ -55,9 +59,10 @@ class CalendarController extends Controller
     public function update(Request $request, $id)
     {
         Calendar::query()->findOrFail($id)->update([
-           'status' => $request->status,
-           'description' => $request->description
+            'status' => $request->status,
+            'description' => $request->description
         ]);
+        Cache::forget('calendars.all');
         return redirect()->back()->with('message', 'Date Status Updated');
     }
 
