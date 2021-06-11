@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AttendanceReportController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Employee\AbsentController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\DeactivatedEmployeeController;
@@ -40,12 +41,16 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/redis', function () {
-    $p = Redis::get('users.all');
-    return $p;
-});
+Route::get('/redirect', function () {
+   if (!\auth()->check()) {
+       return redirect()->to('/');
+   }
 
-Route::get('location-test', [QRCodeController::class, 'locationTest']);
+   if (\auth()->user()->hasRole('Admin')) {
+       return redirect()->route('web.admin.home');
+   }
+   return redirect()->route('web.employee.home');
+});
 
 //RESET PASSWORD ROUTES
 Route::prefix('auth')->name('auth.')->group(function () {
@@ -77,8 +82,6 @@ Route::get('/getParent/{office}/{division}', [UserController::class, 'getParent'
     ->name('parent');
 
 Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-        ->name('home');
     //PROFILE ROUTES
     Route::get('/profile', [ProfileController::class, 'show'])
         ->name('profile');
@@ -91,6 +94,9 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     //ADMIN MASTER-CRUD ROUTES
     Route::prefix('admin')->name('admin.')->middleware('web.admin')->group(function () {
+        //ADMIN DASHBOARD
+        Route::get('/home', [HomeController::class, 'index'])
+            ->name('home');
         //OFFICE CRUD ROUTES
         Route::resource('/offices', OfficeController::class);
         //DIVISION CRUD ROUTES
@@ -133,6 +139,10 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
 
     //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->name('employee.')->middleware(['web.employee', 'web.attendanceAccess'])->group(function () {
+        //EMPLOYEE DASHBOARD
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+            ->name('home');
+
         //STORE ATTENDANCE USING QR CODE
         Route::get('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
             ->name('QRCode.save-attendance');

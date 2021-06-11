@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendResetPasswordEmail;
+use App\Jobs\SendUserNewPassword;
 use App\Mail\ResetPassword;
 use App\Mail\UserNewPassword;
 use App\Models\User;
@@ -19,6 +21,7 @@ class PasswordController extends Controller
             ->where('email', $request->email)
             ->value('id');
         $token = bin2hex(openssl_random_pseudo_bytes(16));
+        $recipient = 'admin@mail.com';
 
         DB::table('password_resets')->insert([
             'email' => $request->email,
@@ -26,7 +29,8 @@ class PasswordController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
+//        Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
+        SendResetPasswordEmail::dispatch($recipient, $userId, $token);
 
         $tokenFromDB = DB::table('password_resets')
             ->where('email', $request->email)
@@ -58,7 +62,9 @@ class PasswordController extends Controller
                 'password' => Hash::make($password)
             ]);
             DB::table('password_resets')->where('email', $user->email)->delete();
-            Mail::to($user->email)->send(new UserNewPassword($password));
+
+//            Mail::to($user->email)->send(new UserNewPassword($password));
+            SendUserNewPassword::dispatch($user->email, $password);
 
             return redirect()->route('login')->with('message', 'Password has been reset and sent successfully');
         } else {

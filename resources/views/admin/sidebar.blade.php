@@ -17,7 +17,7 @@
 
     <ul class="c-sidebar-nav ps">
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('web.home') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('web.admin.home') }}">
                 <svg class="c-sidebar-nav-icon">
                     <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-speedometer"></use>
                 </svg>

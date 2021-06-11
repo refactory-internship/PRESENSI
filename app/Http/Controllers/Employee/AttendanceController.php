@@ -39,6 +39,7 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $this->attendanceService->store($request);
+        Cache::forget('attendance.all');
         return redirect()->route('web.employee.attendances.index')->with('message', 'Attendance Submitted!');
     }
 

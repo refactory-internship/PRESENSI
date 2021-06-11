@@ -123,6 +123,7 @@ class AttendanceService
     {
         $attendance = Attendance::query()->findOrFail($id);
         cache()->forget('attendanceCounter');
+        cache()->forget('approve_attendance.all');
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::APPROVED
         ]);
@@ -132,6 +133,7 @@ class AttendanceService
     {
         $attendance = Attendance::query()->findOrFail($id);
         cache()->forget('attendanceCounter');
+        cache()->forget('approve_attendance.all');
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::REJECTED,
             'rejectionNote' => $request->get('rejectionNote')

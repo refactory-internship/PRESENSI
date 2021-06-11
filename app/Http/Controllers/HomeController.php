@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Services\DateTimeService;
+use App\Http\Services\EmployeeDashboardService;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    protected $dateTimeService;
+    protected $employeeDashboardService;
+
+    public function __construct(DateTimeService $dateTimeService, EmployeeDashboardService $employeeDashboardService)
     {
-        $this->middleware('auth');
+        $this->dateTimeService = $dateTimeService;
+        $this->employeeDashboardService = $employeeDashboardService;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('home');
+        $currentDate = $this->dateTimeService->getCurrentDate();
+        $date = $this->dateTimeService->getDateFromDatabase();
+        $currentDay = date('j', strtotime($currentDate));
+        $currentMonth = date('n', strtotime($currentDate));
+        $currentYear = date('Y', strtotime($currentDate));
+        $attendance = $this->employeeDashboardService->getTodayAttendance($currentDay, $currentMonth, $currentYear);
+        $attendanceCount = $this->employeeDashboardService->countMonthlyAttendance($currentMonth, $currentYear);
+        $overtimeCount = $this->employeeDashboardService->countMonthlyOvertime($currentMonth, $currentYear);
+        $absentCount = $this->employeeDashboardService->countMonthlyAbsent($currentMonth, $currentYear);
+        $leaveDurationCounter = $this->employeeDashboardService->countMonthlyLeave($currentMonth);
+
+        return view('user.home', compact('currentDate', 'date', 'attendance', 'attendanceCount', 'overtimeCount', 'absentCount', 'leaveDurationCounter'));
     }
 }

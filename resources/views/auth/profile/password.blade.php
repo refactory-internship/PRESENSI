@@ -5,7 +5,7 @@
             <div class="row">
                 @include('layouts.partials.message')
                 <div class="col-md-6 mb-3">
-                    <a href="{{ route('web.home') }}" class="btn btn-dark">
+                    <a href="{{ auth()->user()->hasRole('Admin') ? route('web.admin.home') : route('web.employee.home') }}" class="btn btn-dark">
                         <i class="bi bi-arrow-left-circle"></i>
                         Back
                     </a>
