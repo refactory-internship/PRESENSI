@@ -6,9 +6,9 @@ use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
 use App\Enums\AttendanceStatus;
 use App\Http\Resources\AttendanceResource;
+use App\Jobs\EmailAttendanceApprovalRequest;
 use App\Models\Attendance;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,6 +71,8 @@ class AttendanceService
     {
         $attendance = Attendance::query()->findOrFail($id);
         $timeToday = $this->dateTimeService->getCurrentDate();
+        $user = User::query()->findOrFail(auth()->id());
+        $parentEmail = $user->parent->email;
 
         if ($request->has('isFinished')) {
             $clockOutTime = $timeToday;
@@ -80,6 +82,8 @@ class AttendanceService
                 $approvalStatus = ApprovalStatus::APPROVED;
             } else {
                 $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
+
+                EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
             }
 
             if ($attendance->approvalStatus === '1') {

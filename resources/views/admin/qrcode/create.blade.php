@@ -39,11 +39,18 @@
     <script>
         const countdownElement = document.getElementById('countdown');
         const text = document.getElementById('qrCode');
+        let timerInterval;
 
         function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval)
+                countdownElement.innerHTML = '00:00';
+            }
+
             let duration = $('#timer').val();
-            const timerInterval = setInterval(countdown, 1000);
-            getQRCode();
+            timerInterval = setInterval(countdown, 1000);
+
+            getQRCode(text);
             // text.innerHTML = Math.random();
 
             function countdown() {
@@ -63,14 +70,18 @@
                 }
             }
 
+            stopTimer(timerInterval, countdownElement, text)
+        }
+
+        function stopTimer(timerInterval, countdownElement, text) {
             $('#stopTimer').on('click', function () {
                 clearInterval(timerInterval)
                 countdownElement.innerHTML = '00:00';
                 text.innerHTML = '';
-            })
+            });
         }
 
-        function getQRCode() {
+        function getQRCode(text) {
             axios.get('/web/admin/QRCode/generate')
                 .then(function (response) {
                     console.log(response)
