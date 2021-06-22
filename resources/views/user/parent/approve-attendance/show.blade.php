@@ -160,7 +160,13 @@
                                                 <strong>Task Plan</strong>
                                             </div>
                                             <div class="row">
-                                                <p>{{ $attendance->task_plan }}</p>
+                                                <div class="col">
+                                                    <ol>
+                                                        @foreach($tasks as $task)
+                                                            <li>{{ $task }}</li>
+                                                        @endforeach
+                                                    </ol>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-2 pl-4">
@@ -187,37 +193,38 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <small class="text-muted">
-                                            Submitted {{ $attendance->created_at->diffForHumans() }}
-                                        </small>
 
                                         @if($attendance->approvalStatus === '2')
-                                            <div class="text-value-sm text-success">
+                                            <small class="text-value-sm text-success">
                                                 This attendance has been approved
-                                            </div>
+                                            </small>
                                         @elseif($attendance->approvalStatus === '3')
-                                            <div class="text-value-sm text-danger">
+                                            <small class="text-value-sm text-danger">
                                                 This attendance has been rejected
-                                            </div>
+                                            </small>
                                         @else
-                                            <div class="btn-group float-right">
-                                                <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
-                                                   onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
-                                                   class="btn btn-success">
-                                                    <i class="bi bi-check-circle"></i>
-                                                    Approve
-                                                </a>
-                                                <button type="button"
-                                                        class="btn btn-danger"
-                                                        id="rejectButton"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#staticBackdrop"
-                                                        data-bs-url="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}">
-                                                    Reject
-                                                    <i class="bi bi-x-circle"></i>
-                                                </button>
-                                            </div>
+                                            <small class="text-muted">
+                                                Submitted {{ $attendance->created_at->diffForHumans() }}
+                                            </small>
                                         @endif
+
+                                        <div class="btn-group float-right">
+                                            <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+                                               onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
+                                               class="btn btn-success">
+                                                <i class="bi bi-check-circle"></i>
+                                                Approve
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-danger"
+                                                    id="rejectButton"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop"
+                                                    data-bs-url="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}">
+                                                Reject
+                                                <i class="bi bi-x-circle"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

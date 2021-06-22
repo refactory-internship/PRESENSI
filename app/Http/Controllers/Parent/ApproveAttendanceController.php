@@ -22,7 +22,6 @@ class ApproveAttendanceController extends Controller
         $attendances = Cache::remember('approve_attendance.all', 60, function () {
             return Attendance::query()
                 ->where('approverId', auth()->id())
-                ->where('isFinished', true)
                 ->latest()
                 ->get();
         });
@@ -32,7 +31,8 @@ class ApproveAttendanceController extends Controller
     public function show($id)
     {
         $attendance = Attendance::query()->findOrFail($id);
-        return view('user.parent.approve-attendance.show', compact('attendance'));
+        $tasks = json_decode($attendance->task_plan);
+        return view('user.parent.approve-attendance.show', compact('attendance', 'tasks'));
     }
 
     public function approve($id)

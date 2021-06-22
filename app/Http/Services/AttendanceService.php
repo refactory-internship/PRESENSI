@@ -45,7 +45,7 @@ class AttendanceService
         } else {
             $approvedBy = AttendanceApprover::PARENT;
             $approverId = $user->parent->id;
-            $approvalStatus = null;
+            $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
         }
 
         $attendance = Attendance::query()->create([
@@ -74,28 +74,22 @@ class AttendanceService
         $user = User::query()->findOrFail(auth()->id());
         $parentEmail = $user->parent->email;
 
-        if ($request->has('isFinished')) {
-            $clockOutTime = $timeToday;
-            $isFinished = true;
-
-            if ($attendance->user->isAutoApproved === true) {
+        if ($attendance->approvalStatus === '1' || $attendance->approvalStatus === '2') {
+            if ($request->has('isFinished')) {
                 $approvalStatus = ApprovalStatus::APPROVED;
+                $clockOutTime = $timeToday;
+                $isFinished = true;
             } else {
-                $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
-
-                EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
-            }
-
-            if ($attendance->approvalStatus === '1') {
-                $isFinished = $attendance->isFinished;
-                $clockOutTime = $attendance->clock_out_time;
                 $approvalStatus = $attendance->approvalStatus;
+                $clockOutTime = $attendance->clock_out_time;
+                $isFinished = $attendance->isFinished;
             }
-
         } else {
+            $approvalStatus = ApprovalStatus::NEEDS_APPROVAL;
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;
-            $approvalStatus = $attendance->approvalStatus;
+
+            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
         }
 
         cache()->forget('attendance.all');

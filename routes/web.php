@@ -21,10 +21,8 @@ use App\Http\Controllers\Parent\ApproveLeaveController;
 use App\Http\Controllers\Parent\ApproveOvertimeController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------

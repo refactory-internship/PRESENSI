@@ -10,7 +10,7 @@
                                 Ongoing Task
                             </div>
                             <div>
-                                @if(!$attendance || !$tasks || $attendance->isFinished === true)
+                                @if(!$attendance || !$tasks || $attendance->isFinished === 1)
                                     <span class="badge badge-warning">
                                         No Ongoing Task
                                     </span>
@@ -21,7 +21,7 @@
                                         </div>
                                     @endforeach
 
-                                    @if($attendance->status === '1')
+                                    @if($attendance->approvalStatus === '1')
                                         <small class="text-warning">
                                             ON PROGRESS
                                         </small>
