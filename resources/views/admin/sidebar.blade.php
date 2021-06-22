@@ -5,7 +5,7 @@
                 <img class="p-0" src="{{ asset('coreui/brand/laravel-white.svg') }}" style="width: auto; height: 55px;"
                      alt="logo-full">
                 <div class="col my-auto pl-0">
-                    <p class="mb-0 h5">{{ ucwords(strtolower(config('app.name'))) }}</p>
+                    <p class="mb-0 h5">{{ config('app.name') }}</p>
                 </div>
             </div>
         </div>

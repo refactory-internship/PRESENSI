@@ -10,14 +10,16 @@
                                 Ongoing Task
                             </div>
                             <div>
-                                @if(!$attendance || $attendance->isFinished === true)
+                                @if(!$attendance || !$tasks || $attendance->isFinished === true)
                                     <span class="badge badge-warning">
                                         No Ongoing Task
                                     </span>
                                 @else
-                                    <div>
-                                        {{ $attendance->task_plan }}
-                                    </div>
+                                    @foreach($tasks as $task)
+                                        <div>
+                                            {{ $task }}
+                                        </div>
+                                    @endforeach
 
                                     @if($attendance->status === '1')
                                         <small class="text-warning">

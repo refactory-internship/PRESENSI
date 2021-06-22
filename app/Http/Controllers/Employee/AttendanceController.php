@@ -46,14 +46,17 @@ class AttendanceController extends Controller
     public function show($id)
     {
         $attendance = Attendance::query()->findOrFail($id);
-        return view('user.attendance.show', compact('attendance'));
+        $tasks = json_decode($attendance->task_plan);
+        return view('user.attendance.show', compact('attendance', 'tasks'));
     }
 
     public function edit($id)
     {
         $currentDate = $this->dateTimeService->getCurrentDate();
         $attendance = Attendance::query()->findOrFail($id);
-        return view('user.attendance.edit', compact('attendance', 'currentDate'));
+        $tasks = json_decode($attendance->task_plan);
+
+        return view('user.attendance.edit', compact('attendance', 'currentDate', 'tasks'));
     }
 
     public function update(Request $request, $id)

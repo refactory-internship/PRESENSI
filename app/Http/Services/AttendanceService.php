@@ -54,7 +54,7 @@ class AttendanceService
             'approvedBy' => $approvedBy,
             'approverId' => $approverId,
             'isQRCode' => false,
-            'task_plan' => $request->task_plan,
+            'task_plan' => json_encode($request->task_plan),
             'clock_in_time' => date('H:i:s', strtotime($timeToday)),
             'note' => $request->note,
             'clock_out_time' => null,
@@ -101,7 +101,7 @@ class AttendanceService
         cache()->forget('attendance.all');
 
         return $attendance->update([
-            'task_plan' => $request->task_plan,
+            'task_plan' => json_encode($request->task_plan),
             'note' => $request->note,
             'task_report' => $request->task_report,
             'clock_out_time' => $clockOutTime,

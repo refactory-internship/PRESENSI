@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendResetPasswordEmail;
 use App\Jobs\SendUserNewPassword;
+use App\Mail\ResetPassword;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class PasswordController extends Controller
 {

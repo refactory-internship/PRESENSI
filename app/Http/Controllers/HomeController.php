@@ -30,6 +30,12 @@ class HomeController extends Controller
         $absentCount = $this->employeeDashboardService->countMonthlyAbsent($currentMonth, $currentYear);
         $leaveDurationCounter = $this->employeeDashboardService->countMonthlyLeave($currentMonth);
 
-        return view('user.home', compact('currentDate', 'date', 'attendance', 'attendanceCount', 'overtimeCount', 'absentCount', 'leaveDurationCounter'));
+        if ($attendance === null) {
+            $tasks = null;
+        } else {
+            $tasks = json_decode($attendance->task_plan);
+        }
+
+        return view('user.home', compact('currentDate', 'date', 'attendance', 'attendanceCount', 'overtimeCount', 'absentCount', 'leaveDurationCounter', 'tasks'));
     }
 }

@@ -42,14 +42,14 @@ Route::get('/', function () {
 });
 
 Route::get('/redirect', function () {
-   if (!\auth()->check()) {
-       return redirect()->to('/');
-   }
+    if (!\auth()->check()) {
+        return redirect()->to('/');
+    }
 
-   if (\auth()->user()->hasRole('Admin')) {
-       return redirect()->route('web.admin.home');
-   }
-   return redirect()->route('web.employee.home');
+    if (\auth()->user()->hasRole('Admin')) {
+        return redirect()->route('web.admin.home');
+    }
+    return redirect()->route('web.employee.home');
 });
 
 //RESET PASSWORD ROUTES

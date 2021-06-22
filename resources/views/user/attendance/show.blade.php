@@ -56,7 +56,13 @@
                                         <strong>Task Plan</strong>
                                     </div>
                                     <div class="row">
-                                        <p>{{ $attendance->task_plan }}</p>
+                                        <div class="col">
+                                            <ol>
+                                                @foreach($tasks as $task)
+                                                    <li>{{ $task }}</li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -84,36 +90,36 @@
                             </div>
 
                             <div class="card-footer">
-                                <small class="text-muted">
-                                    Submitted {{ $attendance->created_at->diffForHumans() }}
-                                </small>
-
-                                @if($attendance->approvalStatus === '2' && $attendance->user->isAutoApproved === false)
-                                    <div class="text-value-sm text-success">
+                                @if($attendance->approvalStatus === '2')
+                                    <small class="text-value-sm text-success">
                                         This attendance has been approved
-                                    </div>
-                                @elseif($attendance->approvalStatus === '3' && $attendance->user->isAutoApproved === false)
-                                    <div class="text-value-sm text-danger">
+                                    </small>
+                                @elseif($attendance->approvalStatus === '3')
+                                    <small class="text-value-sm text-danger">
                                         This attendance has been rejected
-                                    </div>
+                                    </small>
                                 @else
-                                    <div class="btn-group float-right">
-                                        <a href="{{ route('web.employee.attendances.edit', $attendance->id) }}"
-                                           class="btn btn-primary">
-                                            <i class="bi bi-pencil-square"></i>
-                                            Edit
-                                        </a>
-                                        <button type="button"
-                                                class="btn btn-danger"
-                                                id="deleteButton"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop"
-                                                data-bs-url="{{ route('web.employee.attendances.destroy', $attendance->id) }}">
-                                            Delete
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </div>
+                                    <small class="text-value-sm text-muted">
+                                        Submitted {{ $attendance->created_at->diffForHumans() }}
+                                    </small>
                                 @endif
+
+                                <div class="btn-group float-right">
+                                    <a href="{{ route('web.employee.attendances.edit', $attendance->id) }}"
+                                       class="btn btn-primary">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Edit
+                                    </a>
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            id="deleteButton"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            data-bs-url="{{ route('web.employee.attendances.destroy', $attendance->id) }}">
+                                        Delete
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

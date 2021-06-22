@@ -17,12 +17,30 @@
                                       method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <div class="form-group row mb-3">
-                                        <label for="task_plan" class="col-form-label col-md-3">Task Plan</label>
-                                        <div class="col-md-9">
-                                            <input type="text" name="task_plan" id="task_plan" class="form-control"
-                                                   value="{{ $attendance->task_plan }}">
-                                        </div>
+
+
+
+                                    <div id="dyna_form_edit">
+                                        @foreach($tasks as $task)
+                                            <div class="form-group row mb-3" id="dyna_field_edit">
+                                                <label for="task_plan" class="col-form-label col-md-3">Task Plan</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" name="task_plan[]" id="task_plan" class="form-control"
+                                                           value="{{ $task }}">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @if($loop->index != 0)
+                                                        <button type="button" name="remove" id="remove" class="btn btn-danger">
+                                                            <i class="bi bi-x-circle"></i>
+                                                        </button>
+                                                    @else
+                                                        <button type="button" name="add" id="add" class="btn btn-success">
+                                                            <i class="bi bi-plus-circle"></i>
+                                                        </button>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
 
                                     <div class="form-group row mb-3">
@@ -69,4 +87,44 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            var count = 1;
+
+            function dynamic_field(count) {
+
+                html = '<div class="form-group row mb-3" id="dyna_field_edit">';
+                html += '<label for="task_plan" class="col-form-label col-md-3">Task Plan</label>';
+                html += '<div class="col-md-8">' + '<input type="text" name="task_plan[]" id="task_plan" class="form-control">' + '</div>';
+
+                if (count > 1) {
+                    html += '<div class="col-md-1">' +
+                        '<button type="button" name="remove" id="remove" class="btn btn-danger">' +
+                        '<i class="bi bi-x-circle"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '</div>';
+
+                    $('#dyna_form_edit').append(html);
+                }
+                console.log(count)
+            }
+
+            $(document).on('click', '#add', function () {
+                count++;
+                dynamic_field(count);
+            });
+
+            $(document).on('click', '#remove', function () {
+                if (count > 1) {
+                    count--;
+                }
+                $(this).closest("#dyna_field_edit").remove();
+            });
+
+            dynamic_field(count);
+        });
+    </script>
 @endsection
