@@ -1,62 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## About OASYS
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+OASYS is a web based office attendance system made with Laravel as a project for my internship program on Refactory. There are several features of this system:
+1. Office and Division Management
+2. Employee Management
+3. Working Shift Management
+4. Attendance System
+5. QR Code Attendance
+6. Absent Proposal System
+7. Overtime Proposal System
+8. Leave Proposal System
 
-## About Laravel
+This system also provides Rest API to be consumed for mobile application development.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+OASYS can be used in two ways. First is by using the web application, and the second is by using mobile application.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A brief explanation about QR Code attendance, admin will generate QR Code for the desired amount of time (in seconds), then the employees can scan the generated code to submit their attendance. After attendance is submitted, employee must edit  their attendance because there are fields that automatically filled when an attendance is submitted by scanning QR Code
+
+## API Documentation
+
+- [authentication](https://documenter.getpostman.com/view/14039041/TzJu8x2C)
+- [attendance](https://documenter.getpostman.com/view/14039041/TzRa6j6L)
+- [overtime](https://documenter.getpostman.com/view/14039041/TzXtK1my)
+- [absent](https://documenter.getpostman.com/view/14039041/TzXtK1n1)
+- [leave](https://documenter.getpostman.com/view/14039041/TzXtK1mz)
+- [approve-attendance](https://documenter.getpostman.com/view/14039041/TzY3DGoJ)
+- [approve-overtime](https://documenter.getpostman.com/view/14039041/TzXtK1my)
+- [approve-absent](https://documenter.getpostman.com/view/14039041/TzecD5Q2)
+- [approve-leave](https://documenter.getpostman.com/view/14039041/TzecD5Q3)
+- [qr code attendance](https://documenter.getpostman.com/view/14039041/TzXtK1n2)
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Installation
+1. Run `composer install`
+2. Run `npm install` and then `npm run dev`
+3. Create a file named `.env` on the root folder and then copy the content of `env.example` file to `.env`
+4. Change `CACHE_DRIVER=file` to `CACHE_DRIVER=redis` on the `.env` file
+5. Change `QUEUE_CONNECTION=sync` to `QUEUE_CONNECTION=database` on the `.env` file
+6. Configure the mail variables to your own SMTP server using _Google Mail_ or _Mailtrap_ as well as the database variables to your own configurations
+7. Run `php artisan key:generate`
+8. Run `php artisan migrate:fresh --seed` to migrate and seed the database
+9. Run `php artisan serve`
+10. Run `php artisan queue:work`
+11. By default, a user with admin privilege is created when the seeder is run. The email is `admin@mail.com` and the password is `password`
