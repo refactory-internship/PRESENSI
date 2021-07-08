@@ -46,7 +46,7 @@ class QRCodeService
         $user = User::query()->find(auth()->id());
         $timeToday = $this->dateTimeService->getCurrentDate();
         $calendar = $this->dateTimeService->getDateFromDatabase();
-        $ipAddress = geoip()->getLocation(getenv(('HTTP_X_FORWARDED_FOR')));
+        $ipAddress = geoip()->getLocation(getenv(('HTTP_CLIENT_IP')));
         $gps_lat = $ipAddress->lat;
         $gps_long = $ipAddress->lon;
 
@@ -59,6 +59,8 @@ class QRCodeService
             $approverId = $user->parent->id;
             $approvalStatus = null;
         }
+
+        cache()->forget('attendance.all');
 
         return Attendance::query()->create([
             'user_id' => $user->id,

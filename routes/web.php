@@ -40,7 +40,7 @@ Route::get('/', function () {
 });
 
 Route::get('/location-test', function () {
-    $arr_ip = geoip()->getLocation(getenv(('HTTP_X_FORWARDED_FOR')));
+    $arr_ip = geoip()->getLocation(getenv(('HTTP_CLIENT_IP')));
     $task = json_encode(array('string'));
     dd($arr_ip->lat, $arr_ip->lon, $task);
 });
