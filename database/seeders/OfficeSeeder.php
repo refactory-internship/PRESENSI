@@ -19,14 +19,14 @@ class OfficeSeeder extends Seeder
         $address = 'Jalan Kaliurang KM.12.5, No. 32, Candikarang, Sardonoharjo, Ngaglik';
         DB::table('offices')->insert([
             [
-                'village_id' => 3404120005,
+                'village_id' => null,
                 'name' => 'Office Branch A',
                 'address' => $address,
                 'created_at' => date($today),
                 'updated_at' => date($today)
             ],
             [
-                'village_id' => 3404120005,
+                'village_id' => null,
                 'name' => 'Office Branch B',
                 'address' => $address,
                 'created_at' => date($today),
