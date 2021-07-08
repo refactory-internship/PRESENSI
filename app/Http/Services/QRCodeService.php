@@ -68,7 +68,7 @@ class QRCodeService
             'isQRCode' => true,
             'gps_lat' => $gps_lat,
             'gps_long' => $gps_long,
-            'task_plan' => json_encode('Needs To Be Updated'),
+            'task_plan' => json_encode(array('Needs To Be Updated')),
             'clock_in_time' => date('H:i:s', strtotime($timeToday)),
             'note' => 'Attendance was created by scanning QR Code',
             'clock_out_time' => null,
