@@ -78,6 +78,7 @@ class LeaveService
 
     public function approveLeave($id)
     {
+        cache()->forget('leave.all');
         cache()->forget('leaveCounter');
         cache()->forget('approve_leave.all');
         return Leave::query()->findOrFail($id)->update([
@@ -87,6 +88,7 @@ class LeaveService
 
     public function rejectLeave(Request $request, $id)
     {
+        cache()->forget('leave.all');
         cache()->forget('leaveCounter');
         cache()->forget('approve_leave.all');
         return Leave::query()->findOrFail($id)->update([

@@ -46,6 +46,9 @@ class QRCodeService
         $user = User::query()->find(auth()->id());
         $timeToday = $this->dateTimeService->getCurrentDate();
         $calendar = $this->dateTimeService->getDateFromDatabase();
+        $ipAddress = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+        $gps_lat = $ipAddress->lat;
+        $gps_long = $ipAddress->lon;
 
         if ($user->isAutoApproved === true) {
             $approvedBy = AttendanceApprover::SYSTEM;
@@ -63,7 +66,9 @@ class QRCodeService
             'approvedBy' => $approvedBy,
             'approverId' => $approverId,
             'isQRCode' => true,
-            'task_plan' => 'Needs To Be Updated',
+            'gps_lat' => $gps_lat,
+            'gps_long' => $gps_long,
+            'task_plan' => json_encode('Needs To Be Updated'),
             'clock_in_time' => date('H:i:s', strtotime($timeToday)),
             'note' => 'Attendance was created by scanning QR Code',
             'clock_out_time' => null,

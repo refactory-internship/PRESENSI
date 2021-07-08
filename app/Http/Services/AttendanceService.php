@@ -120,6 +120,7 @@ class AttendanceService
     public function approveAttendance($id)
     {
         $attendance = Attendance::query()->findOrFail($id);
+        cache()->forget('attendance.all');
         cache()->forget('attendanceCounter');
         cache()->forget('approve_attendance.all');
         return $attendance->update([
@@ -130,6 +131,7 @@ class AttendanceService
     public function rejectAttendance(Request $request, $id)
     {
         $attendance = Attendance::query()->findOrFail($id);
+        cache()->forget('attendance.all');
         cache()->forget('attendanceCounter');
         cache()->forget('approve_attendance.all');
         return $attendance->update([

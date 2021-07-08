@@ -39,6 +39,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/location-test', function () {
+    $arr_ip = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+    dd($arr_ip->lat, $arr_ip->lon);
+});
+
 Route::get('/redirect', function () {
     if (!\auth()->check()) {
         return redirect()->to('/');
