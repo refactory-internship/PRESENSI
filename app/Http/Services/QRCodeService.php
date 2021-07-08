@@ -46,7 +46,7 @@ class QRCodeService
         $user = User::query()->find(auth()->id());
         $timeToday = $this->dateTimeService->getCurrentDate();
         $calendar = $this->dateTimeService->getDateFromDatabase();
-        $ipAddress = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+        $ipAddress = geoip()->getLocation(getenv(('HTTP_X_FORWARDED_FOR')));
         $gps_lat = $ipAddress->lat;
         $gps_long = $ipAddress->lon;
 

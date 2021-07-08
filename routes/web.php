@@ -41,7 +41,8 @@ Route::get('/', function () {
 
 Route::get('/location-test', function () {
     $arr_ip = geoip()->getLocation(getenv(('HTTP_X_FORWARDED_FOR')));
-    dd($arr_ip->lat, $arr_ip->lon);
+    $task = json_encode(array('string'));
+    dd($arr_ip->lat, $arr_ip->lon, $task);
 });
 
 Route::get('/redirect', function () {

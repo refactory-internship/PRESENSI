@@ -68,6 +68,7 @@ class AttendanceController extends Controller
     public function destroy($id)
     {
         Attendance::query()->findOrFail($id)->delete();
+        cache()->forget('attendance.all');
         return redirect()->route('web.employee.attendances.index')->with('danger', 'Attendance Deleted!');
     }
 }

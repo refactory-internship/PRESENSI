@@ -63,6 +63,7 @@ class AttendanceService
         ]);
 
         $this->insertToAttendanceMaster($attendance);
+        cache()->forget('attendance.all');
 
         return $attendance;
     }
