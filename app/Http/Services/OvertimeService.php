@@ -4,14 +4,12 @@ namespace App\Http\Services;
 
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
-use App\Enums\AttendanceStatus;
 use App\Enums\OvertimeStatus;
 use App\Http\Resources\OvertimeResource;
 use App\Models\Overtime;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OvertimeService
 {
@@ -51,7 +49,7 @@ class OvertimeService
             $approvalStatus = null;
         }
 
-        $overtime = Overtime::query()->create([
+        return Overtime::query()->create([
             'user_id' => auth()->id(),
             'calendar_id' => $calendar->id,
             'approvedBy' => $approver,
@@ -64,10 +62,6 @@ class OvertimeService
             'isFinished' => false,
             'approvalStatus' => $approvalStatus,
         ]);
-
-        $this->insertToAttendanceMaster($overtime);
-
-        return $overtime;
     }
 
     public function update(Request $request, $id)
@@ -101,19 +95,6 @@ class OvertimeService
             'note' => $request->note,
             'isFinished' => $isFinished,
             'approvalStatus' => $approvalStatus
-        ]);
-    }
-
-    public function insertToAttendanceMaster($overtime)
-    {
-        DB::table('attendance_master')->insert([
-            'user_id' => $overtime->user_id,
-            'overtime_id' => $overtime->id,
-            'attendance_type' => AttendanceStatus::OVERTIME,
-            'month' => $overtime->calendar->month,
-            'year' => $overtime->calendar->year,
-            'created_at' => $overtime->calendar->date,
-            'updated_at' => $overtime->calendar->date
         ]);
     }
 

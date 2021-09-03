@@ -128,16 +128,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card shadow-sm" style="border-left: 2px solid #321fdb">
-                                    <div class="card-body">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input"
-                                                   id="auto_approve" name="auto_approve">
-                                            <label class="custom-control-label" for="auto_approve">Auto Approve
-                                                Attendance</label>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Save" class="btn btn-primary">
                                     <a href="{{ route('web.admin.users.index') }}" class="btn btn-dark">

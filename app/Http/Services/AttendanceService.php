@@ -4,13 +4,11 @@ namespace App\Http\Services;
 
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
-use App\Enums\AttendanceStatus;
 use App\Http\Resources\AttendanceResource;
 use App\Jobs\EmailAttendanceApprovalRequest;
 use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AttendanceService
 {
@@ -62,7 +60,6 @@ class AttendanceService
             'approvalStatus' => $approvalStatus,
         ]);
 
-        $this->insertToAttendanceMaster($attendance);
         cache()->forget('attendance.all');
 
         return $attendance;
@@ -73,7 +70,6 @@ class AttendanceService
         $attendance = Attendance::query()->findOrFail($id);
         $timeToday = $this->dateTimeService->getCurrentDate();
         $user = User::query()->findOrFail(auth()->id());
-        $parentEmail = $user->parent->email;
 
         if ($attendance->approvalStatus === '1' || $attendance->approvalStatus === '2') {
             if ($request->has('isFinished')) {
@@ -90,7 +86,10 @@ class AttendanceService
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;
 
-            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+            if ($user->isAutoApproved === true) {
+                $parentEmail = $user->parent->email;
+                EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+            }
         }
 
         cache()->forget('attendance.all');
@@ -102,19 +101,6 @@ class AttendanceService
             'clock_out_time' => $clockOutTime,
             'isFinished' => $isFinished,
             'approvalStatus' => $approvalStatus
-        ]);
-    }
-
-    public function insertToAttendanceMaster($attendance)
-    {
-        DB::table('attendance_master')->insert([
-            'user_id' => $attendance->user_id,
-            'attendance_id' => $attendance->id,
-            'attendance_type' => AttendanceStatus::ATTENDANCE,
-            'month' => $attendance->calendar->month,
-            'year' => $attendance->calendar->year,
-            'created_at' => $attendance->calendar->date,
-            'updated_at' => $attendance->calendar->date
         ]);
     }
 

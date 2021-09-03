@@ -26,12 +26,11 @@ class AttendanceReportExport implements FromView, ShouldAutoSize
     {
         $request = $this->request;
         $user = User::query()->findOrFail($this->id);
-        $attendance = $this->attendanceReportService->getAttendanceTotal($user, $request);
-        $overtime = $this->attendanceReportService->getOvertimeHours($user, $request);
-        $absent = $this->attendanceReportService->getAbsentTotal($user, $request);
-        $leave = $this->attendanceReportService->getLeaveDuration($user, $request);
+        $report = $this->attendanceReportService->getWholeMonth($user, $request);
+        $overtimes = $this->attendanceReportService->getOvertime($user, $request);
+        $attendanceCounter = $this->attendanceReportService->getAttendanceCount($user, $request);
         $month = $this->attendanceReportService->getReportMonth($request);
 
-        return view('admin.report.attendance.export', compact('user', 'month', 'attendance', 'overtime', 'absent', 'leave'));
+        return view('admin.report.attendance.export', compact('user', 'month', 'report', 'overtimes', 'attendanceCounter'));
     }
 }

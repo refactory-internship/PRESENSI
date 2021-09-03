@@ -37,21 +37,19 @@ class AttendanceReportController extends Controller
     public function export(Request $request, $id)
     {
         $user = User::query()->findOrFail($id);
-        $attendance = $this->attendanceReportService->getAttendanceTotal($user, $request);
-        $overtime = $this->attendanceReportService->getOvertimeHours($user, $request);
-        $absent = $this->attendanceReportService->getAbsentTotal($user, $request);
-        $leave = $this->attendanceReportService->getLeaveDuration($user, $request);
         $month = $this->attendanceReportService->getReportMonth($request);
+        $report = $this->attendanceReportService->getWholeMonth($user, $request);
+        $overtimes = $this->attendanceReportService->getOvertime($user, $request);
+        $attendanceCounter = $this->attendanceReportService->getAttendanceCount($user, $request);
         $reportDate = Carbon::now()->format('YmdHs');
         $xlsxFileName = $user->getFullNameAttribute() . ' ' . $month . ' ' . 'Attendance Report' . ' ' . $reportDate . '.xlsx';
-        $pdf = PDF::loadView('admin.report.attendance.export', compact('user', 'month', 'attendance', 'overtime', 'absent', 'leave'))
+        $pdf = PDF::loadView('admin.report.attendance.export', compact('user', 'month', 'report', 'overtimes', 'attendanceCounter'))
             ->stream();
 
-        switch ($request->input('action')) {
-            case 'xlsx' :
-                return Excel::download(new AttendanceReportExport($request, $id, $this->attendanceReportService), $xlsxFileName);
-            default:
-                return $pdf;
+        if ($request->input('action') === 'xlsx') {
+            return Excel::download(new AttendanceReportExport($request, $id, $this->attendanceReportService), $xlsxFileName);
+        } else {
+            return $pdf;
         }
     }
 }
