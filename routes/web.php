@@ -134,9 +134,9 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             ->name('QRCode.generate');
 
         //ATTENDANCE REPORT ROUTES
-        Route::get('/attendances/report/export/{user}', [AttendanceReportController::class, 'export'])
+        Route::get('/attendance-report/export/{user}', [AttendanceReportController::class, 'export'])
             ->name('attendance-report.export');
-        Route::get('/attendances/report', [AttendanceReportController::class, 'index'])
+        Route::get('/attendance-report', [AttendanceReportController::class, 'index'])
             ->name('attendance-report.index');
     });
     //END OF ADMIN MASTER-CRUD ROUTES
@@ -165,6 +165,12 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             Route::get('/calendars/search', [CalendarController::class, 'search'])
                 ->name('calendars.search');
             Route::resource('/calendars', CalendarController::class);
+
+            //ATTENDANCE REPORT ROUTES
+            Route::get('/attendance-report/export/{user}', [AttendanceReportController::class, 'export'])
+                ->name('attendance-report.export');
+            Route::get('/attendance-report', [AttendanceReportController::class, 'index'])
+                ->name('attendance-report.index');
         });
 
         //PARENT APPROVAL ROUTES

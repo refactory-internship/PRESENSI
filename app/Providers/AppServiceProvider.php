@@ -86,5 +86,17 @@ class AppServiceProvider extends ServiceProvider
                 'calendarRoutes' => $calendarRoutes
             ]);
         });
+
+        View::composer('admin.report.attendance.*', function ($view) {
+           if (auth()->user()->hasRole('Admin')) {
+               $reportRoutes = 'web.admin.attendance-report';
+           } else {
+               $reportRoutes = 'web.employee.attendance-report';
+           }
+
+           $view->with([
+              'reportRoutes' => $reportRoutes
+           ]);
+        });
     }
 }
