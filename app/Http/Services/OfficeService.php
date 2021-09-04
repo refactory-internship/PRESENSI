@@ -16,6 +16,7 @@ class OfficeService
             'name' => $request->name,
             'address' => $request->address
         ]);
+        cache()->forget('office.all');
         return $office->division()->attach($request->divisions);
     }
 
@@ -26,6 +27,7 @@ class OfficeService
             'name' => $request->name,
             'address' => $request->address
         ]);
+        cache()->forget('office.all');
         return $office->division()->sync($request->divisions);
     }
 }

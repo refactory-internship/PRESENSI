@@ -13,6 +13,7 @@ use App\Models\TimeSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -25,13 +26,17 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = Cache::remember("users.all", 60, function () {
-            return User::query()
-                ->where('id', '!=', 1)
-                ->with('division_office')
-                ->with('role')
-                ->get();
-        });
+        if (Cache::has('users.all')) {
+            $users = Cache::get('users.all');
+        } else {
+            $users = Cache::remember("users.all", 60, function () {
+                return User::query()
+                    ->where('id', '!=', 1)
+                    ->with('division_office')
+                    ->with('role')
+                    ->get();
+            });
+        }
         return view('admin.user.index', compact('users'));
     }
 

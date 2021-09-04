@@ -6,6 +6,7 @@ namespace App\Http\Services;
 use App\Models\Leave;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,7 @@ class AttendanceReportService
 {
     public function getReportMonth(Request $request)
     {
-        return \DateTime::createFromFormat('!m', $request->month)->format('F');
+        return DateTime::createFromFormat('!m', $request->month)->format('F');
     }
 
     public function getWholeMonth($user, Request $request)
@@ -23,8 +24,7 @@ class AttendanceReportService
         foreach ($user->leave as $data) {
             $start_date = Carbon::parse($data->start_date);
             $end_date = Carbon::parse($data->end_date);
-            $leavePeriod = CarbonPeriod::create($start_date->toDateString(), $end_date->toDateString());
-            $leave = [];
+            $leavePeriod = CarbonPeriod::create($start_date, $end_date);
             foreach ($leavePeriod as $period) {
                 if ($requestDate->month == $period->month && $requestDate->year == $period->year) {
                     $leave[] = [
@@ -63,9 +63,16 @@ class AttendanceReportService
                 $date->task_plan = json_decode($date->task_plan, true);
             }
             foreach ($leave as $item) {
+                $attendanceType = $date->attendanceType;
+                $note = $date->note;
                 if ($date->date == $item['date']) {
-                    $date->attendanceType = 'Leave';
-                    $date->note = $item['note'];
+                    if ($date->attendanceType === 'Attend' || $date->attendanceType === 'Absent') {
+                        $date->attendanceType = $attendanceType;
+                        $date->note = $note;
+                    } else {
+                        $date->attendanceType = 'Leave';
+                        $date->note = $item['note'];
+                    }
                 }
             }
         }

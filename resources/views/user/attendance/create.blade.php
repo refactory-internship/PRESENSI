@@ -7,12 +7,22 @@
                     <div class="card shadow p-4">
                         <div class="card-body">
                             <h5 class="mb-3">{{ \Carbon\Carbon::parse($currentDate)->isoFormat('dddd, MMMM Do YYYY, kk:mm') }}</h5>
+
                             <h5 class="mb-3">
-                                @if(date('H:i:s', strtotime($currentDate)) >= \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  &&
+                                @if($date->status == 1)
+                                    @if(date('H:i:s', strtotime($currentDate)) > \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  &&
                                     date('H:i:s', strtotime($currentDate)) <= auth()->user()->time_setting->end_time)
-                                    <span class="badge badge-warning">Late Attendance</span>
+                                        <span class="badge badge-warning">Late Attendance</span>
+                                    @elseif(date('H:i:s', strtotime($currentDate)) < \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  ||
+                                        date('H:i:s', strtotime($currentDate)) > auth()->user()->time_setting->end_time)
+                                        <span class="badge badge-warning">Not In Working Hour</span>
+                                    @endif
+                                @elseif($date->status == 2)
+                                    <span class="badge badge-warning">WEEK END</span>
+                                @elseif($date->status == 3)
+                                    <span class="badge badge-warning">{{ $date->description }}</span>
                                 @endif
-                            </h5>
+                            </h5> 
 
                             <form action="{{ route('web.employee.attendances.store') }}" method="POST" id="attendanceForm">
                                 @csrf

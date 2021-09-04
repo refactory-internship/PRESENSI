@@ -13,9 +13,13 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $divisions = Cache::remember('division.all', 60, function () {
-            return Division::all();
-        });
+        if (Cache::has('division.all')) {
+            $divisions = Cache::get('division.all');
+        } else {
+            $divisions = Cache::remember('division.all', 60, function () {
+                return Division::all();
+            });
+        }
         return view('admin.division.index', compact('divisions'));
     }
 
@@ -27,6 +31,7 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         Division::query()->create($request->all());
+        cache()->forget('division.all');
         return redirect()->route($this->index)->with('message', 'Division Added!');
     }
 
@@ -43,13 +48,14 @@ class DivisionController extends Controller
     public function update(Request $request, Division $division)
     {
         $division->update($request->all());
-        Cache::forget('division.all');
+        cache()->forget('division.all');
         return redirect()->route($this->index)->with('message', 'Division Updated!');
     }
 
     public function destroy(Division $division)
     {
         $division->delete();
+        cache()->forget('division.all');
         return redirect()->route($this->index)->with('danger', 'Division Deleted!');
     }
 }

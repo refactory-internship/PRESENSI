@@ -22,9 +22,13 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        $attendances = Cache::remember('attendance.all', 60, function () {
-            return $this->attendanceService->getAttendance();
-        });
+        if (Cache::has('attendance.all')) {
+            $attendances = Cache::get('attendance.all');
+        } else {
+            $attendances = Cache::remember('attendance.all', 60, function () {
+                return $this->attendanceService->getAttendance();
+            });
+        }
         return view('user.attendance.index', compact('attendances'));
     }
 
