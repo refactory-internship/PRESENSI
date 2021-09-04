@@ -19,12 +19,10 @@ class ApproveAttendanceController extends Controller
 
     public function index()
     {
-        $attendances = Cache::remember('approve_attendance.all', 60, function () {
-            return Attendance::query()
-                ->where('approverId', auth()->id())
-                ->latest()
-                ->get();
-        });
+        $attendances = Attendance::query()
+            ->where('approverId', auth()->id())
+            ->latest()
+            ->get();
         return view('user.parent.approve-attendance.index', compact('attendances'));
     }
 

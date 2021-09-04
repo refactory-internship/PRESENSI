@@ -36,7 +36,7 @@ class LeaveService
             $approvalStatus = LeaveStatus::NEEDS_APPROVAL;
         }
 
-        $leave = Leave::query()->create([
+        return Leave::query()->create([
             'user_id' => $user->id,
             'approvedBy' => $approvedBy,
             'approverId' => $approverId,
@@ -45,13 +45,10 @@ class LeaveService
             'note' => $request->note,
             'approvalStatus' => $approvalStatus
         ]);
-
-        return $leave;
     }
 
     public function update(Request $request, $id)
     {
-        cache()->forget('leave.all');
         return Leave::query()->findOrFail($id)->update([
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
@@ -61,9 +58,6 @@ class LeaveService
 
     public function approveLeave($id)
     {
-        cache()->forget('leave.all');
-        cache()->forget('leaveCounter');
-        cache()->forget('approve_leave.all');
         return Leave::query()->findOrFail($id)->update([
             'approvalStatus' => LeaveStatus::APPROVED
         ]);
@@ -71,9 +65,6 @@ class LeaveService
 
     public function rejectLeave(Request $request, $id)
     {
-        cache()->forget('leave.all');
-        cache()->forget('leaveCounter');
-        cache()->forget('approve_leave.all');
         return Leave::query()->findOrFail($id)->update([
             'approvalStatus' => LeaveStatus::REJECTED,
             'rejectionNote' => $request->get('rejectionNote')

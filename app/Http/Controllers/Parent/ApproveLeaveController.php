@@ -19,12 +19,10 @@ class ApproveLeaveController extends Controller
 
     public function index()
     {
-        $leaves = Cache::remember('approve_leave.all', 60, function () {
-            return Leave::query()
-                ->where('approverId', auth()->id())
-                ->latest()
-                ->get();
-        });
+        $leaves = Leave::query()
+            ->where('approverId', auth()->id())
+            ->latest()
+            ->get();
         return view('user.parent.approve-leave.index', compact('leaves'));
     }
 

@@ -53,6 +53,7 @@ class CalendarController extends Controller
         }
 
         $this->calendarService->store($first_year, $last_year);
+        Cache::forget('calendars.all');
         return redirect()->route('web.admin.calendars.create')->with('message', 'New Calendar Added!');
     }
 

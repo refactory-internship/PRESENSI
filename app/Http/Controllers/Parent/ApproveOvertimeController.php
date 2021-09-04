@@ -19,13 +19,11 @@ class ApproveOvertimeController extends Controller
 
     public function index()
     {
-        $overtimes = Cache::remember('approve_overtime.all', 60, function () {
-            return Overtime::query()
-                ->where('approverId', auth()->id())
-                ->where('isFinished', true)
-                ->latest()
-                ->get();
-        });
+        $overtimes = Overtime::query()
+            ->where('approverId', auth()->id())
+            ->where('isFinished', true)
+            ->latest()
+            ->get();
         return view('user.parent.approve-overtime.index', compact('overtimes'));
     }
 

@@ -22,13 +22,7 @@ class OvertimeController extends Controller
 
     public function index()
     {
-        $user = auth()->id();
-        $overtimes = Cache::remember('overtime.all', 60, function () use ($user) {
-           return Overtime::query()
-               ->where('user_id', $user)
-               ->latest()
-               ->get();
-        });
+        $overtimes = $this->overtimeService->getOvertime();
         return view('user.overtime.index', compact('overtimes'));
     }
 

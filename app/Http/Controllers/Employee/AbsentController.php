@@ -19,13 +19,7 @@ class AbsentController extends Controller
 
     public function index()
     {
-        $user = auth()->id();
-        $absents = Cache::remember('absent.all', 60, function () use ($user) {
-            return Absent::query()
-                ->where('user_id', $user)
-                ->latest()
-                ->get();
-        });
+        $absents = $this->absentService->getAbsent();
         return view('user.absent.index', compact('absents'));
     }
 

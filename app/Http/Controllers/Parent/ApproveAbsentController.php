@@ -19,12 +19,10 @@ class ApproveAbsentController extends Controller
 
     public function index()
     {
-        $absents = Cache::remember('approve_absent.all', 60, function () {
-            return Absent::query()
-                ->where('approverId', auth()->id())
-                ->latest()
-                ->get();
-        });
+        $absents = Absent::query()
+            ->where('approverId', auth()->id())
+            ->latest()
+            ->get();
         return view('user.parent.approve-absent.index', compact('absents'));
     }
 

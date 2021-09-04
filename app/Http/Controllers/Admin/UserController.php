@@ -71,6 +71,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        cache()->forget('users.all');
         return redirect()->route('web.admin.users.index')->with('danger', 'Employee Deactivated!');
     }
 
