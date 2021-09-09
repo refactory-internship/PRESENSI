@@ -56,9 +56,9 @@
                                     <label class="col-md-3 col-form-label" for="office">Select Office</label>
                                     <div class="col-md-9">
                                         <select name="office" id="office" class="form-control" aria-label="office">
-                                            @foreach($offices as $id => $name)
+                                            @foreach($offices as $office)
                                                 <option
-                                                    value="{{ $id }}" {{ $id === $user->division_office->office->id ? 'selected' : '' }}>{{ $name }}</option>
+                                                    value="{{ $office->id }}" {{ $office->id == $user->division_office->office->id ? 'selected' : '' }}>{{ $office->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -66,10 +66,10 @@
                                 <div class="form-group row mb-3">
                                     <label class="col-md-3 col-form-label" for="division">Select Division</label>
                                     <div class="col-md-9">
-                                        <select name="division" id="division" class="form-control"
-                                                aria-label="division">
-                                            <option
-                                                value="{{ $user->division_office->division->id }}">{{ $user->division_office->division->name }}</option>
+                                        <select name="division" id="division" class="form-control" aria-label="division">
+                                            @foreach($divisionOffice as $item)
+                                                <option value="{{ $item->division->id }}" {{ $item->division->id == $user->division_office->division->id ? 'selected' : '' }}>{{ $item->division->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -77,8 +77,7 @@
                                     <label for="shift" class="col-md-3 col-form-label">Select Shift</label>
                                     <div class="col-md-9">
                                         <select name="shift" id="shift" class="form-control" aria-label="shift">
-                                            <option
-                                                value="{{ $user->time_setting->id }}">{{ $user->time_setting->getShiftAttribute() }}</option>
+                                            <option value="{{ $user->time_setting->id }}">{{ $user->time_setting->getShiftAttribute() }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -89,23 +88,17 @@
                                             <select name="parent" id="parent" class="form-control"
                                                     aria-label="parent">
                                                 @if($user->parent === null)
-                                                    <option value="">Parent</option>
+                                                    <option value="">No Parent</option>
+                                                    @foreach($parent as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->getFullNameAttribute() }}</option>
+                                                    @endforeach
                                                 @else
-                                                    <option
-                                                        value="{{ $user->parent->id }}">{{ $user->parent->getFullNameAttribute() }}</option>
+                                                    <option value="">No Parent</option>
+                                                    @foreach($parent as $item)
+                                                        <option value="{{ $item->id }} {{ $user->parent->id === $item->id ? 'selected' : '' }}">{{ $item->getFullNameAttribute() }}</option>
+                                                    @endforeach
                                                 @endif
                                             </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card card-accent-primary">
-                                    <div class="card-body">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input"
-                                                   id="auto_approve"
-                                                   name="auto_approve" {{ $user->isAutoApproved === true ? 'checked' : '' }}>
-                                            <label class="custom-control-label" for="auto_approve">Auto Approve
-                                                Attendance</label>
                                         </div>
                                     </div>
                                 </div>

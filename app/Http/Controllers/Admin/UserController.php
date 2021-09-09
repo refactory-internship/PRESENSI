@@ -34,6 +34,7 @@ class UserController extends Controller
                     ->where('id', '!=', 1)
                     ->with('division_office')
                     ->with('role')
+                    ->latest()
                     ->get();
             });
         }
@@ -61,10 +62,17 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $parent = User::all();
-        $offices = Office::query()->pluck('name', 'id');
+        $parent = User::query()
+            ->where('id', '!=', 1)
+            ->where('id', '!=', $user->id)
+            ->where('division_office_id', $user->division_office_id)
+            ->get();
+        $offices = Office::query()->with('division')->get();
+        $divisionOffice = DivisionOffice::query()
+            ->where('office_id', $user->division_office->office->id)
+            ->get();
         $roles = Role::query()->pluck('name', 'id');
-        return view('admin.user.edit', compact('offices', 'roles', 'parent', 'user'));
+        return view('admin.user.edit', compact('offices', 'roles', 'parent', 'user', 'divisionOffice'));
     }
 
     public function update(Request $request, User $user)

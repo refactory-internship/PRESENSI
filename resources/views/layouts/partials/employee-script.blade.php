@@ -49,6 +49,8 @@
                 axios.get('/getParent/' + officeID + '/' + divisionID)
                     .then(function (response) {
                         $('#parent').empty();
+                        const obj = { 0: 'No Parent' }
+                        $.extend(response.data, obj);
                         $.each(response.data, function (id, name) {
                             $('#parent').append(new Option(name, id));
                         });
@@ -74,6 +76,8 @@
         //get users of the office and the division
         axios.get('/getParent/' + officeID + '/' + divisionID)
             .then(function (response) {
+                const obj = { 0: 'No Parent' }
+                $.extend(response.data, obj);
                 $('#parent').empty();
                 $.each(response.data, function (id, name) {
                     $('#parent').append(new Option(name, id));

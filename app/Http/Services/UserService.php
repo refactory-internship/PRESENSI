@@ -22,8 +22,8 @@ class UserService
         $parent = $request->parent;
         $isAutoApproved = false;
 
-        if ($request->parent === null) {
-            $parent = $request->parent;
+        if ($request->parent === null || $request->parent === '0') {
+            $parent = null;
             $isAutoApproved = true;
         }
 
@@ -48,6 +48,14 @@ class UserService
             ->where('office_id', $request->office)
             ->value('id');
 
+        $parent = $request->parent;
+        $isAutoApproved = false;
+
+        if ($request->parent === null || $request->parent === '0') {
+            $parent = null;
+            $isAutoApproved = true;
+        }
+
         cache()->forget('users.all');
         return $user->update([
             'role_id' => $request->role,
@@ -55,8 +63,8 @@ class UserService
             'time_setting_id' => $request->shift,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'parent_id' => $request->parent,
-            'isAutoApproved' => $request->has('auto_approve') ? true : false
+            'parent_id' => $parent,
+            'isAutoApproved' => $isAutoApproved
         ]);
     }
 }

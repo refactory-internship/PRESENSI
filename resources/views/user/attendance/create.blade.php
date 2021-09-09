@@ -22,7 +22,7 @@
                                 @elseif($date->status == 3)
                                     <span class="badge badge-warning">{{ $date->description }}</span>
                                 @endif
-                            </h5> 
+                            </h5>
 
                             <form action="{{ route('web.employee.attendances.store') }}" method="POST" id="attendanceForm">
                                 @csrf
