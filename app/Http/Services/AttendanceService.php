@@ -5,9 +5,11 @@ namespace App\Http\Services;
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
 use App\Jobs\EmailAttendanceApprovalRequest;
+use App\Mail\AttendanceNeedsApproval;
 use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AttendanceService
 {
@@ -60,7 +62,8 @@ class AttendanceService
 
         if ($user->isAutoApproved === false) {
             $parentEmail = $user->parent->email;
-            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+//            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+            Mail::to($parentEmail)->send(new AttendanceNeedsApproval($user, $attendance));
         }
 
         cache()->forget('attendance.all');

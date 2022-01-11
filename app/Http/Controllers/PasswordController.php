@@ -28,8 +28,8 @@ class PasswordController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-//        Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
-        SendResetPasswordEmail::dispatch($recipient, $userId, $token);
+        Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
+//        SendResetPasswordEmail::dispatch($recipient, $userId, $token);
 
         $tokenFromDB = DB::table('password_resets')
             ->where('email', $request->email)
