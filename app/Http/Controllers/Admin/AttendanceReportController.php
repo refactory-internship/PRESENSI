@@ -47,6 +47,7 @@ class AttendanceReportController extends Controller
         $xlsxFileName = $user->getFullNameAttribute() . ' ' . $month . ' ' . 'Attendance Report' . ' ' . $reportDate . '.xlsx';
         $pdf = PDF::loadView('admin.report.attendance.export', compact('user', 'month', 'report', 'overtimes', 'attendanceCounter'))
             ->stream();
+        dd($report);
 
         if ($request->input('action') === 'xlsx') {
             return Excel::download(new AttendanceReportExport($request, $id, $this->attendanceReportService), $xlsxFileName);
