@@ -62,9 +62,9 @@ class AttendanceReportService
             "year" => $request->year
         ]);
 
-//        $resultArray = json_decode(json_encode($result, 1));
+        $resultArray = json_decode(json_encode($result, 1));
 
-        foreach ($result as $date) {
+        foreach ($resultArray as $date) {
             if ($date->task_plan !== null) {
                 $date->task_plan = json_decode($date->task_plan, true);
             }
@@ -84,7 +84,7 @@ class AttendanceReportService
             }
         }
 
-        return $result;
+        return $resultArray;
     }
 
     public function getOvertime($user, Request $request)
