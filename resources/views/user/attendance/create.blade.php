@@ -69,7 +69,7 @@
                 html += '<div class="col-md-8">' + '<input type="text" name="task_plan[]" id="task_plan" class="form-control">' + '</div>';
 
                 if (count > 1) {
-                    html += '<div class="col-md-1">' +
+                    html += '<div class="col-md-1 p-0">' +
                         '<button type="button" name="remove" id="remove" class="btn btn-danger">' +
                         '<i class="bi bi-x-circle"></i>' +
                         '</button>' +
@@ -78,7 +78,7 @@
 
                     $('#dyna_form').append(html);
                 } else {
-                    html += '<div class="col-md-1">' +
+                    html += '<div class="col-md-1 p-0">' +
                         '<button type="button" name="add" id="add" class="btn btn-success">' +
                         '<i class="bi bi-plus-circle"></i>' +
                         '</button>' +

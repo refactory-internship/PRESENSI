@@ -8,46 +8,46 @@
                         @csrf
                         <div class="card shadow p-4">
                             <div class="card-body">
-                                <div class="mb-3">
-                                    <div class="form-group row mb-3">
-                                        <label class="col-md-3 col-form-label" for="provinces">Select Province</label>
-                                        <div class="col-md-9">
-                                            <select name="provinces" id="provinces" class="form-control"
-                                                    aria-label="province">
-                                                <option value="">Province</option>
-                                                @foreach($provinces as $id => $name)
-                                                    <option value="{{ $id }}">{{ $name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label class="col-md-3 col-form-label" for="cities">Select City</label>
-                                        <div class="col-md-9">
-                                            <select name="cities" id="cities" class="form-control" aria-label="cities">
-                                                <option value="">City</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label class="col-md-3 col-form-label" for="districts">Select District</label>
-                                        <div class="col-md-9">
-                                            <select name="districts" id="districts" class="form-control"
-                                                    aria-label="districts">
-                                                <option value="">District</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label class="col-md-3 col-form-label" for="villages">Select Village</label>
-                                        <div class="col-md-9">
-                                            <select name="villages" id="villages" class="form-control"
-                                                    aria-label="villages">
-                                                <option value="">Village</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="mb-3">--}}
+{{--                                    <div class="form-group row mb-3">--}}
+{{--                                        <label class="col-md-3 col-form-label" for="provinces">Select Province</label>--}}
+{{--                                        <div class="col-md-9">--}}
+{{--                                            <select name="provinces" id="provinces" class="form-control"--}}
+{{--                                                    aria-label="province">--}}
+{{--                                                <option value="">Province</option>--}}
+{{--                                                @foreach($provinces as $id => $name)--}}
+{{--                                                    <option value="{{ $id }}">{{ $name }}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group row mb-3">--}}
+{{--                                        <label class="col-md-3 col-form-label" for="cities">Select City</label>--}}
+{{--                                        <div class="col-md-9">--}}
+{{--                                            <select name="cities" id="cities" class="form-control" aria-label="cities">--}}
+{{--                                                <option value="">City</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group row mb-3">--}}
+{{--                                        <label class="col-md-3 col-form-label" for="districts">Select District</label>--}}
+{{--                                        <div class="col-md-9">--}}
+{{--                                            <select name="districts" id="districts" class="form-control"--}}
+{{--                                                    aria-label="districts">--}}
+{{--                                                <option value="">District</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group row mb-3">--}}
+{{--                                        <label class="col-md-3 col-form-label" for="villages">Select Village</label>--}}
+{{--                                        <div class="col-md-9">--}}
+{{--                                            <select name="villages" id="villages" class="form-control"--}}
+{{--                                                    aria-label="villages">--}}
+{{--                                                <option value="">Village</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                         <div class="card shadow p-4">

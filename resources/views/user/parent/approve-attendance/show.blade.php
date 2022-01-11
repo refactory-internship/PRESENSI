@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageTitle' => 'Attendance Details'])
+@extends('layouts.app', ['pageTitle' => 'Attendance Approval'])
 @section('content')
     <div class="container">
         <div class="fade-in">
@@ -11,50 +11,10 @@
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card shadow p-4">
-                        <div class="card-body text-center">
-                            <div class="mb-2">
-                                <div class="row">
-                                    <strong>Employee Name</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->getFullNameAttribute() }}</p>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="row">
-                                    <strong>Role</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->role->name }}</p>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="row">
-                                    <strong>Office and Division</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    @if($attendance->approvalStatus === '3')
-                        <div class="card shadow" style="border-left: 3px solid red">
-                            <div class="card-body">
-                                <div class="text-uppercase font-weight-bold small">Reason of Rejection</div>
-                                <div class="text-value-sm text-danger">
-                                    {{ $attendance->rejectionNote }}
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-                <div class="col-md-8">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
                         <div class="col">
                             <div class="card shadow">
                                 <div class="card-body">
@@ -115,7 +75,57 @@
                                 </div>
                             </div>
                         </div>
+                        @if($attendance->approvalStatus === '3')
+                            <div class="col">
+                                <div class="card shadow" style="border-left: 3px solid red">
+                                    <div class="card-body">
+                                        <div class="text-uppercase font-weight-bold small">
+                                            Reason of Rejection
+                                        </div>
+                                        <div class="text-value-sm text-danger">
+                                            {{ $attendance->rejectionNote }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card shadow p-4 h-100">
+                        <div class="card-body align-items-center justify-content-center">
+                            <div class="mb-2">
+                                <div class="row">
+                                    <strong>Employee Name</strong>
+                                </div>
+                                <div class="row">
+                                    <p>{{ $attendance->user->getFullNameAttribute() }}</p>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="row">
+                                    <strong>Role</strong>
+                                </div>
+                                <div class="row">
+                                    <p>{{ $attendance->user->role->name }}</p>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="row">
+                                    <strong>Office and Division</strong>
+                                </div>
+                                <div class="row">
+                                    <p>{{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
                     <div class="row">
                         <div class="col">
                             <div class="card-group shadow">
@@ -153,6 +163,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="card pt-4">
                                     <div class="card-body">
                                         <div class="mb-2 pl-4">

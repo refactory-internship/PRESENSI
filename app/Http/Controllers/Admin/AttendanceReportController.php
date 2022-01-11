@@ -6,6 +6,7 @@ use App\Exports\AttendanceReportExport;
 use App\Http\Controllers\Controller;
 use App\Http\Services\AttendanceReportService;
 use App\Http\Services\CalendarService;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,8 +26,9 @@ class AttendanceReportController extends Controller
 
     public function index()
     {
+        $admin = Role::query()->where('name', '=', 'Admin')->first();
         $users = User::query()
-            ->where('id', '!=', 1)
+            ->where('role_id', '!=', $admin->id)
             ->get();
         $years = $this->calendarService->pluckYears();
         $months = $this->calendarService->pluckMonths();

@@ -26,31 +26,31 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-3">
-                                    Office Location
-                                </div>
-                                <div class="col-md-9">
-                                    <table class="table table-sm" aria-label="office location">
-                                        <tr>
-                                            <td>Province</td>
-                                            <td>{{ $office->village->district->city->province->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>City</td>
-                                            <td>{{ $office->village->district->city->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>District</td>
-                                            <td>{{ $office->village->district->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Village</td>
-                                            <td>{{ $office->village->name }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
+{{--                            <div class="row mb-3">--}}
+{{--                                <div class="col-md-3">--}}
+{{--                                    Office Location--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-9">--}}
+{{--                                    <table class="table table-sm" aria-label="office location">--}}
+{{--                                        <tr>--}}
+{{--                                            <td>Province</td>--}}
+{{--                                            <td>{{ $office->village->district->city->province->name }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                        <tr>--}}
+{{--                                            <td>City</td>--}}
+{{--                                            <td>{{ $office->village->district->city->name }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                        <tr>--}}
+{{--                                            <td>District</td>--}}
+{{--                                            <td>{{ $office->village->district->name }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                        <tr>--}}
+{{--                                            <td>Village</td>--}}
+{{--                                            <td>{{ $office->village->name }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                    </table>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="address">Office Address</label>

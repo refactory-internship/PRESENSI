@@ -66,7 +66,7 @@ Route::name('api.')->group(function () {
     //USER/EMPLOYEE ROUTES
     Route::prefix('employee')->middleware(['auth:sanctum', 'api.attendanceAccess', 'api.employee'])->name('employee.')->group(function () {
         //STORE ATTENDANCE USING QRCODE
-        Route::get('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
+        Route::post('/QRCode/save_attendance/{token}', [QRCodeController::class, 'saveAttendance'])
             ->name('QRCode.save-attendance');
 
         //ATTENDANCE CRUD ROUTES

@@ -95,7 +95,7 @@
                                                 @else
                                                     <option value="">No Parent</option>
                                                     @foreach($parent as $item)
-                                                        <option value="{{ $item->id }} {{ $user->parent->id === $item->id ? 'selected' : '' }}">{{ $item->getFullNameAttribute() }}</option>
+                                                        <option value="{{ $item->id }}" {{ $user->parent->id === $item->id ? 'selected' : '' }}>{{ $item->getFullNameAttribute() }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

@@ -25,7 +25,7 @@
 
         .content td {
             border: 0.1mm solid black;
-            padding-left: 10px;
+            padding: 3px;
         }
 
         table thead th {
@@ -44,7 +44,7 @@
 <p class="text">Report Month: <strong>{{ $month }}</strong></p>
 
 <br>
-<strong>Attendance Total Count this Month</strong>
+<strong>Monthly Attendance Count</strong>
 <p class="text">
     Attendance: {{$attendanceCounter['attendanceCount']}} {{$attendanceCounter['attendanceCount'] > 1 ? 'Days' : 'Day'}}</p>
 <p class="text">
@@ -56,30 +56,42 @@
 
 <br>
 <strong>Attendance Report</strong>
-<table class="content" aria-label="attendancePDF">
+<table class="content" aria-label="attendancePDF" style="font-size: 12px;">
     <thead>
     <tr>
         <th scope="col">No</th>
         <th scope="col">Date</th>
         <th scope="col">Task Plan</th>
         <th scope="col">Note</th>
-        <th scope="col">Attendance Type</th>
+        <th scope="col">Type</th>
     </tr>
     </thead>
     <tbody>
     @foreach($report as $data)
         <tr>
-            <td>{{$loop->index + 1}}</td>
-            <td>{{$data->date}}</td>
-            <td>
-                @if($data->task_plan !== null)
-                    @foreach($data->task_plan as $task_plan)
-                        {{$loop->last ? $task_plan : $task_plan  . ', '}}
-                    @endforeach
-                @endif
+            <td style="width: 4%; text-align: center;">
+                {{$loop->index + 1}}
             </td>
-            <td>{{$data->note}}</td>
-            <td>{{$data->attendanceType}}</td>
+            @if($data->description === 'WEEK_END' || $data->description === 'HOLIDAY')
+                <td style="width: 15%; color: red;">
+                    {{ date('l', strtotime($data->date)) }}
+                </td>
+            @else
+                <td style="width: 15%;">
+                    {{ date('D, d-m-Y', strtotime($data->date)) }}
+                </td>
+            @endif
+            @if($data->task_plan !== null)
+                <td style="width: 40%;">
+                    @foreach($data->task_plan as $task_plan)
+                        {{ $task_plan }} <br>
+                    @endforeach
+                </td>
+            @else
+                <td></td>
+            @endif
+            <td style="width: 30%;">{{$data->note}}</td>
+            <td style="width: 10%;">{{$data->attendanceType}}</td>
         </tr>
     @endforeach
     </tbody>
@@ -87,7 +99,7 @@
 
 <br>
 <strong>Overtimes Report</strong>
-<table class="content" aria-label="attendancePDF">
+<table class="content" aria-label="attendancePDF" style="font-size: 12px;">
     <thead>
     <tr>
         <th scope="col">No</th>
@@ -101,21 +113,21 @@
     <tbody>
     @forelse($overtimes as $overtime)
         <tr>
-            <td>{{$loop->index + 1}}</td>
-            <td>{{$overtime->date}}</td>
+            <td style="width: 4%; text-align: center;">{{$loop->index + 1}}</td>
+            <td style="width: 15%;">{{ date('D, d-m-Y', strtotime($overtime->date)) }}</td>
             <td>{{$overtime->task_plan}}</td>
-            <td>{{$overtime->start_time}}</td>
-            <td>{{$overtime->end_time}}</td>
-            <td>{{$overtime->duration}}</td>
+            <td style="width: 15%; text-align: center;">{{$overtime->start_time}}</td>
+            <td style="width: 15%; text-align: center;">{{$overtime->end_time}}</td>
+            <td style="width: 10%; text-align: center;">{{$overtime->duration}}</td>
         </tr>
     @empty
         <tr>
+            <td style="width: 4%; text-align: center;">No Data</td>
+            <td style="width: 15%;">No Data</td>
             <td>No Data</td>
-            <td>No Data</td>
-            <td>No Data</td>
-            <td>No Data</td>
-            <td>No Data</td>
-            <td>No Data</td>
+            <td style="width: 15%; text-align: center;">No Data</td>
+            <td style="width: 15%; text-align: center;">No Data</td>
+            <td style="width: 10%; text-align: center;">No Data</td>
         </tr>
     @endforelse
     </tbody>

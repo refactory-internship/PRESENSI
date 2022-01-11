@@ -46,11 +46,11 @@ Route::get('/location-test', function () {
 });
 
 Route::get('/redirect', function () {
-    if (!\auth()->check()) {
+    if (!Auth::check()) {
         return redirect()->to('/');
     }
 
-    if (\auth()->user()->hasRole('Admin')) {
+    if (Auth::user()->hasRole('Admin')) {
         return redirect()->route('web.admin.home');
     }
     return redirect()->route('web.employee.home');
@@ -132,6 +132,8 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             ->name('QRCode.create');
         Route::get('/QRCode/generate', [QRCodeController::class, 'generateQRCode'])
             ->name('QRCode.generate');
+        Route::get('/QRCode/stop', [QRCodeController::class, 'stopQRCode'])
+            ->name('QRCode.stop');
 
         //ATTENDANCE REPORT ROUTES
         Route::get('/attendance-report/export/{user}', [AttendanceReportController::class, 'export'])
@@ -165,12 +167,6 @@ Route::prefix('web')->name('web.')->middleware('auth')->group(function () {
             Route::get('/calendars/search', [CalendarController::class, 'search'])
                 ->name('calendars.search');
             Route::resource('/calendars', CalendarController::class);
-
-            //ATTENDANCE REPORT ROUTES
-            Route::get('/attendance-report/export/{user}', [AttendanceReportController::class, 'export'])
-                ->name('attendance-report.export');
-            Route::get('/attendance-report', [AttendanceReportController::class, 'index'])
-                ->name('attendance-report.index');
         });
 
         //PARENT APPROVAL ROUTES

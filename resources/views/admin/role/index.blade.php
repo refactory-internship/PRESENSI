@@ -12,7 +12,7 @@
                         </a>
                     </div>
                     <div class="row">
-                        @foreach($roles as $role)
+                        @foreach ($roles as $role)
                             <div class="col-md-3">
                                 <div class="card shadow">
                                     <div class="card-body d-flex justify-content-between align-items-start">
@@ -38,7 +38,7 @@
                                         <svg class="c-icon">
                                             <use xlink:href="{{ asset('coreui/icons/free.svg') }}#cil-people"></use>
                                         </svg>
-                                        {{ count($role->user) }}
+                                        {{ $role->user_count }}
                                     </div>
                                 </div>
                             </div>

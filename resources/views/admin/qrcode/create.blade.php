@@ -14,13 +14,13 @@
                                     <option value="60">60 Seconds</option>
                                 </select>
                             </div>
-{{--                            <a href="{{ route('web.admin.QRCode.generate') }}" class="btn btn-primary" target="_blank" onclick="startTimer()">--}}
-{{--                                Start QR Code--}}
-{{--                            </a>--}}
+                            {{-- <a href="{{ route('web.admin.QRCode.generate') }}" class="btn btn-primary" target="_blank" onclick="startTimer()"> --}}
+                            {{-- Start QR Code --}}
+                            {{-- </a> --}}
                             <button class="btn btn-success" onclick="startTimer()">Start QR Code</button>
-                            <button class="btn btn-danger" id="stopTimer">Stop QR Code</button>
+                            <button class="btn btn-danger" id="stopTimer" onclick="stopQRCode()">Stop QR Code</button>
 
-                            <div class="text-center mb-3">
+                            <div class="text-center my-3">
                                 <h5>Remaining Time</h5>
                                 <h5 id="countdown">00:00</h5>
                             </div>
@@ -74,7 +74,7 @@
         }
 
         function stopTimer(timerInterval, countdownElement, text) {
-            $('#stopTimer').on('click', function () {
+            $('#stopTimer').on('click', function() {
                 clearInterval(timerInterval)
                 countdownElement.innerHTML = '00:00';
                 text.innerHTML = '';
@@ -83,10 +83,13 @@
 
         function getQRCode(text) {
             axios.get('/web/admin/QRCode/generate')
-                .then(function (response) {
-                    console.log(response)
+                .then(function(response) {
                     text.innerHTML = response.data;
                 });
+        }
+
+        function stopQRCode() {
+            axios.get('/web/admin/QRCode/stop');
         }
     </script>
 @endsection

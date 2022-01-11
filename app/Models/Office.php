@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Laravolt\Indonesia\Models\Village;
 
 class Office extends Model
@@ -21,5 +22,15 @@ class Office extends Model
     public function village()
     {
         return $this->belongsTo(Village::class);
+    }
+
+    /**
+     * Get all of the comments for the Office
+     *
+     * @return HasManyThrough
+     */
+    public function user(): HasManyThrough
+    {
+        return $this->hasManyThrough(User::class, Division::class);
     }
 }

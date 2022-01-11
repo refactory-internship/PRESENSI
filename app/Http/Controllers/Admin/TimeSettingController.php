@@ -25,7 +25,7 @@ class TimeSettingController extends Controller
             $times = Cache::get('time_setting.all');
         } else {
             $times = Cache::remember('time_setting.all', 60, function () {
-                return TimeSetting::all();
+                return TimeSetting::with('division')->get();
             });
         }
         return view('admin.time-setting.index', compact('times'));
@@ -60,7 +60,7 @@ class TimeSettingController extends Controller
     public function destroy(TimeSetting $timeSetting)
     {
         $timeSetting->delete();
-        cache()->forget('division.all');
+        cache()->forget('time_setting.all');
         return redirect()->route($this->index)->with('danger', 'Time Setting Deleted!');
     }
 }

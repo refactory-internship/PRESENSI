@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Office;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,23 +16,29 @@ class OfficeSeeder extends Seeder
      */
     public function run()
     {
-        $today = Carbon::now();
+//        $today = Carbon::now();
         $address = 'Jalan Kaliurang KM.12.5, No. 32, Candikarang, Sardonoharjo, Ngaglik';
-        DB::table('offices')->insert([
-            [
-                'village_id' => 3404120005,
-                'name' => 'Office Branch A',
-                'address' => $address,
-                'created_at' => date($today),
-                'updated_at' => date($today)
-            ],
-            [
-                'village_id' => 3404120005,
-                'name' => 'Office Branch B',
-                'address' => $address,
-                'created_at' => date($today),
-                'updated_at' => date($today)
-            ],
+
+        Office::query()->create([
+            'village_id' => null,
+            'name' => 'Office Branch A',
+            'address' => $address
         ]);
+//        DB::table('offices')->insert([
+//            [
+//                'village_id' => null,
+//                'name' => 'Office Branch A',
+//                'address' => $address,
+//                'created_at' => date($today),
+//                'updated_at' => date($today)
+//            ],
+//            [
+//                'village_id' => null,
+//                'name' => 'Office Branch B',
+//                'address' => $address,
+//                'created_at' => date($today),
+//                'updated_at' => date($today)
+//            ],
+//        ]);
     }
 }

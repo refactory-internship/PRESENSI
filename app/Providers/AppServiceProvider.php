@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
             'pageTitle' => 'title'
         ]);
 
-        View::composer(['user.*', 'layouts.partials.sidebar'], function ($view) {
+        View::composer('layouts.partials.sidebar', function ($view) {
             $attendanceCounter = Attendance::query()
                 ->where('approverId', auth()->id())
                 ->where('approvalStatus', ApprovalStatus::NEEDS_APPROVAL)
@@ -77,18 +77,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'calendarRoutes' => $calendarRoutes
             ]);
-        });
-
-        View::composer('admin.report.attendance.*', function ($view) {
-           if (auth()->user()->hasRole('Admin')) {
-               $reportRoutes = 'web.admin.attendance-report';
-           } else {
-               $reportRoutes = 'web.employee.attendance-report';
-           }
-
-           $view->with([
-              'reportRoutes' => $reportRoutes
-           ]);
         });
     }
 }

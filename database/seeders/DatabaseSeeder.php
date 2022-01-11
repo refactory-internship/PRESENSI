@@ -15,15 +15,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            LaravoltIndonesiaSeeder::class,
+//            LaravoltIndonesiaSeeder::class,
             RoleSeeder::class,
             DivisionSeeder::class,
             OfficeSeeder::class,
             TimeSettingSeeder::class,
             DivisionOfficeSeeder::class,
             UserSeeder::class,
-            ChildSeeder::class,
+//            ChildSeeder::class,
             CalendarSeeder::class,
+//            AttendanceSeeder::class,
+//            OvertimeSeeder::class,
+//            AbsentSeeder::class
         ]);
     }
 }

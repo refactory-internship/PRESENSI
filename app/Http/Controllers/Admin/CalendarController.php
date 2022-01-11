@@ -4,25 +4,31 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\CalendarService;
+use App\Http\Services\DateTimeService;
 use App\Models\Calendar;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class CalendarController extends Controller
 {
     private $calendarService;
+    private $dateTimeService;
 
-    public function __construct(CalendarService $calendarService)
+    public function __construct(CalendarService $calendarService, DateTimeService $dateTimeService)
     {
         $this->calendarService = $calendarService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function index()
     {
-        $calendars = Cache::remember('calendars.all', 10, function () {
-            return $this->calendarService->getCurrentDates();
-        });
+        if (Cache::has('calendars.all')) {
+            $calendars = Cache::get('calendars.all');
+        } else {
+            $calendars = Cache::remember('calendars.all', 60, function () {
+                return $this->calendarService->getCurrentDates();
+            });
+        }
 
         $years = $this->calendarService->pluckYears();
         $months = $this->calendarService->pluckMonths();
@@ -33,8 +39,9 @@ class CalendarController extends Controller
     {
         $first = Calendar::query()->first();
         $last = Calendar::query()->orderBy('date', 'DESC')->first();
-        $thisYear = date('Y', strtotime(Carbon::now()));
-        $yearInterval = 5;
+        $currentDate = $this->dateTimeService->getCurrentDate();
+        $thisYear = date('Y', strtotime($currentDate));
+        $yearInterval = 6;
         return view('admin.calendar.create', compact('first', 'last', 'thisYear', 'yearInterval'));
     }
 

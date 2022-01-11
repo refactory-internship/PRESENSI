@@ -85,7 +85,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="text-value-lg text-info">Overtime</div>
-                            <div class="text-muted font-weight-bold small">{{ $overtimeCount }}</div>
+                            <div class="text-muted font-weight-bold small">{{ $overtimeCount }} Hours</div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="text-value-lg text-warning">Absent</div>
-                            <div class="text-muted font-weight-bold small">{{ $absentCount }}</div>
+                            <div class="text-muted font-weight-bold small">{{ $absentCount }} Days</div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="text-value-lg text-danger">Leave</div>
-                            <div class="text-muted font-weight-bold small">{{ $leaveDurationCounter }}</div>
+                            <div class="text-muted font-weight-bold small">{{ $leaveDurationCounter }} Days</div>
                         </div>
                     </div>
                 </div>

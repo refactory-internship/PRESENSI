@@ -23,15 +23,15 @@ class RoleSeeder extends Seeder
                 'updated_at' => date($today),
             ],
             [
-                'name' => 'Manager',
+                'name' => 'Lead',
                 'created_at' => date($today),
                 'updated_at' => date($today),
             ],
-            [
-                'name' => 'Supervisor',
-                'created_at' => date($today),
-                'updated_at' => date($today),
-            ],
+//            [
+//                'name' => 'Supervisor',
+//                'created_at' => date($today),
+//                'updated_at' => date($today),
+//            ],
             [
                 'name' => 'Employee',
                 'created_at' => date($today),

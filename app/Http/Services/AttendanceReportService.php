@@ -20,11 +20,13 @@ class AttendanceReportService
     public function getWholeMonth($user, Request $request)
     {
         $requestDate = Carbon::createFromDate($request->year, $request->month)->startOfMonth();
+
         $leave = [];
         foreach ($user->leave as $data) {
             $start_date = Carbon::parse($data->start_date);
             $end_date = Carbon::parse($data->end_date);
             $leavePeriod = CarbonPeriod::create($start_date, $end_date);
+
             foreach ($leavePeriod as $period) {
                 if ($requestDate->month == $period->month && $requestDate->year == $period->year) {
                     $leave[] = [
@@ -36,6 +38,7 @@ class AttendanceReportService
         }
 
         $result = DB::select('SELECT calendars.date,
+                                            calendars.description,
                                             attendances.task_plan,
                                             CASE
                                                 WHEN attendances.id IS NOT NULL THEN attendances.note
@@ -46,22 +49,26 @@ class AttendanceReportService
                                                 WHEN absents.id IS NOT NULL THEN "Absent"
                                                 END AS attendanceType
                                      FROM calendars
-                                        LEFT JOIN (SELECT *
-                                                    FROM attendances
-                                                    WHERE user_id = :attendanceUserID) attendances ON calendars.id = attendances.calendar_id
-                                        LEFT JOIN (SELECT *
-                                                    FROM absents
-                                                    WHERE user_id = :absentUserID) absents ON calendars.id = absents.calendar_id
+                                        LEFT JOIN (SELECT * FROM attendances WHERE user_id = :attendanceUserID)
+                                            attendances ON calendars.id = attendances.calendar_id
+                                        LEFT JOIN (SELECT * FROM absents WHERE user_id = :absentUserID)
+                                            absents ON calendars.id = absents.calendar_id
                                         WHERE calendars.month = :month
                                           AND calendars.year = :year
-                                     ORDER BY calendars.date',
-            ['attendanceUserID' => $user->id, 'absentUserID' => $user->id, 'month' => $request->month, 'year' => $request->year]);
-        $resultArray = json_decode(json_encode($result, 1));
+                                     ORDER BY calendars.date', [
+            'attendanceUserID' => $user->id,
+            'absentUserID' => $user->id,
+            'month' => $request->month,
+            'year' => $request->year
+        ]);
 
-        foreach ($resultArray as $date) {
+//        $resultArray = json_decode(json_encode($result, 1));
+
+        foreach ($result as $date) {
             if ($date->task_plan !== null) {
                 $date->task_plan = json_decode($date->task_plan, true);
             }
+
             foreach ($leave as $item) {
                 $attendanceType = $date->attendanceType;
                 $note = $date->note;
@@ -77,7 +84,7 @@ class AttendanceReportService
             }
         }
 
-        return $resultArray;
+        return $result;
     }
 
     public function getOvertime($user, Request $request)

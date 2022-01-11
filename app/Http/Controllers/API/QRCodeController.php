@@ -18,6 +18,13 @@ class QRCodeController extends Controller
     public function saveAttendance($token)
     {
         $tokenFromDB = $this->qrCodeService->getTokenFromDB($token);
+        $today_attendance_exist = $this->qrCodeService->checkUserAttendanceExistToday();
+
+        if ($today_attendance_exist) {
+            return response()->json([
+                'message' => 'Sorry, but you had submitted your attendance for today'
+            ], 400);
+        }
 
         if ($token === $tokenFromDB) {
             $this->qrCodeService->saveQRAttendance();

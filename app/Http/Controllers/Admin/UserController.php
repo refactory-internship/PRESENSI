@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\Store;
 use App\Http\Services\UserService;
+use App\Models\Division;
 use App\Models\DivisionOffice;
 use App\Models\Office;
 use App\Models\Role;
@@ -13,7 +14,6 @@ use App\Models\TimeSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -30,14 +30,13 @@ class UserController extends Controller
             $users = Cache::get('users.all');
         } else {
             $users = Cache::remember("users.all", 60, function () {
-                return User::query()
-                    ->where('id', '!=', 1)
-                    ->with('division_office')
-                    ->with('role')
-                    ->latest()
-                    ->get();
+                return User::with('division_office.office', 'division_office.division', 'role', 'parent')
+                ->where('role_id', '!=', 1)
+                ->latest()
+                ->get();
             });
         }
+
         return view('admin.user.index', compact('users'));
     }
 

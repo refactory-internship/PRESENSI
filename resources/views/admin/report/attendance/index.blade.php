@@ -30,7 +30,7 @@
                                                     id="editDateButton"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#filterReportDateModal"
-                                                    data-bs-url="{{ route($reportRoutes . '.export', $user->id) }}">
+                                                    data-bs-url="{{ route('web.admin.attendance-report.export', $user->id) }}">
                                                 Generate
                                             </button>
                                         </td>

@@ -15,7 +15,7 @@ class RoleController extends Controller
             $roles = Cache::get('roles.all');
         } else {
             $roles = Cache::remember('roles.all', 60, function () {
-                return Role::all();
+                return Role::withCount('user')->get();
             });
         }
         return view('admin.role.index', compact('roles'));

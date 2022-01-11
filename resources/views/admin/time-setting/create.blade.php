@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['pageTitle' => 'Add New Time Setting'])
 @section('content')
     <div class="container">
         <div class="fade-in">

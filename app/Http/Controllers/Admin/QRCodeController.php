@@ -31,9 +31,19 @@ class QRCodeController extends Controller
         return QrCode::size(300)->generate(route('web.employee.QRCode.save-attendance', $token));
     }
 
+    public function stopQRCode()
+    {
+        return $this->qrCodeService->stopQRCode();
+    }
+
     public function saveAttendance($token)
     {
         $tokenFromDB = $this->qrCodeService->getTokenFromDB($token);
+        $today_attendance_exist = $this->qrCodeService->checkUserAttendanceExistToday();
+
+        if ($today_attendance_exist) {
+            return redirect()->route('web.employee.attendances.index')->with('danger', 'Sorry, but you had submitted your attendance for today!');
+        }
 
         if ($token === $tokenFromDB) {
             $this->qrCodeService->saveQRAttendance();

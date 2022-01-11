@@ -19,7 +19,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Location</th>
+{{--                                    <th scope="col">Location</th>--}}
                                     <th scope="col">Address</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
@@ -29,7 +29,7 @@
                                     <tr>
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $office->name }}</td>
-                                        <td>{{ $office->village->district->city->province->name }}</td>
+{{--                                        <td>{{ $office->village->district->city->province->name }}</td>--}}
                                         <td>{{ $office->address }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('web.admin.offices.show', $office->id) }}" class="btn btn-sm btn-outline-dark">

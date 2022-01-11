@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceApprover;
-use App\Http\Resources\AttendanceResource;
 use App\Jobs\EmailAttendanceApprovalRequest;
 use App\Models\Attendance;
 use App\Models\User;
@@ -22,11 +21,10 @@ class AttendanceService
     public function getAttendance()
     {
         $user = auth()->id();
-        $attendances = Attendance::query()
+        return Attendance::with('calendar')
             ->where('user_id', $user)
             ->latest()
             ->get();
-        return AttendanceResource::collection($attendances);
     }
 
     public function store(Request $request)
@@ -60,6 +58,11 @@ class AttendanceService
             'approvalStatus' => $approvalStatus,
         ]);
 
+        if ($user->isAutoApproved === false) {
+            $parentEmail = $user->parent->email;
+            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+        }
+
         cache()->forget('attendance.all');
         return $attendance;
     }
@@ -85,7 +88,7 @@ class AttendanceService
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;
 
-            if ($user->isAutoApproved === true) {
+            if ($user->isAutoApproved === false) {
                 $parentEmail = $user->parent->email;
                 EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
             }

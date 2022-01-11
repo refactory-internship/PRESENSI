@@ -8,6 +8,7 @@ use App\Http\Services\DateTimeService;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class AttendanceController extends Controller
 {
@@ -22,6 +23,14 @@ class AttendanceController extends Controller
 
     public function index()
     {
+        // $cachedAttendances = Redis::get('attendances.all');
+        // if  (isset($cachedAttendances)) {
+        //     $attendances = json_decode($cachedAttendances, false);
+        // } else {
+        //     $attendances = $this->attendanceService->getAttendance();
+        //     Redis::set('attendances.all', $attendances);
+        // }
+
         if (Cache::has('attendance.all')) {
             $attendances = Cache::get('attendance.all');
         } else {
@@ -29,6 +38,7 @@ class AttendanceController extends Controller
                 return $this->attendanceService->getAttendance();
             });
         }
+
         return view('user.attendance.index', compact('attendances'));
     }
 
