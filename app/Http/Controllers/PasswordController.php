@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendResetPasswordEmail;
 use App\Jobs\SendUserNewPassword;
 use App\Mail\ResetPassword;
+use App\Mail\UserNewPassword;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -62,7 +63,8 @@ class PasswordController extends Controller
             ]);
             DB::table('password_resets')->where('email', $user->email)->delete();
 
-            SendUserNewPassword::dispatch($user->email, $password);
+            Mail::to($user->email)->send(new UserNewPassword($password));
+//            SendUserNewPassword::dispatch($user->email, $password);
 
             return redirect()->route('login')->with('message', 'Password has been reset and sent successfully');
         } else {
