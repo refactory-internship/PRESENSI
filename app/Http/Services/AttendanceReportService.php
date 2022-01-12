@@ -43,13 +43,11 @@ class AttendanceReportService
                                             CASE
                                                 WHEN attendances.id IS NOT NULL THEN attendances.note
                                                 WHEN absents.id IS NOT NULL THEN absents.reason
-                                                WHEN attendances.id IS NULL AND absents.id IS NULL THEN '-'
                                                 END AS note,
                                             CASE
                                                 WHEN attendances.id IS NOT NULL THEN 'Attend'
                                                 WHEN absents.id IS NOT NULL THEN 'Absent'
-                                                WHEN attendances.id IS NULL AND absents.id IS NULL THEN '-'
-                                                END AS attendanceType
+                                                END AS type
                                      FROM calendars
                                         LEFT JOIN (SELECT * FROM attendances WHERE user_id = :attendanceUserID)
                                             attendances ON calendars.id = attendances.calendar_id
@@ -72,14 +70,14 @@ class AttendanceReportService
             }
 
             foreach ($leave as $item) {
-                $attendanceType = $date->attendanceType;
+                $type = $date->type;
                 $note = $date->note;
                 if ($date->date == $item['date']) {
-                    if ($date->attendanceType === 'Attend' || $date->attendanceType === 'Absent') {
-                        $date->attendanceType = $attendanceType;
+                    if ($date->type === 'Attend' || $date->type === 'Absent') {
+                        $date->type = $type;
                         $date->note = $note;
                     } else {
-                        $date->attendanceType = 'Leave';
+                        $date->type = 'Leave';
                         $date->note = $item['note'];
                     }
                 }
