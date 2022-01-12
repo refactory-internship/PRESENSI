@@ -90,8 +90,17 @@
             @else
                 <td></td>
             @endif
-            <td style="width: 30%;">{{$data->note}}</td>
-            <td style="width: 10%;">{{$data->attendanceType}}</td>
+            @if($data->note !== null)
+                <td style="width: 30%;">{{$data->note}}</td>
+            @else
+                <td></td>
+            @endif
+
+            @if($data->attendanceType !== null)
+                <td style="width: 10%;">{{$data->attendanceType}}</td>
+            @else
+                <td></td>
+            @endif
         </tr>
     @endforeach
     </tbody>

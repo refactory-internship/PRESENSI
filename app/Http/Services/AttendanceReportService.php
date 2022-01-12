@@ -43,12 +43,10 @@ class AttendanceReportService
                                             CASE
                                                 WHEN attendances.id IS NOT NULL THEN attendances.note
                                                 WHEN absents.id IS NOT NULL THEN absents.reason
-                                                WHEN attendances.id IS NULL AND absents.id IS NULL THEN '-'
                                                 END AS note,
                                             CASE
                                                 WHEN attendances.id IS NOT NULL THEN 'Attend'
                                                 WHEN absents.id IS NOT NULL THEN 'Absent'
-                                                WHEN attendances.id IS NULL AND absents.id IS NULL THEN '-'
                                                 END AS attendanceType
                                      FROM calendars
                                         LEFT JOIN (SELECT * FROM attendances WHERE user_id = :attendanceUserID)
