@@ -63,7 +63,7 @@
         <th scope="col">Date</th>
         <th scope="col">Task Plan</th>
         <th scope="col">Note</th>
-        <th scope="col">Type</th>
+{{--        <th scope="col">Type</th>--}}
     </tr>
     </thead>
     <tbody>
@@ -96,11 +96,11 @@
                 <td></td>
             @endif
 
-            @if($data->attendanceType !== null)
-                <td style="width: 10%;">{{$data->attendanceType}}</td>
-            @else
-                <td></td>
-            @endif
+{{--            @if($data->attendanceType !== null)--}}
+{{--                <td style="width: 10%;">{{$data->attendanceType}}</td>--}}
+{{--            @else--}}
+{{--                <td></td>--}}
+{{--            @endif--}}
         </tr>
     @endforeach
     </tbody>
