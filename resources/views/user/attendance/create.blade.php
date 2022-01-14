@@ -15,7 +15,7 @@
                                         <span class="badge badge-warning">Late Attendance</span>
                                     @elseif(date('H:i:s', strtotime($currentDate)) < \Carbon\Carbon::parse(auth()->user()->time_setting->start_time)->addMinutes(15)->toTimeString()  ||
                                         date('H:i:s', strtotime($currentDate)) > auth()->user()->time_setting->end_time)
-                                        <span class="badge badge-warning">Not In Working Hour</span>
+                                        <span class="badge badge-warning">Not in Working Hour</span>
                                     @endif
                                 @elseif($date->status == 2)
                                     <span class="badge badge-warning">WEEK END</span>
@@ -66,7 +66,7 @@
 
                 html = '<div class="form-group row mb-3" id="dyna_field">';
                 html += '<label for="task_plan" class="col-form-label col-md-3">Task Plan</label>';
-                html += '<div class="col-md-8">' + '<input type="text" name="task_plan[]" id="task_plan" class="form-control">' + '</div>';
+                html += '<div class="col-md-8">' + '<input type="text" name="task_plan[]" id="task_plan" class="form-control" required>' + '</div>';
 
                 if (count > 1) {
                     html += '<div class="col-md-1 p-0">' +

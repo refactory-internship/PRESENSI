@@ -2,28 +2,28 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
-class ResetPassword extends Mailable
+class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $userId;
-    public $token;
+    public $password;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($userId, $token)
+    public function __construct($userId, $password)
     {
         $this->userId = $userId;
-        $this->token = $token;
+        $this->password = $password;
     }
 
     /**
@@ -34,13 +34,11 @@ class ResetPassword extends Mailable
     public function build()
     {
         $user = User::query()->findOrFail($this->userId);
-        return $this->from($user->email, $user->getFullNameAttribute())
-            ->to(config('mail.from.address'))
-            ->markdown('email.password.reset')
-            ->subject('Reset Password Request')
+        return $this->markdown('email.welcome')
+            ->subject('Welcome to Our Application!')
             ->with([
                 'user' => $user,
-                'token' => $this->token
+                'password' => $this->password
             ]);
     }
 }

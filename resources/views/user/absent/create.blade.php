@@ -11,7 +11,7 @@
                                 <div class="form-group row mb-3">
                                     <label for="date" class="col-form-label col-md-3">Date of Absence</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="date" id="date">
+                                        <input type="date" class="form-control" name="date" id="date" required>
                                     </div>
                                 </div>
 
@@ -19,7 +19,7 @@
                                     <label for="reason" class="col-form-label col-md-3">Reason of Absence</label>
                                     <div class="col-md-9">
                                         <textarea name="reason" id="reason" cols="30" rows="5"
-                                                  class="form-control" style="resize: none"></textarea>
+                                                  class="form-control" style="resize: none" required></textarea>
                                     </div>
                                 </div>
 

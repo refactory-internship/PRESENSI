@@ -37,30 +37,33 @@ class AttendanceReportService
             }
         }
 
-        $result = DB::select("SELECT calendars.date,
-                                            calendars.description,
-                                            attendances.task_plan,
-                                            CASE
-                                                WHEN attendances.id IS NOT NULL THEN attendances.note
-                                                WHEN absents.id IS NOT NULL THEN absents.reason
-                                                END AS note,
-                                            CASE
-                                                WHEN attendances.id IS NOT NULL THEN 'Attend'
-                                                WHEN absents.id IS NOT NULL THEN 'Absent'
-                                                END AS type
-                                     FROM calendars
-                                        LEFT JOIN (SELECT * FROM attendances WHERE user_id = :attendanceUserID)
-                                            attendances ON calendars.id = attendances.calendar_id
-                                        LEFT JOIN (SELECT * FROM absents WHERE user_id = :absentUserID)
-                                            absents ON calendars.id = absents.calendar_id
-                                        WHERE calendars.month = :month
-                                          AND calendars.year = :year
-                                     ORDER BY calendars.date", [
-            "attendanceUserID" => $user->id,
-            "absentUserID" => $user->id,
-            "month" => $request->month,
-            "year" => $request->year
-        ]);
+        $result = DB::select(
+            "SELECT calendars.date,
+                calendars.description,
+                attendances.task_plan,
+                CASE
+                    WHEN attendances.id IS NOT NULL THEN attendances.note
+                    WHEN absents.id IS NOT NULL THEN absents.reason
+                    END AS note,
+                CASE
+                    WHEN attendances.id IS NOT NULL THEN 'Attend'
+                    WHEN absents.id IS NOT NULL THEN 'Absent'
+                    END AS type
+            FROM calendars
+            LEFT JOIN (SELECT * FROM attendances WHERE user_id = :attendanceUserID)
+                attendances ON calendars.id = attendances.calendar_id
+            LEFT JOIN (SELECT * FROM absents WHERE user_id = :absentUserID)
+                absents ON calendars.id = absents.calendar_id
+            WHERE calendars.month = :month
+                AND calendars.year = :year
+            ORDER BY calendars.date",
+            [
+                "attendanceUserID" => $user->id,
+                "absentUserID" => $user->id,
+                "month" => $request->month,
+                "year" => $request->year
+            ]
+        );
 
         $resultArray = json_decode(json_encode($result, 1));
 
@@ -89,19 +92,25 @@ class AttendanceReportService
 
     public function getOvertime($user, Request $request)
     {
-        return DB::select('SELECT calendars.date,
-                                         overtimes.task_plan,
-                                         overtimes.start_time,
-                                         overtimes.end_time,
-                                         overtimes.duration
-                                  FROM calendars
-                                      JOIN (SELECT *
-                                            FROM overtimes
-                                            WHERE user_id = :overtimesUserID) overtimes ON calendars.id = overtimes.calendar_id
-                                     WHERE calendars.month = :month
-                                       AND calendars.year = :year
-                                  ORDER BY calendars.date',
-            ['overtimesUserID' => $user->id, 'month' => $request->month, 'year' => $request->year]);
+        return DB::select(
+            "SELECT calendars.date,
+                    overtimes.task_plan,
+                    overtimes.start_time,
+                    overtimes.end_time,
+                    overtimes.duration
+            FROM calendars
+                JOIN (SELECT *
+                    FROM overtimes
+                    WHERE user_id = :overtimesUserID) overtimes ON calendars.id = overtimes.calendar_id
+                WHERE calendars.month = :month
+                AND calendars.year = :year
+            ORDER BY calendars.date",
+            [
+                'overtimesUserID' => $user->id,
+                'month' => $request->month,
+                'year' => $request->year
+            ]
+        );
     }
 
     public function getAttendanceCount($user, Request $request)

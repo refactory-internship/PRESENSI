@@ -32,7 +32,7 @@
                                 <div class="form-group row mb-3">
                                     <label for="task_plan" class="col-form-label col-md-3">Task Plan</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="task_plan" id="task_plan">
+                                        <input type="text" class="form-control" name="task_plan" id="task_plan" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">

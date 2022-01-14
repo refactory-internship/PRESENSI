@@ -17,11 +17,10 @@ class PasswordController extends Controller
 {
     public function sendEmailToAdmin(Request $request)
     {
-        $userId = User::query()
+        $user = User::query()
             ->where('email', $request->email)
-            ->value('id');
+            ->firstOrFail();
         $token = bin2hex(openssl_random_pseudo_bytes(16));
-        $recipient = 'admin@mail.com';
 
         DB::table('password_resets')->insert([
             'email' => $request->email,
@@ -29,8 +28,8 @@ class PasswordController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        Mail::to('admin@mail.com')->send(new ResetPassword($userId, $token));
-//        SendResetPasswordEmail::dispatch($recipient, $userId, $token);
+        Mail::send(new ResetPassword($user->id, $token));
+        //        SendResetPasswordEmail::dispatch($recipient, $user->id, $token);
 
         $tokenFromDB = DB::table('password_resets')
             ->where('email', $request->email)
@@ -64,7 +63,7 @@ class PasswordController extends Controller
             DB::table('password_resets')->where('email', $user->email)->delete();
 
             Mail::to($user->email)->send(new UserNewPassword($password));
-//            SendUserNewPassword::dispatch($user->email, $password);
+            //            SendUserNewPassword::dispatch($user->email, $password);
 
             return redirect()->route('login')->with('message', 'Password has been reset and sent successfully');
         } else {

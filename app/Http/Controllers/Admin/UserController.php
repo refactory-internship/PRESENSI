@@ -31,9 +31,9 @@ class UserController extends Controller
         } else {
             $users = Cache::remember("users.all", 60, function () {
                 return User::with('division_office.office', 'division_office.division', 'role', 'parent')
-                ->where('role_id', '!=', 1)
-                ->latest()
-                ->get();
+                    ->where('role_id', '!=', 1)
+                    ->latest()
+                    ->get();
             });
         }
 

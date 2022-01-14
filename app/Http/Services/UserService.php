@@ -9,6 +9,8 @@ use App\Models\DivisionOffice;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\WelcomeEmail;
+use Illuminate\Support\Facades\Mail;
 
 class UserService
 {
@@ -28,7 +30,7 @@ class UserService
         }
 
         cache()->forget('users.all');
-        return User::query()->create([
+        $user =  User::query()->create([
             'role_id' => $request->role,
             'division_office_id' => $division_office_id,
             'time_setting_id' => $request->shift,
@@ -39,6 +41,10 @@ class UserService
             'parent_id' => $parent,
             'isAutoApproved' => $isAutoApproved
         ]);
+
+        Mail::to($user->email)->send(new WelcomeEmail($user->id, $request->password));
+
+        return $user;
     }
 
     public function update(Request $request, User $user)

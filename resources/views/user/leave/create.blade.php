@@ -11,14 +11,14 @@
                                 <div class="form-group row mb-3">
                                     <label for="start_date" class="col-form-label col-md-3">Start Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="start_date" id="start_date">
+                                        <input type="date" class="form-control" name="start_date" id="start_date" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-3">
                                     <label for="end_date" class="col-form-label col-md-3">End Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="end_date" id="end_date">
+                                        <input type="date" class="form-control" name="end_date" id="end_date" required>
                                     </div>
                                 </div>
 
@@ -26,7 +26,7 @@
                                     <label for="note" class="col-form-label col-md-3">Description</label>
                                     <div class="col-md-9">
                                         <textarea name="note" id="note" cols="30" rows="5"
-                                                  class="form-control" style="resize: none"></textarea>
+                                                  class="form-control" style="resize: none" required></textarea>
                                     </div>
                                 </div>
 

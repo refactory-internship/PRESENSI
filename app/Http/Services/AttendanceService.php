@@ -39,7 +39,6 @@ class AttendanceService
             $approvedBy = AttendanceApprover::SYSTEM;
             $approverId = null;
             $approvalStatus = ApprovalStatus::APPROVED;
-
         } else {
             $approvedBy = AttendanceApprover::PARENT;
             $approverId = $user->parent->id;
@@ -60,11 +59,11 @@ class AttendanceService
             'approvalStatus' => $approvalStatus,
         ]);
 
-        if ($user->isAutoApproved === false) {
-            $parentEmail = $user->parent->email;
-//            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
-            Mail::to($parentEmail)->send(new AttendanceNeedsApproval($user, $attendance));
-        }
+        //         if ($user->isAutoApproved === false) {
+        //             $parentEmail = $user->parent->email;
+        // //            EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+        //             Mail::to($parentEmail)->send(new AttendanceNeedsApproval($user, $attendance));
+        //         }
 
         cache()->forget('attendance.all');
         return $attendance;
