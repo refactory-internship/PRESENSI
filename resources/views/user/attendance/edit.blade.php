@@ -68,7 +68,13 @@
                                                 <label class="form-check-label ml-2" for="isFinished">
                                                     Attendance Finished
                                                 </label>
+                                                @if (date('H:i:s', strtotime($currentDate)) < \Carbon\Carbon::parse(auth()->user()->time_setting->end_time)->toTimeString())
+                                                    <span class="badge badge-warning ms-2">
+                                                        Still in Working Hour!
+                                                    </span>
+                                                @endif
                                             </div>
+
                                         </div>
                                     </div>
 

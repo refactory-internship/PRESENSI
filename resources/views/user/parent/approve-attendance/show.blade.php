@@ -98,28 +98,16 @@
                     <div class="card shadow p-4 h-100">
                         <div class="card-body align-items-center justify-content-center">
                             <div class="mb-2">
-                                <div class="row">
-                                    <strong>Employee Name</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->getFullNameAttribute() }}</p>
-                                </div>
+                                <strong>Employee Name</strong>
+                                <p>{{ $attendance->user->full_name }}</p>
                             </div>
                             <div class="mb-2">
-                                <div class="row">
-                                    <strong>Role</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->role->name }}</p>
-                                </div>
+                                <strong>Role</strong>
+                                <p>{{ $attendance->user->role->name }}</p>
                             </div>
                             <div class="mb-2">
-                                <div class="row">
-                                    <strong>Office and Division</strong>
-                                </div>
-                                <div class="row">
-                                    <p>{{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}</p>
-                                </div>
+                                <strong>Office and Division</strong>
+                                <p>{{ $attendance->user->division_office->division->name . ' on ' . $attendance->user->division_office->office->name }}</p>
                             </div>
                         </div>
                     </div>
@@ -132,34 +120,29 @@
                                 <div class="card col-md-5 p-4">
                                     <div class="card-body">
                                         <div class="mb-2">
-                                            <div class="row">
-                                                <strong>Date</strong>
-                                            </div>
-                                            <div class="row">
-                                                <p>{{ date('l, F jS Y', strtotime($attendance->calendar->date)) }}</p>
-                                            </div>
+                                            <strong>Date</strong>
+                                            <p>{{ date('l, F jS Y', strtotime($attendance->calendar->date)) }}</p>
                                         </div>
                                         <div class="mb-2">
-                                            <div class="row">
+                                            <div class="d-flex flex-row justify-content-between">
                                                 <strong>Clock-In Time</strong>
-                                            </div>
-                                            <div class="row">
-                                                <p>{{ date('H:i', strtotime($attendance->clock_in_time)) }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="mb-2">
-                                            <div class="row">
-                                                <strong>Clock-Out Time</strong>
-                                            </div>
-                                            <div class="row">
-                                                @if(is_null($attendance->clock_out_time))
-                                                    <div class="text-value-sm text-danger">
-                                                        NOT CLOCKED OUT
-                                                    </div>
-                                                @else
-                                                    <p>{{ date('H:i', strtotime($attendance->clock_out_time)) }}</p>
+                                                @if ($attendance->clock_in_time > \Carbon\Carbon::parse($attendance->user->time_setting->start_time)->addMinutes(15)->toTimeString())
+                                                    <span class="badge badge-warning font-weight-bold py-1" style="font-size: 12px;">
+                                                        Late Attendance
+                                                    </span>
                                                 @endif
                                             </div>
+                                            <p>{{ date('H:i', strtotime($attendance->clock_in_time)) }}</p>
+                                        </div>
+                                        <div class="mb-2">
+                                            <strong>Clock-Out Time</strong>
+                                            @if(is_null($attendance->clock_out_time))
+                                                <div class="text-value-sm text-danger">
+                                                    NOT CLOCKED OUT
+                                                </div>
+                                            @else
+                                                <p>{{ date('H:i', strtotime($attendance->clock_out_time)) }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -167,75 +150,66 @@
                                 <div class="card pt-4">
                                     <div class="card-body">
                                         <div class="mb-2 pl-4">
-                                            <div class="row">
-                                                <strong>Task Plan</strong>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <ol>
-                                                        @foreach($tasks as $task)
-                                                            <li>{{ $task }}</li>
-                                                        @endforeach
-                                                    </ol>
+                                            <strong>Task Plan</strong>
+                                            <ol>
+                                                @foreach($tasks as $task)
+                                                    <li>{{ $task }}</li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
+                                        <div class="mb-2 pl-4">
+                                            <strong>Task Report</strong>
+                                            @if($attendance->task_report === null)
+                                                <div class="text-value-sm text-danger mb-3">
+                                                    NOT CLOCKED OUT
                                                 </div>
-                                            </div>
+                                            @else
+                                                <p>{{ $attendance->task_report }}</p>
+                                            @endif
                                         </div>
                                         <div class="mb-2 pl-4">
-                                            <div class="row">
-                                                <strong>Task Report</strong>
-                                            </div>
-                                            <div class="row">
-                                                @if($attendance->task_report === null)
-                                                    <div class="text-value-sm text-danger mb-3">
-                                                        NOT CLOCKED OUT
-                                                    </div>
-                                                @else
-                                                    <p>{{ $attendance->task_report }}</p>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="mb-2 pl-4">
-                                            <div class="row">
-                                                <strong>Attendance Note</strong>
-                                            </div>
-                                            <div class="row">
-                                                <p>{{ $attendance->note }}</p>
-                                            </div>
+                                            <strong>Attendance Note</strong>
+                                            <p>{{ $attendance->note }}</p>
                                         </div>
                                     </div>
                                     <div class="card-footer">
+                                        @if ($attendance->isFinished !== true)
+                                            @if($attendance->approvalStatus === '2')
+                                                <small class="text-value-sm text-success">
+                                                    This attendance has been approved
+                                                </small>
+                                            @elseif($attendance->approvalStatus === '3')
+                                                <small class="text-value-sm text-danger">
+                                                    This attendance has been rejected
+                                                </small>
+                                            @else
+                                                <small class="text-muted">
+                                                    Submitted {{ $attendance->created_at->diffForHumans() }}
+                                                </small>
+                                            @endif
 
-                                        @if($attendance->approvalStatus === '2')
-                                            <small class="text-value-sm text-success">
-                                                This attendance has been approved
-                                            </small>
-                                        @elseif($attendance->approvalStatus === '3')
-                                            <small class="text-value-sm text-danger">
-                                                This attendance has been rejected
-                                            </small>
+                                            <div class="btn-group float-right">
+                                                <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
+                                                onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
+                                                class="btn btn-success">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    Approve
+                                                </a>
+                                                <button type="button"
+                                                        class="btn btn-danger"
+                                                        id="rejectButton"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop"
+                                                        data-bs-url="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}">
+                                                    Reject
+                                                    <i class="bi bi-x-circle"></i>
+                                                </button>
+                                            </div>
                                         @else
-                                            <small class="text-muted">
-                                                Submitted {{ $attendance->created_at->diffForHumans() }}
+                                            <small class="text-value-sm text-muted">
+                                                This attendance is finished
                                             </small>
                                         @endif
-
-                                        <div class="btn-group float-right">
-                                            <a href="{{ route('web.employee.approve-attendances.approve', $attendance->id) }}"
-                                               onclick="event.preventDefault(); document.getElementById('approve-attendance').submit();"
-                                               class="btn btn-success">
-                                                <i class="bi bi-check-circle"></i>
-                                                Approve
-                                            </a>
-                                            <button type="button"
-                                                    class="btn btn-danger"
-                                                    id="rejectButton"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop"
-                                                    data-bs-url="{{ route('web.employee.approve-attendances.reject', $attendance->id) }}">
-                                                Reject
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
