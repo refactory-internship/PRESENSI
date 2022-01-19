@@ -23,7 +23,7 @@ class CalendarSeeder extends Seeder
      */
     public function run()
     {
-        $first_year = '2022';
+        $first_year = '2021';
         $last_year = '2022';
         $this->calendarService->store($first_year, $last_year);
     }

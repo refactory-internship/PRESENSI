@@ -11,14 +11,16 @@
                                 <div class="form-group row mb-3">
                                     <label for="start_date" class="col-form-label col-md-3">Start Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="start_date" id="start_date" required>
+                                        <input type="date" class="form-control" name="start_date" id="start_date"
+                                        min="{{ $first }}" max="{{ $last }}" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-3">
                                     <label for="end_date" class="col-form-label col-md-3">End Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="end_date" id="end_date" required>
+                                        <input type="date" class="form-control" name="end_date" id="end_date"
+                                        min="{{ $first }}" max="{{ $last }}" required>
                                     </div>
                                 </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\LeaveService;
+use App\Models\Calendar;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,10 @@ class LeaveController extends Controller
 
     public function create()
     {
-        return view('user.leave.create');
+        $first = Calendar::query()->first()->value('date')->format('Y-m-d');
+        $last = Calendar::query()->orderBy('date', 'DESC')->first();
+        $last = $last->date->format('Y-m-d');
+        return view('user.leave.create', compact('first', 'last'));
     }
 
     public function show($id)

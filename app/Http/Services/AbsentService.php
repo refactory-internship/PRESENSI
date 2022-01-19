@@ -22,6 +22,7 @@ class AbsentService
             ->get();
         return AbsentResource::collection($absents);
     }
+
     public function store(Request $request)
     {
         $user = User::query()->find(auth()->id());
@@ -61,15 +62,15 @@ class AbsentService
     public function approveAbsent($id)
     {
         return Absent::query()->findOrFail($id)->update([
-           'approvalStatus' => AbsentStatus::APPROVED
+            'approvalStatus' => AbsentStatus::APPROVED
         ]);
     }
 
     public function rejectAbsent(Request $request, $id)
     {
         return Absent::query()->findOrFail($id)->update([
-           'approvalStatus' => AbsentStatus::REJECTED,
-           'rejectionNote' => $request->get('rejectionNote')
+            'approvalStatus' => AbsentStatus::REJECTED,
+            'rejectionNote' => $request->get('rejectionNote')
         ]);
     }
 }

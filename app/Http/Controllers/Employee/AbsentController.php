@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Services\AbsentService;
 use App\Models\Absent;
+use App\Models\Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -25,7 +26,10 @@ class AbsentController extends Controller
 
     public function create()
     {
-        return view('user.absent.create');
+        $first = Calendar::query()->first()->value('date')->format('Y-m-d');
+        $last = Calendar::query()->orderBy('date', 'DESC')->first();
+        $last = $last->date->format('Y-m-d');
+        return view('user.absent.create', compact('first', 'last'));
     }
 
     public function store(Request $request)
