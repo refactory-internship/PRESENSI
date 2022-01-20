@@ -44,7 +44,7 @@ class AttendanceController extends Controller
     public function destroy($id)
     {
         Attendance::query()->findOrFail($id)->delete();
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
         return response()->json([
             'message' => 'Attendance Deleted'
         ]);

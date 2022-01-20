@@ -22,14 +22,15 @@ class CalendarController extends Controller
 
     public function index()
     {
-        if (Cache::has('calendars.all')) {
-            $calendars = Cache::get('calendars.all');
-        } else {
-            $calendars = Cache::remember('calendars.all', 60, function () {
-                return $this->calendarService->getCurrentDates();
-            });
-        }
+        // if (Cache::has('calendars.all')) {
+        //     $calendars = Cache::get('calendars.all');
+        // } else {
+        //     $calendars = Cache::remember('calendars.all', 60, function () {
+        //         return $this->calendarService->getCurrentDates();
+        //     });
+        // }
 
+        $calendars = $this->calendarService->getCurrentDates();
         $years = $this->calendarService->pluckYears();
         $months = $this->calendarService->pluckMonths();
         return view('admin.calendar.index', compact('calendars', 'years', 'months'));

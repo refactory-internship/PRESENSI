@@ -16,14 +16,14 @@ class DeactivatedEmployeeController extends Controller
     public function restore($id)
     {
         User::onlyTrashed()->where('id', $id)->restore();
-        cache()->forget('users.all');
+        // cache()->forget('users.all');
         return redirect()->route('web.admin.deactivated-employees')->with('message', 'Employee Reactivated!');
     }
 
     public function destroy($id)
     {
         User::onlyTrashed()->where('id', $id)->forceDelete();
-        cache()->forget('users.all');
+        // cache()->forget('users.all');
         return redirect()->route('web.admin.deactivated-employees')->with('danger', 'Employee Deleted!');
     }
 }

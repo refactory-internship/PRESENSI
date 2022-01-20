@@ -11,13 +11,15 @@ class RoleController extends Controller
 {
     public function index()
     {
-        if (Cache::has('roles.all')) {
-            $roles = Cache::get('roles.all');
-        } else {
-            $roles = Cache::remember('roles.all', 60, function () {
-                return Role::withCount('user')->get();
-            });
-        }
+        // if (Cache::has('roles.all')) {
+        //     $roles = Cache::get('roles.all');
+        // } else {
+        //     $roles = Cache::remember('roles.all', 60, function () {
+        //         return Role::withCount('user')->get();
+        //     });
+        // }
+
+        $roles = Role::withCount('user')->get();
         return view('admin.role.index', compact('roles'));
     }
 
@@ -31,7 +33,7 @@ class RoleController extends Controller
         Role::query()->create([
             'name' => $request->name,
         ]);
-        cache()->forget('roles.all');
+        // cache()->forget('roles.all');
         return redirect()->route('web.admin.roles.index')->with('message', 'Role Added!');
     }
 
@@ -50,14 +52,14 @@ class RoleController extends Controller
         $role->update([
             'name' => $request->name
         ]);
-        cache()->forget('roles.all');
+        // cache()->forget('roles.all');
         return redirect()->route('web.admin.roles.index')->with('message', 'Role Updated!');
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
-        cache()->forget('roles.all');
+        // cache()->forget('roles.all');
         return redirect()->route('web.admin.roles.index')->with('danger', 'Role Deleted!');
     }
 }

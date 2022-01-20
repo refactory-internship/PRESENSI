@@ -65,7 +65,7 @@ class AttendanceService
         //             Mail::to($parentEmail)->send(new AttendanceNeedsApproval($user, $attendance));
         //         }
 
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
         return $attendance;
     }
 
@@ -96,7 +96,7 @@ class AttendanceService
             }
         }
 
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
         return $attendance->update([
             'task_plan' => json_encode($request->task_plan),
             'note' => $request->note,
@@ -110,7 +110,7 @@ class AttendanceService
     public function approveAttendance($id)
     {
         $attendance = Attendance::query()->findOrFail($id);
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::APPROVED
         ]);
@@ -119,7 +119,7 @@ class AttendanceService
     public function rejectAttendance(Request $request, $id)
     {
         $attendance = Attendance::query()->findOrFail($id);
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
         return $attendance->update([
             'approvalStatus' => ApprovalStatus::REJECTED,
             'rejectionNote' => $request->get('rejectionNote')

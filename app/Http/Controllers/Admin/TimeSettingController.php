@@ -21,13 +21,15 @@ class TimeSettingController extends Controller
 
     public function index()
     {
-        if (Cache::has('time_setting.all')) {
-            $times = Cache::get('time_setting.all');
-        } else {
-            $times = Cache::remember('time_setting.all', 60, function () {
-                return TimeSetting::with('division')->get();
-            });
-        }
+        // if (Cache::has('time_setting.all')) {
+        //     $times = Cache::get('time_setting.all');
+        // } else {
+        //     $times = Cache::remember('time_setting.all', 60, function () {
+        //         return TimeSetting::with('division')->get();
+        //     });
+        // }
+
+        $times = TimeSetting::with('division')->get();
         return view('admin.time-setting.index', compact('times'));
     }
 
@@ -40,7 +42,7 @@ class TimeSettingController extends Controller
     public function store(Request $request)
     {
         $this->timeSettingService->store($request);
-        cache()->forget('time_setting.all');
+        // cache()->forget('time_setting.all');
         return redirect()->route($this->index)->with('message', 'Time Setting Added!');
     }
 
@@ -53,14 +55,14 @@ class TimeSettingController extends Controller
     public function update(Request $request, TimeSetting $timeSetting)
     {
         $this->timeSettingService->update($request, $timeSetting);
-        cache()->forget('division.all');
+        // cache()->forget('division.all');
         return redirect()->route($this->index)->with('message', 'Time Setting Updated!');
     }
 
     public function destroy(TimeSetting $timeSetting)
     {
         $timeSetting->delete();
-        cache()->forget('time_setting.all');
+        // cache()->forget('time_setting.all');
         return redirect()->route($this->index)->with('danger', 'Time Setting Deleted!');
     }
 }

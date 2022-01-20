@@ -66,7 +66,7 @@ class QRCodeService
             $approvalStatus = null;
         }
 
-        cache()->forget('attendance.all');
+        // cache()->forget('attendance.all');
 
         return Attendance::query()->create([
             'user_id' => $user->id,

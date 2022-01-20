@@ -29,7 +29,7 @@ class UserService
             $isAutoApproved = true;
         }
 
-        cache()->forget('users.all');
+        // cache()->forget('users.all');
         $user =  User::query()->create([
             'role_id' => $request->role,
             'division_office_id' => $division_office_id,
@@ -62,7 +62,7 @@ class UserService
             $isAutoApproved = true;
         }
 
-        cache()->forget('users.all');
+        // cache()->forget('users.all');
         return $user->update([
             'role_id' => $request->role,
             'division_office_id' => $division_office_id,

@@ -26,16 +26,21 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Cache::has('users.all')) {
-            $users = Cache::get('users.all');
-        } else {
-            $users = Cache::remember("users.all", 60, function () {
-                return User::with('division_office.office', 'division_office.division', 'role', 'parent')
-                    ->where('role_id', '!=', 1)
-                    ->latest()
-                    ->get();
-            });
-        }
+        // if (Cache::has('users.all')) {
+        //     $users = Cache::get('users.all');
+        // } else {
+        //     $users = Cache::remember("users.all", 60, function () {
+        //         return User::with('division_office.office', 'division_office.division', 'role', 'parent')
+        //             ->where('role_id', '!=', 1)
+        //             ->latest()
+        //             ->get();
+        //     });
+        // }
+
+        $users = User::with('division_office.office', 'division_office.division', 'role', 'parent')
+            ->where('role_id', '!=', 1)
+            ->latest()
+            ->get();
 
         return view('admin.user.index', compact('users'));
     }
@@ -83,7 +88,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        cache()->forget('users.all');
+        // cache()->forget('users.all');
         return redirect()->route('web.admin.users.index')->with('danger', 'Employee Deactivated!');
     }
 

@@ -22,13 +22,15 @@ class OfficeController extends Controller
 
     public function index()
     {
-        if (Cache::has('office.all')) {
-            $offices = Cache::get('office.all');
-        } else {
-            $offices = Cache::remember('office.all', 60, function () {
-                return Office::with('village')->get();
-            });
-        }
+        // if (Cache::has('office.all')) {
+        //     $offices = Cache::get('office.all');
+        // } else {
+        //     $offices = Cache::remember('office.all', 60, function () {
+        //         return Office::with('village')->get();
+        //     });
+        // }
+
+        $offices = Office::with('village')->get();
         return view('admin.office.index', compact('offices'));
     }
 
@@ -66,7 +68,7 @@ class OfficeController extends Controller
     public function destroy(Office $office)
     {
         $office->delete();
-        cache()->forget('office.all');
+        // cache()->forget('office.all');
         return redirect()->route($this->index)->with('danger', 'Office Deleted!');
     }
 }
