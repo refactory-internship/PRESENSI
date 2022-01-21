@@ -44,25 +44,55 @@
                         </div>
 
                         <div class="card-footer">
-                            <small class="text-muted">
-                                Submitted {{ $leave->created_at->diffForHumans() }}
-                            </small>
+                            @if ($leave->approvalStatus === '2')
+                                <strong class="text-success">
+                                    This leave has been approved
+                                </strong>
+                            @elseif ($leave->approvalStatus === '3')
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <strong class="text-danger">
+                                        This leave has been rejected
+                                    </strong>
 
-                            <div class="btn-group float-right">
-                                <a href="{{ route('web.employee.leaves.edit', $leave->id) }}" class="btn btn-primary">
-                                    <i class="bi bi-pencil-square"></i>
-                                    Edit
-                                </a>
-                                <button type="button"
-                                        class="btn btn-danger"
-                                        id="deleteButton"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"
-                                        data-bs-url="{{ route('web.employee.leaves.destroy', $leave->id) }}">
-                                    Delete
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
+                                    <div class="btn-group float-right">
+                                        <a href="{{ route('web.employee.leaves.edit', $leave->id) }}" class="btn btn-primary">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Edit
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-danger"
+                                                id="deleteButton"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop"
+                                                data-bs-url="{{ route('web.employee.leaves.destroy', $leave->id) }}">
+                                            Delete
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        Submitted {{ $leave->created_at->diffForHumans() }}
+                                    </small>
+
+                                    <div class="btn-group float-right">
+                                        <a href="{{ route('web.employee.leaves.edit', $leave->id) }}" class="btn btn-primary">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Edit
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-danger"
+                                                id="deleteButton"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop"
+                                                data-bs-url="{{ route('web.employee.leaves.destroy', $leave->id) }}">
+                                            Delete
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

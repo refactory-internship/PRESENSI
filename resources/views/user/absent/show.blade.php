@@ -35,24 +35,26 @@
                         </div>
 
                         <div class="card-footer">
-                            <small class="text-muted">
-                                Submitted {{ $absent->created_at->diffForHumans() }}
-                            </small>
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    Submitted {{ $absent->created_at->diffForHumans() }}
+                                </small>
 
-                            <div class="btn-group float-right">
-                                <a href="{{ route('web.employee.absents.edit', $absent->id) }}" class="btn btn-primary">
-                                    <i class="bi bi-pencil-square"></i>
-                                    Edit
-                                </a>
-                                <button type="button"
-                                        class="btn btn-danger"
-                                        id="deleteButton"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"
-                                        data-bs-url="{{ route('web.employee.absents.destroy', $absent->id) }}">
-                                    Delete
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
+                                <div class="btn-group float-right">
+                                    <a href="{{ route('web.employee.absents.edit', $absent->id) }}" class="btn btn-primary">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Edit
+                                    </a>
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            id="deleteButton"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            data-bs-url="{{ route('web.employee.absents.destroy', $absent->id) }}">
+                                        Delete
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -49,10 +49,18 @@ class LeaveService
 
     public function update(Request $request, $id)
     {
-        return Leave::query()->findOrFail($id)->update([
+        $leave = Leave::query()->findOrFail($id);
+        $approvalStatus = $leave->approvalStatus;
+
+        if ($approvalStatus === '1' || $approvalStatus === '3') {
+            $approvalStatus = LeaveStatus::NEEDS_APPROVAL;
+        }
+
+        return $leave->update([
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'note' => $request->note,
+            'approvalStatus' => $approvalStatus
         ]);
     }
 

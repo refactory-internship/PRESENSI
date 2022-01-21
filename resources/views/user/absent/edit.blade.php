@@ -12,7 +12,8 @@
                                 <div class="form-group row mb-3">
                                     <label for="date" class="col-form-label col-md-3">Date of Absence</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="date" id="date" value="{{ $absent->getFormattedDate() }}">
+                                        <input type="date" class="form-control" name="date" id="date"
+                                        min="{{ $today }}" max="{{ $last }}" value="{{ $absent->getFormattedDate() }}">
                                     </div>
                                 </div>
 

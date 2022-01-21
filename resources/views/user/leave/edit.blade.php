@@ -12,14 +12,16 @@
                                 <div class="form-group row mb-3">
                                     <label for="start_date" class="col-form-label col-md-3">Start Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="start_date" id="start_date" value="{{ $leave->getFormattedStartDate() }}">
+                                        <input type="date" class="form-control" name="start_date" id="start_date"
+                                        min="{{ $today }}" max="{{ $last }}" value="{{ $leave->getFormattedStartDate() }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-3">
                                     <label for="end_date" class="col-form-label col-md-3">End Date</label>
                                     <div class="col-md-9">
-                                        <input type="date" class="form-control" name="end_date" id="end_date" value="{{ $leave->getFormattedEndDate() }}">
+                                        <input type="date" class="form-control" name="end_date" id="end_date"
+                                        min="{{ $today }}" max="{{ $last }}" value="{{ $leave->getFormattedEndDate() }}">
                                     </div>
                                 </div>
 

@@ -37,7 +37,7 @@ class AbsentService
         } else {
             $approvedBy = AttendanceApprover::PARENT;
             $approverId = $user->parent->id;
-            $approvalStatus = AbsentStatus::NEEDS_APPROVAL;
+            $approvalStatus = AbsentStatus::APPROVED;
         }
 
         return Absent::query()->create([

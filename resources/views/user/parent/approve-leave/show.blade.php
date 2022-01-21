@@ -75,35 +75,37 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">
-                                    Submitted {{ $leave->created_at->diffForHumans() }}
-                                </small>
-
                                 @if($leave->approvalStatus === '2' && $leave->user->isAutoApproved === false)
-                                    <div class="text-value-sm text-success">
+                                    <strong class="text-success font-weight-bold">
                                         This leave has been approved
-                                    </div>
+                                    </strong>
                                 @elseif($leave->approvalStatus === '3' && $leave->user->isAutoApproved === false)
-                                    <div class="text-value-sm text-danger">
+                                    <strong class="text-danger font-weight-bold">
                                         This leave has been rejected
-                                    </div>
+                                    </strong>
                                 @else
-                                    <div class="btn-group float-right">
-                                        <a href="{{ route('web.employee.approve-leaves.approve', $leave->id) }}"
-                                           onclick="event.preventDefault(); document.getElementById('approve-leave').submit();"
-                                           class="btn btn-success">
-                                            <i class="bi bi-check-circle"></i>
-                                            Approve
-                                        </a>
-                                        <button type="button"
-                                                class="btn btn-danger"
-                                                id="rejectButton"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop"
-                                                data-bs-url="{{ route('web.employee.approve-leaves.reject', $leave->id) }}">
-                                            Reject
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
+                                    <div class="d-flex flex-row justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            Submitted {{ $leave->created_at->diffForHumans() }}
+                                        </small>
+
+                                        <div class="btn-group float-right">
+                                            <a href="{{ route('web.employee.approve-leaves.approve', $leave->id) }}"
+                                            onclick="event.preventDefault(); document.getElementById('approve-leave').submit();"
+                                            class="btn btn-success">
+                                                <i class="bi bi-check-circle"></i>
+                                                Approve
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-danger"
+                                                    id="rejectButton"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop"
+                                                    data-bs-url="{{ route('web.employee.approve-leaves.reject', $leave->id) }}">
+                                                Reject
+                                                <i class="bi bi-x-circle"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 @endif
                             </div>

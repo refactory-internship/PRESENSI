@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\AbsentService;
+use App\Http\Services\DateTimeService;
 use App\Models\Absent;
 use App\Models\Calendar;
 use Illuminate\Http\Request;
@@ -12,10 +13,12 @@ use Illuminate\Support\Facades\Cache;
 class AbsentController extends Controller
 {
     private $absentService;
+    private $dateTimeService;
 
-    public function __construct(AbsentService $absentService)
+    public function __construct(AbsentService $absentService, DateTimeService $dateTimeService)
     {
         $this->absentService = $absentService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function index()
@@ -26,10 +29,10 @@ class AbsentController extends Controller
 
     public function create()
     {
-        $first = Calendar::query()->first()->value('date')->format('Y-m-d');
+        $today = $this->dateTimeService->getCurrentDate()->toDateString();
         $last = Calendar::query()->orderBy('date', 'DESC')->first();
         $last = $last->date->format('Y-m-d');
-        return view('user.absent.create', compact('first', 'last'));
+        return view('user.absent.create', compact('today', 'last'));
     }
 
     public function store(Request $request)
@@ -46,8 +49,11 @@ class AbsentController extends Controller
 
     public function edit($id)
     {
+        $today = $this->dateTimeService->getCurrentDate()->toDateString();
+        $last = Calendar::query()->orderBy('date', 'DESC')->first();
+        $last = $last->date->format('Y-m-d');
         $absent = Absent::query()->findOrFail($id);
-        return view('user.absent.edit', compact('absent'));
+        return view('user.absent.edit', compact('absent', 'today', 'last'));
     }
 
     public function update(Request $request, $id)

@@ -90,10 +90,10 @@ class AttendanceService
             $isFinished = $attendance->isFinished;
             $clockOutTime = $attendance->clock_out_time;
 
-            if ($user->isAutoApproved === false) {
-                $parentEmail = $user->parent->email;
-                EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
-            }
+            // if ($user->isAutoApproved === false) {
+            //     $parentEmail = $user->parent->email;
+            //     EmailAttendanceApprovalRequest::dispatch($parentEmail, $user, $attendance);
+            // }
         }
 
         // cache()->forget('attendance.all');

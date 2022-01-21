@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\DateTimeService;
 use App\Http\Services\LeaveService;
 use App\Models\Calendar;
 use App\Models\Leave;
@@ -11,10 +12,12 @@ use Illuminate\Http\Request;
 class LeaveController extends Controller
 {
     private $leaveService;
+    private $dateTimeService;
 
-    public function __construct(LeaveService $leaveService)
+    public function __construct(LeaveService $leaveService, DateTimeService $dateTimeService)
     {
         $this->leaveService = $leaveService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function index()
@@ -31,10 +34,10 @@ class LeaveController extends Controller
 
     public function create()
     {
-        $first = Calendar::query()->first()->value('date')->format('Y-m-d');
+        $today = $this->dateTimeService->getCurrentDate()->toDateString();
         $last = Calendar::query()->orderBy('date', 'DESC')->first();
         $last = $last->date->format('Y-m-d');
-        return view('user.leave.create', compact('first', 'last'));
+        return view('user.leave.create', compact('today', 'last'));
     }
 
     public function show($id)
@@ -45,8 +48,11 @@ class LeaveController extends Controller
 
     public function edit($id)
     {
+        $today = $this->dateTimeService->getCurrentDate()->toDateString();
+        $last = Calendar::query()->orderBy('date', 'DESC')->first();
+        $last = $last->date->format('Y-m-d');
         $leave = Leave::query()->findOrFail($id);
-        return view('user.leave.edit', compact('leave'));
+        return view('user.leave.edit', compact('leave', 'today', 'last'));
     }
 
     public function update(Request $request, $id)
